@@ -1,0 +1,94 @@
+{
+    "quizzes": [
+        {
+            "id": "1234abcd",
+            "name": "Temel Pediyatrik Deformite Quizi",
+            "numberOfQuestions": 3,
+            "finishedUsers": [],
+            "questions": [
+                {
+                    "text": "Aşağıdaki özelliklerden hangisi 'nöromuskuler' omurga deformitelerinin tipik özelliklerinden değildir?",
+                    "type": "multiple-choice",
+                    "questionNumber": 1,
+                    "choices": [
+                        {
+                            "text": "Özellikle erken dönemlerinde oldukça yumuşaktır, pasif olarak düzeltilebilir",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "Pelvisi içine alabilir",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "Vertebral kolonun çökmesi ile ortaya çıkar",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "İlerlemesi büyümenin sona ermesi ile sona ermez",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "Genellikle az sayıda vertebral içerir",
+                            "isCorrect": true
+                        }
+                    ]
+                },
+                {
+                    "text": "Onaltı yaşında kız hasta sırtta eğrilik yakınması ile polikliniğe başvuruyor. Hastanın ağrısı yok. Fizik muayenede sağda rib hump görülüyor ve nörolojik muayenesi normal. Menarş yaşı 2,5 yıl önce. Direkt röntgenogramında Risser bulgusu evre-4 ve ana torasik Cobb açısı: 38°. Hastalığın doğal seyri ile ilgili vereceğiniz açıklamalardan hangisi doğrudur?",
+                    "type": "multiple-choice",
+                    "questionNumber": 2,
+                    "choices": [
+                        {
+                            "text": "Ameliyat olmazsa yüksek olasılıkla eğrilik ilerlemesinde artış",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "Kronik bel ağrısı olasılığında artış",
+                            "isCorrect": true
+                        },
+                        {
+                            "text": "İleride vajinal doğum güçlüğü",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "Eğrilik atipik olduğu için MR görüntüleme gerekebileceği",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "İleride pulmoner fonksiyonda azalma",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "text": "Hasta Lenke sınıflandırmasına göre hangi tip ve değişkenler ile tanımlanabilir? Soruyu olgu senaryosuna göre yanıtlayınız:",
+                    "type": "case study",
+                    "case": "<p style='margin-bottom: 2rem;'>Aşağıda 13 yaşında bir kızın ön-arka ve yan tüm vertebral kolon grafileri ve ölçümleri&nbsp;görülmektedir. Görüldüğü gibi, koronal düzlemdeki eğriliklerinde; üst torakal eğrilik 21° olup 18°ye, torakal eğrilik 47° olup 38°ye, lomber eğrilik ise 49° olup 23°ye düzelmektedir. Yan grafide torakal kifoz 44°, lomber lordoz 57° ve torakolomber bileşke kifozu 0° (şekilde belirtilmemiş) olarak ölçülmüştür. Hastanın Risser evresi II'dir. Sağ omuzun 2 cm yüksek olduğu görülmektedir.&nbsp;<p style='text-align: center;'><span><img src='https://drive.google.com/uc?id=1V4TnY5IyVv2G5FbWLqU5Mx-zaeUh9MQ5' alt='' role='presentation' width='700' height='700'><br></span></p>",
+                    "questionNumber": 3,
+                    "choices": [
+                        {
+                            "text": "Tip II, C (+)",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "Tip III, C (N)",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "Tip VI, C (+)",
+                            "isCorrect": true
+                        },
+                        {
+                            "text": "Tip III, B (N)",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "Tip VI, C (N)",
+                            "isCorrect": false
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

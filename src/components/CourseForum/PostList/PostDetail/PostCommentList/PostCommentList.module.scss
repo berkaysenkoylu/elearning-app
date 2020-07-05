@@ -1,0 +1,9 @@
+@import "../../../../../variables";
+
+.PostCommentList {
+    margin-top: 1rem;
+    height: 28rem;
+    // max-height: 30rem;
+    padding-right: 1rem;
+    overflow-y: scroll;
+}

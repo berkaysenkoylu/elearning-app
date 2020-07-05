@@ -1,0 +1,75 @@
+@import "../../../../variables";
+
+.PostDetailContainer {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    &__Cta {
+        margin-top: auto;
+    }
+}
+
+.PostDetail {
+    padding: 1rem;
+    border: 1px solid rgba($color-black, 0.8);
+
+    &__Header {
+        display: flex;
+        margin-bottom: 1rem;
+
+        &__Title {
+            h2 {
+                font-size: $default-header-font-size;
+            }
+
+            span {
+                font-style: italic;
+
+                &::before {
+                    content: "by ";
+                    font-style: normal;
+                }
+            }
+        }
+
+        &__Time {
+            margin-left: auto;
+        }
+    }
+
+    &__Body {
+        padding: 1.5rem 0;
+    }
+
+    &__Cta {
+        display: flex;
+        
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid rgba($color-black, 0.4);
+
+        & > button:not(:last-child) {
+            margin-right: 1rem;
+        }
+
+        & > button:first-child {
+            margin-left: auto;
+        }
+    }
+}
+
+.PostComments {
+    margin-top: 1rem;
+    text-align: center;
+
+    h1 {
+        font-size: $small-header-font-size;
+        text-align: center;
+    }
+}
+
+.PostComments__Overflow {
+    overflow-y: scroll;
+}

@@ -1,0 +1,34 @@
+@import "../../../../variables";
+
+.QuestionResult {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 4rem;
+
+    &:not(:last-child) {
+        border-right: 3px solid $color-black;
+    }
+
+    &__QuestionNumber {
+        text-align: center;
+        width: 100%;
+        font-weight: 700;
+        padding-bottom: 0.8rem;
+        margin-bottom: 1rem;
+        border-bottom: 3px solid $color-black;
+    }
+
+    &__Icon {
+        width: 3rem;
+        height: 3rem;
+
+        &__Correct {
+            fill: $color-secondary-dark-2;
+        }
+
+        &__Incorrect {
+            fill: $color-primary-dark-2;
+        }
+    }
+}

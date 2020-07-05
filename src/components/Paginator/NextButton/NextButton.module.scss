@@ -1,0 +1,18 @@
+@import "../../../variables";
+
+.NextButton {
+    all: unset;
+    box-sizing: border-box;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.ArrowIcon {
+    width: 2rem;
+    height: 2rem;
+    fill: $color-tertiary-dark-1;
+}
+
+.NextButton:disabled .ArrowIcon {
+    fill: rgba($color-tertiary-dark-2, 0.4);
+}

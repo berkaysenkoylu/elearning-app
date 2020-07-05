@@ -1,0 +1,11 @@
+@import "../../../variables";
+
+.Navigation {
+    width: 100%;
+}
+
+.NavigationItems {
+    display: flex;
+    list-style: none;
+    padding: 1rem 2rem;
+}

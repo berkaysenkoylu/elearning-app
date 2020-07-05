@@ -1,0 +1,25 @@
+@import "../../../../../../variables";
+
+.PostComment {
+    &:not(:last-child) {
+        margin-bottom: 1rem;
+    }
+
+    padding: 1rem;
+    border: 1px solid rgba($color-black, 0.6);
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+
+    &__Header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 5px;
+        border-bottom: 1px solid rgba($color-black, 0.3);
+    }
+
+    &__Content {
+        padding: 5px 0;
+    }
+}

@@ -1,0 +1,35 @@
+@import "../../variables";
+
+.ProgressBar {
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 60rem;
+    height: 1.25rem;
+
+    &__Background,
+    &__Foreground {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+    }
+
+    &__Background {
+        width: 100%;
+        background-color: $color-tertiary-dark-2;
+        z-index: 1;
+        border-radius: 5px;
+    }
+
+    &__Foreground {
+        width: 0%;
+        background-color: $color-tertiary;
+        z-index: 100;
+        border-bottom-left-radius: 5px;
+        border-top-left-radius: 5px;
+        transition: all 0.2s ease-out;
+    }
+}

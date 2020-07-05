@@ -1,0 +1,99 @@
+{
+    "courseId": "123abc",
+    "postList": [
+        {
+            "id": "1",
+            "title": "About this course",
+            "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+            "author": "Admin",
+            "createdAt": "Sat Jun 20 2020 15:00:43",
+            "updatedAt": "Sun Jun 21 2020 15:25:43",
+            "isPinned": false,
+            "responses": [],
+            "views": 11
+        },
+        {
+            "id": "2",
+            "title": "Concerning AIS",
+            "content": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+            "author": "Alpaslan Şenköylü",
+            "createdAt": "Sun Jun 21 2020 15:00:43",
+            "updatedAt": "Sun Jun 21 2020 15:36:43",
+            "isPinned": false,
+            "responses": [
+                {
+                    "index": "This is a test response.",
+                    "updatedAt": "Sun Jun 21 2020 15:55:43",
+                    "author": "Jane Doe"
+                },
+                {
+                    "index": "This is yet another test response.",
+                    "updatedAt": "Mon Jun 22 2020 13:55:43",
+                    "author": "John Doe"
+                },
+                {
+                    "index": "The more the merrier as far as the test responses are concerned.",
+                    "updatedAt": "Tue Jun 23 2020 10:55:43",
+                    "author": "Johnny Doe"
+                },
+                {
+                    "index": "Comment demonstration",
+                    "updatedAt": "Wed Jun 24 2020 10:55:43",
+                    "author": "Jenny Doe"
+                }
+            ],
+            "views": 54
+        },
+        {
+            "id": "3",
+            "title": "Scoliosis",
+            "content": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.",
+            "author": "Emre Acaroğlu",
+            "createdAt": "Sat Jun 20 2020 16:00:43",
+            "updatedAt": "Sat Jun 20 2020 14:51:43",
+            "isPinned": false,
+            "responses": [
+                {
+                    "index": "This is another demo response",
+                    "updatedAt": "Sun Jun 21 2020 15:00:43",
+                    "author": "John Doe"
+                }
+            ],
+            "views": 146
+        },
+        {
+            "id": "4",
+            "title": "Scoliosis case of a 7-year-old boy",
+            "content": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.",
+            "author": "Alpaslan Şenköylü",
+            "createdAt": "Sun Jun 20 2020 16:00:43",
+            "updatedAt": "Wed Jun 18 2020 14:51:43",
+            "isPinned": false,
+            "responses": [
+                {
+                    "index": "This is another demo response",
+                    "updatedAt": "Sun Jun 21 2020 15:00:43",
+                    "author": "Jane Doe"
+                }
+            ],
+            "views": 244
+        },
+        {
+            "id": "5",
+            "title": "Kyphosis",
+            "content": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.",
+            "author": "Emre Acaroğlu",
+            "createdAt": "Sun Jun 20 2020 16:00:43",
+            "updatedAt": "Sun Jun 16 2020 14:51:43",
+            "isPinned": false,
+            "responses": [
+                {
+                    "index": "This is another demo response",
+                    "updatedAt": "Sun Jun 21 2020 16:00:43",
+                    "author": "Jane Doe"
+                }
+            ],
+            "views": 356
+        }
+    ]
+}

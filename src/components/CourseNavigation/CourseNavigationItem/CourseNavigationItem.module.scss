@@ -1,0 +1,43 @@
+@import "../../../variables";
+
+.CourseNavigationItem {
+    cursor: pointer;
+    width: 10rem;
+    height: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover &__Icon {
+        fill: $color-complement-dark-1;
+    }
+
+    &:hover &__Text {
+        color: $color-complement-dark-1;
+    }
+    
+    &__Icon {
+        width: 3rem;
+        height: 3rem;
+        margin-right: 0.5rem;
+        fill: $color-tertiary-dark-1;
+        transition: all 0.2s ease-out;
+    }
+
+    &__Text {
+        font-size: $default-font-size;
+        font-weight: 600;
+        color: $color-tertiary-dark-1;
+        transition: all 0.2s ease-out;
+    }
+}
+
+.CourseNavigationItem__Active {
+    & > svg {
+        fill: $color-complement-dark-1;
+    }
+
+    & > span {
+        color: $color-complement-dark-1;
+    }
+}

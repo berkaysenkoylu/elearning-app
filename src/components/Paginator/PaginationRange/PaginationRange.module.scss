@@ -1,0 +1,8 @@
+@import '../../../variables';
+
+.PaginationRange {
+    display: inline-block;
+    font-size: $default-font-size;
+    color: rgba($color-tertiary-dark-1, 0.8);
+    margin: 0 3rem;
+}

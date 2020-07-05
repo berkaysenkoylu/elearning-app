@@ -1,0 +1,22 @@
+@import "../../../variables";
+
+.Toolbar {
+    position: fixed;
+    width: 100%;
+    height: 5rem;
+    top: 0;
+    background-color: $color-tertiary;
+    font-size: $default-font-size;
+    z-index: 1000;
+    display: flex;
+    -webkit-box-align: center;
+    -moz-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+
+    // & > * {
+    //     max-width: 140rem;
+    //     margin: 0 auto;
+    // }
+}

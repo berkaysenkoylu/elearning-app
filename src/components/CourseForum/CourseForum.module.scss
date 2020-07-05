@@ -1,0 +1,27 @@
+@import "../../variables";
+
+.CourseForum {
+    width: 80%;
+    height: 60rem;
+    margin: 0 auto;
+    padding: 1.5rem;
+    font-size: $default-font-size;
+    box-shadow: 0.25rem 0.5rem 0.75rem rgba($color-tertiary-dark-2, 0.75);
+    background-color: rgba($color-tertiary-dark-2, 0.2);
+    display: flex;
+    flex-direction: column;
+
+    &__Cta {
+        width: 100%;
+        height: 5rem;
+        // background-color: rgba($color-tertiary-dark-2, 0.5);
+        margin-top: auto;
+
+        display: flex;
+        align-items: center;
+
+        & > button {
+            margin-right: auto;
+        }
+    }
+}
