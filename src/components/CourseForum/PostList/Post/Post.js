@@ -31,7 +31,7 @@ const Post = (props) => {
             </td>
 
             <td className={classes.Post__Author}>
-                {postData.author}
+                {postData.author.status !== 'admin' ? postData.author.firstName + ' ' + postData.author.lastName : postData.author.firstName}
             </td>
 
             <td className={classes.Post__Replies}>

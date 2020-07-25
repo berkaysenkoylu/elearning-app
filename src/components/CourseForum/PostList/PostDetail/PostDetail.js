@@ -18,7 +18,7 @@ const PostDetail = (props) => {
                             {postData.title}
                         </h2>
                         <span>
-                            {postData.author}
+                            {postData.author.status !== 'admin' ? postData.author.firstName + ' ' + postData.author.lastName : postData.author.firstName}
                         </span>
                     </div>
 

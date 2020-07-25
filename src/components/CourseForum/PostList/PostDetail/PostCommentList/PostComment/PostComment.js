@@ -8,7 +8,7 @@ const PostComment = (props) => {
     return (
         <div className={classes.PostComment}>
             <div className={classes.PostComment__Header}>
-                <span>{commentData.author}</span>
+                <span>{commentData.author.firstName + ' ' + commentData.author.lastName}</span>
                 <span>{commentData.updatedAt}</span>
             </div>
 

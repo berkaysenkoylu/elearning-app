@@ -11,8 +11,11 @@ const QuizContainer = (props) => {
     const [isQuizFinished, setIsQuizFinished] = useState(false);
     const [quizResultData, setQuizResultData] = useState([]);
 
-    const content = require('../../assets/quiz_poc.json');
-    const quizData = ((content || {}).quizzes || []).find(quiz => quiz.id === props.quizId);
+    // const content = require('../../assets/quiz_poc.json');
+    const quizData = {
+        ...props.quizData,
+        numberOfQuestions: props.quizData.questions.length
+    };
 
     const onQuizStartedHandler = () => {
         setIsAtQuizIntro(false);

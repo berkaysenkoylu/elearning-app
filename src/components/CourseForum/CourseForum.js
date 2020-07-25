@@ -7,7 +7,8 @@ import PostDetail from './PostList/PostDetail/PostDetail';
 import Button from '../UI/Button/Button';
 import Paginator from '../Paginator/Paginator';
 
-const CourseForum = () => {
+const CourseForum = (props) => {
+    // const [courseForumData, setCourseForumData] = useState({});
     const [paginationState, setPaginationState] = useState({
         perPage: 3,
         pageCount: 2,
@@ -21,8 +22,17 @@ const CourseForum = () => {
     const [showPostDetail, setShowPostDetail] = useState(false);
     const [selectedPost, setSelectedPost] = useState(null);
 
-    const forumData = require('../../assets/course_forum_poc.json');
-    const forumPostList = (forumData || {}).postList || [];
+    // const forumData = require('../../assets/course_forum_poc.json');
+    // const forumPostList = (forumData || {}).postList || [];
+    const forumPostList = props.forumData.posts || [];
+
+    // console.log(props.forumData)
+
+    // useEffect(() => {
+    //     console.log(props.forumData);
+
+    //     setCourseForumData(props.forumData);
+    // }, [props.forumData]);
 
     useEffect(() => {
         // Initial state
@@ -59,7 +69,7 @@ const CourseForum = () => {
     }
 
     const onPostSelectedHandler = (postId) => {
-        let selectedPost = forumPostList.find(post => post.id === postId);
+        let selectedPost = forumPostList.find(post => post._id === postId);
 
         setSelectedPost(selectedPost);
         setShowPostDetail(true);
@@ -81,22 +91,22 @@ const CourseForum = () => {
     let pageContent = !showPostDetail ? (<>
         {!createPostMode ? <>
             <PostList
-                    postList={forumPostList.slice(paginationState.startIndex, paginationState.endIndex)}
-                    onPostSelected={onPostSelectedHandler}
+                postList={forumPostList.slice(paginationState.startIndex, paginationState.endIndex)}
+                onPostSelected={onPostSelectedHandler}
+            />
+
+            <div className={classes.CourseForum__Cta}>
+                <Button clicked={onCreatePostPressedHandler}>Create a Post</Button>
+
+                <Paginator 
+                    itemPerPage={[3, 5, 10]}
+                    maxItemCount={forumPostList.length}
+                    pagination={onPaginationChangeHandler}
+                    currentPage={paginationState.currentPage}
+                    hasNextPage={paginationState.hasNextPage}
+                    hasPrevPage={paginationState.hasPrevPage}
                 />
-
-                <div className={classes.CourseForum__Cta}>
-                    <Button clicked={onCreatePostPressedHandler}>Create a Post</Button>
-
-                    <Paginator 
-                        itemPerPage={[3, 5, 10]}
-                        maxItemCount={forumPostList.length}
-                        pagination={onPaginationChangeHandler}
-                        currentPage={paginationState.currentPage}
-                        hasNextPage={paginationState.hasNextPage}
-                        hasPrevPage={paginationState.hasPrevPage}
-                    />
-                </div>
+            </div>
         </> : <CreatePost 
             createPostCancel={onCreatePostCancelledHandler}
         />}

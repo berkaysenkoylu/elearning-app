@@ -8,9 +8,9 @@ const PostList = (props) => {
 
     let postContent = postList.map((post) => {
         return <Post
-            key={post.id}
+            key={post._id}
             postData={post}
-            postSelected={() => props.onPostSelected(post.id)}
+            postSelected={() => props.onPostSelected(post._id)}
         />
     });
 

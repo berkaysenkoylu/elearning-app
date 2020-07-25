@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from 'react';
 
 import classes from './Course.module.scss';
+import axiosCourse from '../../axiosUtility/axios-course';
+import axiosForum from '../../axiosUtility/axios-forum';
 import CourseNavigation from '../../components/CourseNavigation/CourseNavigation';
 import CourseInfo from '../../components/CourseInfo/CourseInfo';
 import CourseForum from '../../components/CourseForum/CourseForum';
@@ -8,7 +10,6 @@ import CourseMenu from '../../components/CourseMenu/CourseMenu';
 import CourseSection from '../../components/CourseSection/CourseSection';
 import Quiz from '../../components/Quiz/QuizContainer';
 
-// POC
 class Course extends Component {
     state = {
         courseNavItems: [{
@@ -26,7 +27,8 @@ class Course extends Component {
             icon: 'bubbles2',
             active: false
         }],
-        courseContent: {},
+        courseData: {},
+        courseForum: {},
         currentWeek: 0,
         sectionIndex: 0,
         currentPage: 0,
@@ -35,11 +37,31 @@ class Course extends Component {
     }
 
     componentDidMount() {
-        const content = require('../../assets/course_poc.json');
+        // TODO: change here
+        axiosCourse.get('/5f134682fd429c04c04e579f').then(response => {
+            return response.data.course;
+        }).then(fetchedCourse => {
+            this.setState({
+                courseData: fetchedCourse
+            });
 
-        this.setState({
-            courseData: content
+            return axiosForum.get('/course/' + fetchedCourse._id);
+        }).then(forumResp => {
+            // console.log(forumResp.data.forum)
+
+            this.setState({
+                courseForum: forumResp.data.forum
+            });
+        }).catch(error => {
+            console.log(error)
         });
+
+        // TODO: REMOVE
+        // const content = require('../../assets/course_poc.json');
+
+        // this.setState({
+        //     courseData: content
+        // });
     }
 
     onNavigationItemClickedHandler = (index) => {
@@ -87,6 +109,7 @@ class Course extends Component {
     }
 
     render() {
+        let courseLandingData = (this.state.courseData || {}).landing || {};
         let activeNavigation = (this.state.courseNavItems.find(item => item.active) || {}).name;
         let section = ((this.state.courseData || {}).weeks || [])[this.state.sectionIndex] || {};
         let courseName = (this.state.courseData || {}).name;
@@ -96,7 +119,7 @@ class Course extends Component {
         
         switch(activeNavigation) {
             case 'Info':
-                pageContent = <CourseInfo />;
+                pageContent = <CourseInfo landingData={courseLandingData} />;
                 break;
             case 'Course':
                 pageContent = (
@@ -105,7 +128,7 @@ class Course extends Component {
                             <CourseMenu
                                 courseIntro={courseIntro}
                                 onSectionSelect={this.onSectionSelectedHandler}
-                                courseQuiz={courseQuiz}
+                                courseQuiz={courseQuiz._id}
                                 onQuizModeActivated={this.onQuizModeActivatedHandler}
                             />
                         : !this.state.isOnQuizMode ?
@@ -114,14 +137,15 @@ class Course extends Component {
                                 sectionData={section}
                             /> :
                             <Quiz
-                                quizId={courseQuiz}
+                                // quizId={courseQuiz}
+                                quizData={courseQuiz}
                                 onQuizExited={this.onQuizExitedHandler} />
                         }
                     </div>
                 );
                 break;
             case 'Forums':
-                pageContent = <CourseForum />;
+                pageContent = <CourseForum forumData={this.state.courseForum} />;
                 break;
             default:
                 break;
