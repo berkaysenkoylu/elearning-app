@@ -37,8 +37,7 @@ class Course extends Component {
     }
 
     componentDidMount() {
-        // TODO: change here
-        axiosCourse.get('/5f134682fd429c04c04e579f').then(response => {
+        axiosCourse.get('/' + this.props.match.params.id).then(response => {
             return response.data.course;
         }).then(fetchedCourse => {
             this.setState({
@@ -53,7 +52,9 @@ class Course extends Component {
                 courseForum: forumResp.data.forum
             });
         }).catch(error => {
-            console.log(error)
+            console.log(error);
+
+            this.props.history.push('/courses');
         });
 
         // TODO: REMOVE

@@ -5,7 +5,7 @@ import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
 // TODO REMOVE
 import Course from '../../containers/Course/Course';
 
-const Layout = () => {
+const Layout = (props) => {
     const testStyle = {
         height: 'calc(100vh - 5rem)',
         width: '100vw',
@@ -17,9 +17,10 @@ const Layout = () => {
             <Toolbar />
 
             <div style={testStyle}>
-                SITE LAYOUT
-
-                <Course />
+                {props.children}
+                
+                {/* SITE LAYOUT
+                <Course /> */}
             </div>
         </Fragment>
     );
