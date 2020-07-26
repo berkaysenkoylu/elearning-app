@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
+import classes from './CourseList.module.scss';
 import axiosCourse from '../../axiosUtility/axios-course';
 import CourseListElement from './CourseListElement/CourseListElement';
 
@@ -17,18 +18,19 @@ const CourseList = (props) => {
     }
 
     return (
-        <section>
-            <header>
+        <section className={classes.CourseList}>
+            <header className={classes.CourseList__Header}>
                 <h1>OUR COURSES</h1>
             </header>
         
-            <div>
-                { courseList.map(course => {
+            <div className={classes.CourseList__Content}>
+                { courseList.map((course, i) => {
                     return <CourseListElement
                         key={course._id}
                         data={course}
-                        onCourseClicked={() => onCourseClickedHandler(course._id)}
-                    />
+                        index={i}
+                        clicked={() => onCourseClickedHandler(course._id)}
+                    />;
                 }) }
             </div>
         </section>

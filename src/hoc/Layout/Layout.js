@@ -3,7 +3,7 @@ import React, { Fragment } from 'react';
 import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
 
 // TODO REMOVE
-import Course from '../../containers/Course/Course';
+// import Course from '../../containers/Course/Course';
 
 const Layout = (props) => {
     const testStyle = {

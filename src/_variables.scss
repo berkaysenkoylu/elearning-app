@@ -27,6 +27,18 @@ $color-complement-dark-1: #C27100;
 $color-complement-dark-2: #734300;
 $color-complement-dark-3: #523002;
 
+$color-misc-1: #ff5781;
+$color-misc-2: #ba265d;
+
+$color-misc-3: #ffb900;
+$color-misc-4: #ce6228;
+
+$color-misc-5: #2998ff;
+$color-misc-6: #5643fa;
+
+$colors: $color-misc-1, $color-misc-3, $color-misc-6;
+$colors-active: $color-misc-2, $color-misc-4, $color-misc-5;
+
 // Misc colors
 $color-white: #fff;
 $color-black: #000;

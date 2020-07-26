@@ -8,6 +8,7 @@ const App = (props) => {
 
 	let routes = (
 		<Switch>
+			<Route path='/auth' render={() => <div>AUTH COMPONENT</div>} />
 			<Route path='/contact' render={() => <div>CONTACT COMPONENT</div>} />
 			<Route path='/about' render={() => <div>ABOUT COMPONENT</div>} />
 			<Route path='/courses' component={CourseContainer} />
