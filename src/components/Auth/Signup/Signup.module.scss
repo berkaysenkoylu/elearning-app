@@ -1,0 +1,139 @@
+@import "../../../variables";
+
+.Signup {
+    z-index: 50;
+    padding: 6rem calc(10% + 6rem) 6rem 6rem;
+    width: 100%;
+    min-height: 100%;
+    position: absolute;
+    top: 0;
+    left: 95%;
+    background-color: $color-misc-7;
+    cursor: pointer;
+    transition: 0.3s ease;
+
+    &__Close {
+        z-index: 75;
+        position: absolute;
+        top: 2rem;
+        right: 8rem;
+        border-radius: 100%;
+        background-color: $color-white;
+        width: 6rem;
+        height: 6rem;
+        cursor: pointer;
+        transition: all 0.2s ease-out;
+
+        &:hover {
+            box-shadow: $shadow-custom;
+            transform: scale(1.05);
+        }
+
+        &:hover::before {
+            background-color: $color-misc-6;
+            transform: translate(-50%, -50%) rotateZ(-135deg);
+        }
+
+        &:hover::after {
+            background-color: $color-misc-6;
+            transform: translate(-50%, -50%) rotateZ(-45deg);
+        }
+
+        &::before,
+        &::after {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 3rem;
+            height: 4px;
+            background-color: rgba($color-misc-6, 0.9);
+            transition: all 0.2s ease-out;
+        }
+
+        &::before {
+            transform: translate(-50%, -50%) rotateZ(45deg);
+        }
+
+        &::after {
+            transform: translate(-50%, -50%) rotateZ(135deg);
+            transition: all 0.14s;
+        }
+    }
+
+    &::before,
+    &::after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 6rem;
+        background-color: rgba($color-white, 0.4);
+        height: 3rem;
+        width: 2px;
+        transition: 0.2s ease-out;
+    }
+
+    &::before {
+        left: 1.5%;
+    }
+
+    &::after {
+        left: 3%;
+    }
+
+    &:hover:not(&__Active) {
+        box-shadow: $shadow-custom-2;
+        left: 92%;
+
+        &::before,
+        &::after {
+            opacity: 0;
+        }
+    }
+
+    &__Active {
+        left: 10%;
+        box-shadow: $shadow-custom-2;
+        cursor: default;
+
+        &::before,
+        &::after {
+            opacity: 0;
+        }
+    }
+
+    &__Form {
+        &__Header {
+            font-size: $default-header-font-size;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 400;
+            color: $color-complement;
+            margin-bottom: 3.5rem;
+        }
+
+        &__Cta {
+            margin-top: 1.5rem;
+            display: flex;
+
+            button {
+                border: 0;
+                width: 100%;
+                font-size: $default-font-size;
+                font-weight: 500;
+                text-transform: uppercase;
+                color: $color-white;
+                background-color: $color-misc-5;
+                border-radius: 4px;
+                padding: 1.25rem;
+                cursor: pointer;
+
+                &:disabled {
+                    cursor: not-allowed;
+                    background-color: $color-gray-dark;
+                }
+            }
+        }
+    }
+}

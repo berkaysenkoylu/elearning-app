@@ -35,6 +35,7 @@ $color-misc-4: #ce6228;
 
 $color-misc-5: #2998ff;
 $color-misc-6: #5643fa;
+$color-misc-7: #6f5fff;
 
 $colors: $color-misc-1, $color-misc-3, $color-misc-6;
 $colors-active: $color-misc-2, $color-misc-4, $color-misc-5;
@@ -48,6 +49,8 @@ $color-gray-light: #eee;
 // SHADOWS
 $shadow-dark: 0 2rem 6rem rgba(0, 0, 0, 0.3);
 $shadow-light: 0 2rem 5rem rgba(0, 0, 0, 0.06);
+$shadow-custom: 0 0 3rem rgba(0, 0, 0, 0.1);
+$shadow-custom-2: 0 0 1rem rgba(0, 0, 0, 0.2);
 
 // FONT SIZE
 $default-font-size: 1.6rem;

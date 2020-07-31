@@ -7,8 +7,6 @@ import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
 
 const Layout = (props) => {
     const testStyle = {
-        height: 'calc(100vh - 5rem)',
-        width: '100vw',
         marginTop: '5rem'
     };
 

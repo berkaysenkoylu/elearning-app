@@ -29,7 +29,7 @@ const CourseList = (props) => {
                         key={course._id}
                         data={course}
                         index={i}
-                        clicked={() => onCourseClickedHandler(course._id)}
+                        selectCourseListElement={() => onCourseClickedHandler(course._id)}
                     />;
                 }) }
             </div>

@@ -1,0 +1,13 @@
+@import "../../variables";
+
+.Authentication {
+    z-index: 15;
+    position: relative;
+    width: 60rem;
+    border-radius: 4px;
+    box-shadow: $shadow-custom;
+    margin: 20rem auto 0 auto;
+    overflow: hidden;
+    height: 47rem;
+    transition: all 0.3s ease;
+}

@@ -48,12 +48,18 @@ const Input = (props) => {
         default:
             break;
     }
+
+    let labelClassList = [classes.InputElement__Label];
+
+    if (props.labelColor === 'white') {
+        labelClassList = [classes.InputElement__Label, classes.InputElement__Label__White];
+    }
     
-    return(
+    return (
         <div className={classes.Input}>
             <p className={classes.ValidationError}>{validationError}</p>
             {inputElement}
-            <label className={classes.InputElement__Label}>{props.label}</label>
+            <label className={labelClassList.join(' ')}>{props.label}</label>
         </div>
     )
 }

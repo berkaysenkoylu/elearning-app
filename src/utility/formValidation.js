@@ -23,6 +23,11 @@ const checkValidity = (value, rules) => {
         isValid = pattern.test(value) && isValid;
     }
 
+    if (rules.isEnglishOnly) {
+        const pattern = /^[a-zA-Z]+$/;
+        isValid = pattern.test(value) && isValid;
+    }
+
     return isValid;
 }
 

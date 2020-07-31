@@ -126,4 +126,75 @@ export const logout = () => {
     }
 }
 
-// TODO: PASSWORD RESET
+
+// TODO
+export const passwordResetRequestStart = () => {
+    return {
+        type: actionTypes.PASSWORD_RESET_REQUEST_START
+    };
+};
+
+export const passwordResetRequestSuccess = () => {
+    return {
+        type: actionTypes.PASSWORD_RESET_REQUEST_SUCCESS,
+        path: '/'
+    };
+};
+
+export const passwordResetRequestFail = (error) => {
+    return {
+        type: actionTypes.PASSWORD_RESET_REQUEST_FAIL,
+        error: error,
+        path: '/auth/reset-password'
+    };
+};
+
+export const passwordResetRequest = (email) => {
+    return dispatch => {
+        dispatch(passwordResetRequestStart());
+
+        axiosAuth.post('/password-reset-request', { email }).then(result => {
+            dispatch(passwordResetRequestSuccess());
+        }).catch(error => {
+            dispatch(passwordResetRequestFail(error.response.data.message));
+        });
+    };
+};
+
+export const resetPasswordStart = () => {
+    return {
+        type: actionTypes.PASSWORD_RESET_START
+    };
+};
+
+export const resetPasswordSuccess = () => {
+    return {
+        type: actionTypes.PASSWORD_RESET_SUCCESS,
+        path: '/'
+    };
+}
+
+export const resetPasswordFail = (error) => {
+    return {
+        type: actionTypes.PASSWORD_RESET_FAIL,
+        error: error,
+        path: '/auth/reset-password'
+    };
+}
+
+export const resetPassword = (formData, token) => {
+    return dispatch => {
+        dispatch(resetPasswordStart());
+
+        const data = {
+            newpassword: formData.password,
+            token: token
+        };
+
+        axiosAuth.post('/password-reset', data).then(response => {
+            dispatch(resetPasswordSuccess());
+        }).catch(error => {
+            dispatch(resetPasswordFail(error.response.data.message));
+        });
+    }
+}

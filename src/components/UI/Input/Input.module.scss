@@ -51,6 +51,10 @@
         margin-top: 0.7rem;
         display: block;
         transition: all 0.3s;
+
+        &__White {
+            color: $color-white;
+        }
     }
 
     &:placeholder-shown + &__Label {
