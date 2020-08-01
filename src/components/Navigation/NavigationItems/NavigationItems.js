@@ -10,7 +10,11 @@ const NavigationItems = (props) => {
             <NavigationItem exact to="/courses">Courses</NavigationItem>
             <NavigationItem exact to="/about">About us</NavigationItem>
             <NavigationItem exact to="/contact">Contact</NavigationItem>
-            <NavigationItem exact to="/auth">Sign in</NavigationItem>
+            
+            {props.isAuth ?
+                <NavigationItem exact to="/logout">Logout</NavigationItem> :
+                <NavigationItem exact to="/auth">Sign in</NavigationItem>
+            }
         </>
     );
 

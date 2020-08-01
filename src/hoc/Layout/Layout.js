@@ -1,9 +1,7 @@
 import React, { Fragment } from 'react';
+import { connect } from 'react-redux';
 
 import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
-
-// TODO REMOVE
-// import Course from '../../containers/Course/Course';
 
 const Layout = (props) => {
     const testStyle = {
@@ -12,16 +10,19 @@ const Layout = (props) => {
 
     return (
         <Fragment>
-            <Toolbar />
+            <Toolbar isAuth={props.isAuthenticated} />
 
             <div style={testStyle}>
                 {props.children}
-                
-                {/* SITE LAYOUT
-                <Course /> */}
             </div>
         </Fragment>
     );
 }
 
-export default Layout;
+const mapStateToProps = state => {
+    return {
+        isAuthenticated: state.isAuth
+    }
+}
+
+export default connect(mapStateToProps, null)(Layout);

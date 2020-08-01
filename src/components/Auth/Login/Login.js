@@ -77,12 +77,9 @@ const Login = (props) => {
             password: formControls.password.value
         }
 
-        // TODO
-        // if(formIsValid) {
-        //     props.loginFormSubmit(loginForm);
-        // }
-        
-        console.log(loginForm)
+        if(formIsValid) {
+            props.loginFormSubmit(loginForm);
+        }
     }
 
     return (

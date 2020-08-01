@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes';
-import axiosAuth from '../../axios-auth';
+import axiosAuth from '../../axiosUtility/axios-auth';
 
 export const signupStart = () => {
     return {
