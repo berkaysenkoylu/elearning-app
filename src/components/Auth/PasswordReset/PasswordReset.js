@@ -5,7 +5,7 @@ import Input from '../../UI/Input/Input';
 import Button from '../../UI/Button/Button';
 import formValidation from '../../../utility/formValidation';
 
-const PasswordReset = () => {
+const PasswordReset = (props) => {
     const [resetFormControls, setResetFormControls] = useState({
         password: {
             elementType: 'input',
@@ -40,6 +40,8 @@ const PasswordReset = () => {
     });
     const [formValid, setFormValid] = useState(false);
 
+    let token = props.location.pathname.split('/').slice(-1).join('');
+
     const inputChangedHandler = (event, inputName) => {
         const copiedFormControls = { ...resetFormControls };
 
@@ -70,12 +72,11 @@ const PasswordReset = () => {
 
         const passwordResetForm = {
             password: resetFormControls.password.value,
-            passwordVerify: resetFormControls.passwordRepeat.value
+            passwordVerify: resetFormControls.passwordRepeat.value,
+            token: token
         };
-
-        console.log(passwordResetForm);
         
-        // props.resetFormSubmit(passwordResetForm, token);
+        props.resetFormSubmit(passwordResetForm);
     }
 
     let formInputs = Object.keys(resetFormControls).map(formControl => {
@@ -91,16 +92,29 @@ const PasswordReset = () => {
         />;
     });
 
+    let pageContent = null;
+    if(props.loading) {
+        pageContent = 'LOADING...';
+    } else if(props.path === '/') {
+        pageContent = <p className={classes.ResetedPasswordHeader}>Successfully changed your password</p>;
+    } else {
+        pageContent = (
+            <>
+                <h2 className={classes.PasswordReset__Header}>
+                    Enter your new password
+                </h2>
+                
+                <form onSubmit={passwordResetFormSubmitted} className={classes.PasswordReset__Form}>
+                    {formInputs}
+                    <Button disabled={!formValid}>Reset</Button>
+                </form>
+            </>
+        )
+    }
+
     return (
         <div className={classes.PasswordReset}>
-            <h2 className={classes.PasswordReset__Header}>
-                Enter your new password
-            </h2>
-            
-            <form onSubmit={passwordResetFormSubmitted} className={classes.PasswordReset__Form}>
-                {formInputs}
-                <Button disabled={!formValid}>Reset</Button>
-            </form>
+            {pageContent}
         </div>
     )
 }

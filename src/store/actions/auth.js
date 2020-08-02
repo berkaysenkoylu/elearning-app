@@ -10,7 +10,7 @@ export const signupStart = () => {
 export const signupSuccess = () => {
     return {
         type: actionTypes.SIGNUP_SUCCESS,
-        path: '/auth/login'
+        path: '/auth/signup-success'
     };
 };
 
@@ -126,8 +126,6 @@ export const logout = () => {
     }
 }
 
-
-// TODO
 export const passwordResetRequestStart = () => {
     return {
         type: actionTypes.PASSWORD_RESET_REQUEST_START
@@ -161,6 +159,8 @@ export const passwordResetRequest = (email) => {
     };
 };
 
+
+// TODO
 export const resetPasswordStart = () => {
     return {
         type: actionTypes.PASSWORD_RESET_START
@@ -182,16 +182,16 @@ export const resetPasswordFail = (error) => {
     };
 }
 
-export const resetPassword = (formData, token) => {
+export const resetPassword = (formData) => {
     return dispatch => {
         dispatch(resetPasswordStart());
 
         const data = {
-            newpassword: formData.password,
-            token: token
+            password: formData.password,
+            token: formData.token
         };
 
-        axiosAuth.post('/password-reset', data).then(response => {
+        axiosAuth.put('/password-reset', data).then(response => {
             dispatch(resetPasswordSuccess());
         }).catch(error => {
             dispatch(resetPasswordFail(error.response.data.message));

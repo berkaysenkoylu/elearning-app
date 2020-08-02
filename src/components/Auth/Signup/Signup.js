@@ -111,12 +111,9 @@ const Signup = (props) => {
             password: formControls.password.value
         }
 
-        // TODO
-        // if(formIsValid) {
-        //     props.signupFormSubmit(signupForm);
-        // }
-        
-        console.log(signupForm)
+        if(formIsValid) {
+            props.signupFormSubmit(signupForm);
+        }
     }
 
     const resetForm = () => {

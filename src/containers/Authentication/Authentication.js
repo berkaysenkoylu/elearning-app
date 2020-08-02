@@ -8,6 +8,7 @@ import classes from './Authentication.module.scss';
 import ErrorDialogue from '../../components/ErrorDialogue/ErrorDialogue';
 import Login from '../../components/Auth/Login/Login';
 import Signup from '../../components/Auth/Signup/Signup';
+import SignupSuccess from '../../components/Auth/SignupSuccess/SignupSuccess';
 import RequestPasswordReset from '../../components/Auth/RequestPasswordReset/RequestPasswordReset';
 import PasswordRest from '../../components/Auth/PasswordReset/PasswordReset';
 
@@ -22,6 +23,16 @@ class Authentication extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
+        if(prevProps.redirectPath !== this.props.redirectPath && prevProps.signupSuccess !== this.props.signupSuccess &&
+            this.props.redirectPath === '/auth/signup-success') {
+            this.setState({
+                signupMode: false
+            });
+
+            // SIGNUP SUCCESSFULL
+            this.props.history.push(this.props.redirectPath);
+        }
+
         // Check if there is an error
         if(prevProps.error !== this.props.error && this.props.error !== null) {
             this.setState({
@@ -52,6 +63,18 @@ class Authentication extends Component {
         this.props.login(formData);
     }
 
+    onSignupFormSubmittedHandler = (formData) => {
+        this.props.signup(formData);
+    }
+
+    onEmailFormSubmitted = (email) => {
+        this.props.requestPasswordReset(email);
+    }
+
+    onPasswordResetFormSubmitHandler = (formData) => {
+        this.props.resetPassword(formData);
+    }
+
     render() {
         let content = null;
 
@@ -61,9 +84,21 @@ class Authentication extends Component {
         } else {
             content = (
                 <Switch>
-                    <Route path={this.props.match.url + '/password-reset'} exact render={() => <RequestPasswordReset />} />
+                    <Route path={this.props.match.url + '/signup-success'} exact render={() => <SignupSuccess />} />
+
+                    <Route path={this.props.match.url + '/password-reset'} exact render={() =>
+                        <RequestPasswordReset
+                            emailFormSubmit={this.onEmailFormSubmitted}
+                            loading={this.props.loading}
+                            reqSuccessfull={!this.state.showError && !this.props.error} />} />
     
-                    <Route path={this.props.match.url + '/password-reset/:token'} exact render={() => <PasswordRest />} />
+                    <Route path={this.props.match.url + '/password-reset/:token'} exact render={() =>
+                        <PasswordRest
+                            {...this.props}
+                            resetFormSubmit={this.onPasswordResetFormSubmitHandler}
+                            loading={this.props.loading}
+                            reqSuccessfull={!this.state.showError && !this.props.error}
+                            path={this.props.redirectPath} />} />
                     
                     <Route path={this.props.match.url} exact render={() => {
                         return <div className={classes.Authentication} style={this.state.signupMode ? { height: "60rem" } : {}}>
@@ -77,6 +112,7 @@ class Authentication extends Component {
                                 isSignupMode={this.state.signupMode}
                                 openSignupPanel={this.onSignupClosedHandler}
                                 closeSignupPanel={this.onSignupClosedHandler}
+                                signupFormSubmit={this.onSignupFormSubmittedHandler}
                             />
                         </div>;
                     }} />
@@ -104,13 +140,17 @@ const mapStateToProps = state => {
         error: state.error,
         token: state.token,
         isAuthenticated: state.isAuth,
-        redirectPath: state.redirectPath
+        redirectPath: state.redirectPath,
+        signupSuccess: state.successfullSignup
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        login: (formData) => dispatch(actions.login(formData))
+        login: (formData) => dispatch(actions.login(formData)),
+        signup: (formData) => dispatch(actions.signup(formData)),
+        requestPasswordReset: (email) => dispatch(actions.passwordResetRequest(email)),
+        resetPassword: (formData) => dispatch(actions.resetPassword(formData))
     }
 }
 
