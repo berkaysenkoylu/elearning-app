@@ -63,6 +63,15 @@ const CreatePost = (props) => {
         setFormControls(copiedFormControls);
     }
 
+    const createPostHandler = () => {
+        let formData = {
+            title: formControls.title.value,
+            content: formControls.content.value
+        };
+
+        props.createPost(formData);
+    }
+
     let formFields = Object.keys(formControls).map((formControl, i) => {
         return <Input
             key={i}
@@ -92,7 +101,8 @@ const CreatePost = (props) => {
                 <div className={classes.CreatePost__Cta}>
                     <Button
                         btnType="BtnPrimary"
-                        disabled={!isFormValid}>Create</Button>
+                        disabled={!isFormValid}
+                        clicked={createPostHandler}>Create</Button>
                     <Button
                         btnType="BtnDanger"
                         clicked={props.createPostCancel}>Cancel</Button>

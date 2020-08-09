@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import classes from './PostDetail.module.scss';
 import Button from '../../../UI/Button/Button';
@@ -6,8 +7,6 @@ import PostCommentList from './PostCommentList/PostCommentList';
 
 const PostDetail = (props) => {
     const postData = props.postData;
-
-    // console.log(postData);
 
     return (
         <section className={classes.PostDetailContainer}>
@@ -32,12 +31,15 @@ const PostDetail = (props) => {
                 </div>
 
                 <div className={classes.PostDetail__Cta}>
-                    <Button
-                        btnType='BtnDanger'
-                        btnSize='BtnSmall'>Delete</Button>
-                    <Button
-                        btnType='BtnSecondary'
-                        btnSize='BtnSmall'>Edit</Button>
+                    { props.userId === postData.author._id ? <>
+                        <Button
+                            btnType='BtnDanger'
+                            btnSize='BtnSmall'>Delete</Button>
+                        <Button
+                            btnType='BtnSecondary'
+                            btnSize='BtnSmall'>Edit</Button>
+                    </> : null }
+                    
                     <Button
                         btnType='BtnPrimary'
                         btnSize='BtnSmall'>Reply</Button>
@@ -62,4 +64,10 @@ const PostDetail = (props) => {
     )
 }
 
-export default PostDetail;
+const mapStateToProps = state => {
+    return {
+        userId: state.userId
+    }
+}
+
+export default connect(mapStateToProps, null)(PostDetail);

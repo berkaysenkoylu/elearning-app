@@ -3,6 +3,7 @@ import React, { Component, Fragment } from 'react';
 import classes from './Course.module.scss';
 import axiosCourse from '../../axiosUtility/axios-course';
 import axiosForum from '../../axiosUtility/axios-forum';
+import axiosPost from '../../axiosUtility/axios-post';
 import CourseNavigation from '../../components/CourseNavigation/CourseNavigation';
 import CourseInfo from '../../components/CourseInfo/CourseInfo';
 import CourseForum from '../../components/CourseForum/CourseForum';
@@ -33,7 +34,8 @@ class Course extends Component {
         sectionIndex: 0,
         currentPage: 0,
         isOnMainMenu: true,
-        isOnQuizMode: false
+        isOnQuizMode: false,
+        isOnCreatePostMode: false
     }
 
     componentDidMount() {
@@ -109,6 +111,42 @@ class Course extends Component {
         });
     }
 
+    onCreatePostModeToggledHandler = (bool) => {
+        this.setState({
+            isOnCreatePostMode: bool
+        });
+    }
+
+    onForumPostCreatedHandler = (data) => {
+        let formData = {
+            ...data,
+            forumId: this.state.courseForum._id
+        };
+
+        let config = {
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('token')
+            }
+        }
+
+        console.log(formData);
+
+        // this.setState({
+        //     isOnCreatePostMode: false
+        // });
+
+        axiosPost.post('', formData, config).then(result => {
+            console.log(result);
+
+            return axiosForum.get('/course/' + this.state.courseData._id);
+        }).then(newForumResponse => {
+            this.setState({
+                courseForum: newForumResponse.data.forum,
+                isOnCreatePostMode: false
+            });
+        });
+    }
+
     render() {
         let courseLandingData = (this.state.courseData || {}).landing || {};
         let activeNavigation = (this.state.courseNavItems.find(item => item.active) || {}).name;
@@ -146,7 +184,12 @@ class Course extends Component {
                 );
                 break;
             case 'Forums':
-                pageContent = <CourseForum forumData={this.state.courseForum} />;
+                pageContent = <CourseForum 
+                    createPostMode={this.state.isOnCreatePostMode}
+                    toggleCreatePostMode={this.onCreatePostModeToggledHandler}
+                    forumData={this.state.courseForum}
+                    forumPostCreated={this.onForumPostCreatedHandler}
+                />;
                 break;
             default:
                 break;

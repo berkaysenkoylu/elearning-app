@@ -18,7 +18,6 @@ const CourseForum = (props) => {
         startIndex: 0,
         endIndex: 0
     });
-    const [createPostMode, setCreatePostMode] = useState(false);
     const [showPostDetail, setShowPostDetail] = useState(false);
     const [selectedPost, setSelectedPost] = useState(null);
 
@@ -81,15 +80,19 @@ const CourseForum = (props) => {
     }
 
     const onCreatePostPressedHandler = () => {
-        setCreatePostMode(true);
+        props.toggleCreatePostMode(true);
     }
 
     const onCreatePostCancelledHandler = () => {
-        setCreatePostMode(false);
+        props.toggleCreatePostMode(false);
+    }
+
+    const onCreatePostHandler = (data) => {
+        props.forumPostCreated(data);
     }
 
     let pageContent = !showPostDetail ? (<>
-        {!createPostMode ? <>
+        {!props.createPostMode ? <>
             <PostList
                 postList={forumPostList.slice(paginationState.startIndex, paginationState.endIndex)}
                 onPostSelected={onPostSelectedHandler}
@@ -108,6 +111,7 @@ const CourseForum = (props) => {
                 />
             </div>
         </> : <CreatePost 
+            createPost={onCreatePostHandler}
             createPostCancel={onCreatePostCancelledHandler}
         />}
         </>) : 
