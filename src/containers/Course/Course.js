@@ -129,12 +129,6 @@ class Course extends Component {
             }
         }
 
-        console.log(formData);
-
-        // this.setState({
-        //     isOnCreatePostMode: false
-        // });
-
         axiosPost.post('', formData, config).then(result => {
             console.log(result);
 
@@ -144,6 +138,22 @@ class Course extends Component {
                 courseForum: newForumResponse.data.forum,
                 isOnCreatePostMode: false
             });
+        });
+    }
+
+    onForumPostDeletedHandler = (postId) => {
+        // TODO: ADD BACKEND CONNECTION
+        const copiedCourseForum = { ...this.state.courseForum };
+
+        let copiedCourseForumPosts = copiedCourseForum.posts.filter(post => post._id !== postId);
+
+        copiedCourseForum.posts = [...copiedCourseForumPosts];
+
+        this.setState(prevState => {
+            return {
+                ...prevState,
+                courseForum: copiedCourseForum
+            }
         });
     }
 
@@ -176,7 +186,6 @@ class Course extends Component {
                                 sectionData={section}
                             /> :
                             <Quiz
-                                // quizId={courseQuiz}
                                 quizData={courseQuiz}
                                 onQuizExited={this.onQuizExitedHandler} />
                         }
@@ -189,6 +198,7 @@ class Course extends Component {
                     toggleCreatePostMode={this.onCreatePostModeToggledHandler}
                     forumData={this.state.courseForum}
                     forumPostCreated={this.onForumPostCreatedHandler}
+                    onPostDeleted={this.onForumPostDeletedHandler}
                 />;
                 break;
             default:

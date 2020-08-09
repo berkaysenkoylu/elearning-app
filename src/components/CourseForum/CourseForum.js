@@ -91,6 +91,13 @@ const CourseForum = (props) => {
         props.forumPostCreated(data);
     }
 
+    const onPostDeleted = (postId) => {
+        props.onPostDeleted(postId);
+
+        setSelectedPost(null);
+        setShowPostDetail(false);
+    }
+
     let pageContent = !showPostDetail ? (<>
         {!props.createPostMode ? <>
             <PostList
@@ -118,6 +125,7 @@ const CourseForum = (props) => {
         <PostDetail
             postData={selectedPost}
             onBackButtonPressed={onBackButtonPressedHandler}
+            postDeleted={onPostDeleted}
         />;
 
     return (

@@ -34,7 +34,8 @@ const PostDetail = (props) => {
                     { props.userId === postData.author._id ? <>
                         <Button
                             btnType='BtnDanger'
-                            btnSize='BtnSmall'>Delete</Button>
+                            btnSize='BtnSmall'
+                            clicked={() => props.postDeleted(postData._id)}>Delete</Button>
                         <Button
                             btnType='BtnSecondary'
                             btnSize='BtnSmall'>Edit</Button>
