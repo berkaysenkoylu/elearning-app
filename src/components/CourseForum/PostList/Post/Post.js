@@ -5,7 +5,7 @@ import classes from './Post.module.scss';
 const Post = (props) => {
     const postData = props.postData;
 
-    const getPostUpdateTimeDifference = (time) => {
+    const getPostCreateTimeDifference = (time) => {
         let now = (new Date()).getTime();
         let updateTime = (new Date(time)).getTime();
         let difference = parseInt((now - updateTime) / 3600000 * 60);
@@ -43,7 +43,7 @@ const Post = (props) => {
             </td>
 
             <td className={classes.Post__Activity}>
-                {getPostUpdateTimeDifference(postData.updatedAt)}
+                {getPostCreateTimeDifference(postData.createdAt)}
             </td>
         </tr>
     );

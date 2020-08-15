@@ -23,7 +23,9 @@ const Modal = (props) => {
                 <div className={modalClasses.join(' ')} style={props.customStyle}>
                     <Backdrop show={props.show} clicked={closeModalHandler} />
                     <div className={classes.Modal}>
-                        <div dangerouslySetInnerHTML={{__html: props.content}}></div>
+                        {props.content ?
+                        <div dangerouslySetInnerHTML={{__html: props.content}}></div> :
+                        props.children}
                     </div>
                 </div>) : null,
             document.getElementById('modal-root')

@@ -1,0 +1,55 @@
+@import "../../../../../../../variables";
+
+.CreatePostComment {
+    position: relative;
+
+    &__Close {
+        display: inline-block;
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        right: 0;
+        width: 3rem;
+        height: 3rem;
+
+        &::before,
+        &::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            background-color: $color-primary-dark-1;
+            transition: all 0.2s ease-out;
+        }
+
+        &::before {
+            width: 100%;
+            height: 5px;
+            transform: translate(-50%, -50%) rotateZ(45deg);
+        }
+
+        &::after {
+            height: 100%;
+            width: 5px;
+            transform: translate(-50%, -50%) rotateZ(45deg);
+        }
+
+        &:hover::before, &:hover::after {
+            background-color: $color-primary-light-2;
+        }
+    }
+
+    &__Header {
+        text-align: center;
+        font-size: $small-header-font-size;
+    }
+
+    &__Form {
+        margin-top: 4rem;
+
+        &__Cta {
+            display: flex;
+            justify-content: center;
+        }
+    }
+}

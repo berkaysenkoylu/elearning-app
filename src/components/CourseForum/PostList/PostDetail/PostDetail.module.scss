@@ -34,8 +34,33 @@
             }
         }
 
-        &__Time {
+        &__TimeContainer {
+            min-width: 15rem;
             margin-left: auto;
+            position: relative;
+
+            &__Time {
+                cursor: pointer;
+                display: block;
+                width: 100%;
+                text-align: right; 
+            }
+
+            &__Tooltip {
+                font-weight: 600;
+                position: absolute;
+                top: 60%;
+                right: 0%;
+                height: 0;
+                overflow: hidden;
+                transition: all 0.2s ease-out;
+                background-color: $color-white;
+                padding: 0 3px;
+            }
+
+            &__Time:hover ~ &__Tooltip {
+                height: 2.4rem;
+            }
         }
     }
 

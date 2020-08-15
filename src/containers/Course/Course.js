@@ -190,8 +190,27 @@ class Course extends Component {
                 }
             });
         }).catch(error => {
-            console.log(error);
+            console.log(error.response.data.message);
         });        
+    }
+
+    onForumPostRespondedHandler = (formData) => {
+        let config = {
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('token')
+            }
+        };
+
+        axiosPost.put(`/respond/${formData.postId}`, { index: formData.index }, config).then(response => {
+            return axiosForum.get('/course/' + this.state.courseData._id);
+        }).then(newForumResponse => {
+            this.setState({
+                courseForum: newForumResponse.data.forum
+            });
+        }).catch(error => {
+            // TODO: A Better error feedback should be implemented
+            console.log(error.response.data.message);
+        })
     }
 
     render() {
@@ -237,6 +256,7 @@ class Course extends Component {
                     forumPostCreated={this.onForumPostCreatedHandler}
                     forumPostEdited={this.onForumPostEditedHandler}
                     onPostDeleted={this.onForumPostDeletedHandler}
+                    postCommentSubmitted={this.onForumPostRespondedHandler}
                 />;
                 break;
             default:

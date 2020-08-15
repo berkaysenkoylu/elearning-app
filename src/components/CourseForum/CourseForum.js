@@ -29,11 +29,10 @@ const CourseForum = (props) => {
 
     // console.log(props.forumData)
 
-    // useEffect(() => {
-    //     console.log(props.forumData);
-
-    //     setCourseForumData(props.forumData);
-    // }, [props.forumData]);
+    useEffect(() => {
+        if (selectedPost !== null)
+            setSelectedPost(props.forumData.posts.find(post => post._id === selectedPost._id))
+    }, [props.forumData.posts, selectedPost]);
 
     useEffect(() => {
         // Initial state
@@ -151,6 +150,7 @@ const CourseForum = (props) => {
             onBackButtonPressed={onBackButtonPressedHandler}
             postDeleted={onPostDeleted}
             postEdited={onPostEdit}
+            postCommentSubmit={props.postCommentSubmitted}
         />;
 
     return (
