@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 
 import classes from './Course.module.scss';
+import Loader from '../../components/Loader/Loader';
 import axiosCourse from '../../axiosUtility/axios-course';
 import axiosForum from '../../axiosUtility/axios-forum';
 import axiosPost from '../../axiosUtility/axios-post';
@@ -28,6 +29,7 @@ class Course extends Component {
             icon: 'bubbles2',
             active: false
         }],
+        isLoading: false,
         courseData: {},
         courseForum: {},
         currentWeek: 0,
@@ -39,7 +41,13 @@ class Course extends Component {
     }
 
     componentDidMount() {
+        this.setState({
+            isLoading: true
+        });
         axiosCourse.get('/' + this.props.match.params.id).then(response => {
+            this.setState({
+                isLoading: false
+            });
             return response.data.course;
         }).then(fetchedCourse => {
             this.setState({
@@ -263,20 +271,34 @@ class Course extends Component {
                 break;
         }
 
+        let coursePageContent = (
+            <span className={classes.Course__Loader}>
+                <Loader strokeWidth={4} />
+            </span>
+        );
+
+        if (!this.state.isLoading) {
+            coursePageContent = (
+                <Fragment>
+                    <h1 className={classes.Course__Title}>
+                        {courseName}
+                    </h1>
+
+                    <CourseNavigation
+                        navItemList={this.state.courseNavItems}
+                        navigationItemClicked={this.onNavigationItemClickedHandler}
+                    />
+
+                    {pageContent}
+                </Fragment>
+            );
+        }
+
         return (
-            <Fragment>
-                <h1 className={classes.Course__Title}>
-                    {courseName}
-                </h1>
-
-                <CourseNavigation
-                    navItemList={this.state.courseNavItems}
-                    navigationItemClicked={this.onNavigationItemClickedHandler}
-                />
-
-                {pageContent}
-            </Fragment>
-        )
+            <>
+                {coursePageContent}
+            </>
+        );
     }
 }
 
