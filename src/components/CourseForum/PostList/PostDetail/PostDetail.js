@@ -38,7 +38,8 @@ const PostDetail = (props) => {
                             clicked={() => props.postDeleted(postData._id)}>Delete</Button>
                         <Button
                             btnType='BtnSecondary'
-                            btnSize='BtnSmall'>Edit</Button>
+                            btnSize='BtnSmall'
+                            clicked={() => props.postEdited(postData._id)}>Edit</Button>
                     </> : null }
                     
                     <Button

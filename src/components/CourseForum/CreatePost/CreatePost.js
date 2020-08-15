@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 import classes from './CreatePost.module.scss';
 import Input from '../../UI/Input/Input';
@@ -38,6 +38,45 @@ const CreatePost = (props) => {
     });
     const [isFormValid, setIsFormValid] = useState(false);
 
+    const prePopulateFormFields = useCallback(() => {
+        let prePopulatedFormFields = {};
+
+        // Prepopulate the title
+        const copiedTitle = { ...formControls.title };
+
+        copiedTitle.value = props.editFormFields['title'];
+        let isTitleValid = checkValidity(props.editFormFields['title'], copiedTitle.validation);
+        copiedTitle.valid = isTitleValid;
+        copiedTitle.touched = true;
+
+        prePopulatedFormFields['title'] = {...copiedTitle};
+
+        // Prepopulate the content
+        const copiedContent = { ...formControls.content };
+
+        copiedContent.value = props.editFormFields['content'];
+        let isContentValid = checkValidity(props.editFormFields['content'], copiedContent.validation);
+        copiedContent.valid = isContentValid;
+        copiedContent.touched = true;
+
+        prePopulatedFormFields['content'] = {...copiedContent};
+
+        let formIsValid = true;
+        Object.keys(prePopulatedFormFields).forEach(formControl => {
+            formIsValid = formIsValid && prePopulatedFormFields[formControl].valid;
+        });
+
+        setIsFormValid(formIsValid);
+        setFormControls(prePopulatedFormFields);
+    }, [props.editFormFields, formControls.title, formControls.content]);
+
+    useEffect(() => {
+        if (props.isEditMode) {
+            prePopulateFormFields();
+        }
+        // eslint-disable-next-line
+    }, [props.isEditMode]);
+
     const inputChangedHandler = (event, inputName) => {
         event.preventDefault();
 
@@ -72,6 +111,15 @@ const CreatePost = (props) => {
         props.createPost(formData);
     }
 
+    const updatePostHandler = () => {
+        let formData = {
+            title: formControls.title.value,
+            content: formControls.content.value
+        };
+
+        props.editPost(formData);
+    }
+
     let formFields = Object.keys(formControls).map((formControl, i) => {
         return <Input
             key={i}
@@ -89,7 +137,7 @@ const CreatePost = (props) => {
         <section className={classes.CreatePost}>
             <header className={classes.CreatePost__Header}>
                 <h2>
-                    Create a Post
+                    {!props.isEditMode ? 'Create a Post' : 'Edit the Post'}
                 </h2>
             </header>
 
@@ -99,10 +147,14 @@ const CreatePost = (props) => {
                 </div>
 
                 <div className={classes.CreatePost__Cta}>
-                    <Button
+                    {!props.isEditMode ? <Button
                         btnType="BtnPrimary"
                         disabled={!isFormValid}
-                        clicked={createPostHandler}>Create</Button>
+                        clicked={createPostHandler}>Create</Button> :
+                        <Button
+                        btnType="BtnPrimary"
+                        disabled={!isFormValid}
+                        clicked={updatePostHandler}>Update</Button>}
                     <Button
                         btnType="BtnDanger"
                         clicked={props.createPostCancel}>Cancel</Button>

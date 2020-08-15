@@ -127,10 +127,10 @@ class Course extends Component {
             headers: {
                 Authorization: 'Bearer ' + localStorage.getItem('token')
             }
-        }
+        };
 
         axiosPost.post('', formData, config).then(result => {
-            console.log(result);
+            console.log(result); // TODO remove
 
             return axiosForum.get('/course/' + this.state.courseData._id);
         }).then(newForumResponse => {
@@ -141,20 +141,57 @@ class Course extends Component {
         });
     }
 
-    onForumPostDeletedHandler = (postId) => {
-        // TODO: ADD BACKEND CONNECTION
-        const copiedCourseForum = { ...this.state.courseForum };
+    onForumPostEditedHandler = (data) => {
+        const formData = {
+            title: data.title,
+            content: data.content
+        };
 
-        let copiedCourseForumPosts = copiedCourseForum.posts.filter(post => post._id !== postId);
-
-        copiedCourseForum.posts = [...copiedCourseForumPosts];
-
-        this.setState(prevState => {
-            return {
-                ...prevState,
-                courseForum: copiedCourseForum
+        let config = {
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('token')
             }
+        };
+
+        axiosPost.put(`/${data.postId}`, formData, config).then(result => {
+            console.log(result); // TODO remove
+
+            return axiosForum.get('/course/' + this.state.courseData._id);
+        }).then(newForumResponse => {
+            this.setState({
+                courseForum: newForumResponse.data.forum,
+                isOnCreatePostMode: false
+            });
+        }).catch(error => {
+            console.log(error);
         });
+    }
+
+    onForumPostDeletedHandler = (postId) => {
+        let config = {
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('token')
+            }
+        };
+
+        axiosPost.delete(`/${postId}`, config).then(result => {
+            console.log(result);
+
+            const copiedCourseForum = { ...this.state.courseForum };
+
+            let copiedCourseForumPosts = copiedCourseForum.posts.filter(post => post._id !== postId);
+
+            copiedCourseForum.posts = [...copiedCourseForumPosts];
+
+            this.setState(prevState => {
+                return {
+                    ...prevState,
+                    courseForum: copiedCourseForum
+                }
+            });
+        }).catch(error => {
+            console.log(error);
+        });        
     }
 
     render() {
@@ -198,6 +235,7 @@ class Course extends Component {
                     toggleCreatePostMode={this.onCreatePostModeToggledHandler}
                     forumData={this.state.courseForum}
                     forumPostCreated={this.onForumPostCreatedHandler}
+                    forumPostEdited={this.onForumPostEditedHandler}
                     onPostDeleted={this.onForumPostDeletedHandler}
                 />;
                 break;

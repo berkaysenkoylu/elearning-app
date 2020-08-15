@@ -12,7 +12,11 @@ const Paginator = (props) => {
     const [pageCount, setPageCount] = useState(Math.floor((props.maxItemCount / props.itemPerPage[0])) + ((props.maxItemCount % props.itemPerPage[0] === 0) ? 0 : 1));
     
     useEffect(() => {
-        setPageCount(Math.floor((props.maxItemCount / props.itemPerPage[0])) + ((props.maxItemCount % props.itemPerPage[0] === 0) ? 0 : 1))
+        setCurrentPage(props.currentPage);
+    }, [props.currentPage]);
+    
+    useEffect(() => {
+        setPageCount(Math.floor((props.maxItemCount / props.itemPerPage[0])) + ((props.maxItemCount % props.itemPerPage[0] === 0) ? 0 : 1));
     }, [props.maxItemCount, props.itemPerPage]);
 
     const onValueSelectedHandler = (value) => {

@@ -20,6 +20,8 @@ const CourseForum = (props) => {
     });
     const [showPostDetail, setShowPostDetail] = useState(false);
     const [selectedPost, setSelectedPost] = useState(null);
+    const [isPostEditMode, setIsPostEditMode] = useState(false);
+    const [postToEdit, setPostToEdit] = useState(null);
 
     // const forumData = require('../../assets/course_forum_poc.json');
     // const forumPostList = (forumData || {}).postList || [];
@@ -80,6 +82,8 @@ const CourseForum = (props) => {
     }
 
     const onCreatePostPressedHandler = () => {
+        setPostToEdit(null);
+        setIsPostEditMode(false);
         props.toggleCreatePostMode(true);
     }
 
@@ -91,11 +95,28 @@ const CourseForum = (props) => {
         props.forumPostCreated(data);
     }
 
+    const onEditPostHandler = (data) => {
+        props.forumPostEdited({ ...data, postId: postToEdit._id });
+    }
+
     const onPostDeleted = (postId) => {
         props.onPostDeleted(postId);
 
         setSelectedPost(null);
         setShowPostDetail(false);
+    }
+
+    const onPostEdit = (postId) => {
+        let editPost = forumPostList.find(post => post._id === postId);
+
+        // TODO: I may have to change this
+        if (typeof editPost !== 'undefined') {
+            setSelectedPost(null);
+            setShowPostDetail(false);
+            setPostToEdit(editPost);
+            setIsPostEditMode(true);
+            props.toggleCreatePostMode(true);
+        }
     }
 
     let pageContent = !showPostDetail ? (<>
@@ -120,12 +141,16 @@ const CourseForum = (props) => {
         </> : <CreatePost 
             createPost={onCreatePostHandler}
             createPostCancel={onCreatePostCancelledHandler}
+            isEditMode={isPostEditMode}
+            editFormFields={postToEdit}
+            editPost={onEditPostHandler}
         />}
         </>) : 
         <PostDetail
             postData={selectedPost}
             onBackButtonPressed={onBackButtonPressedHandler}
             postDeleted={onPostDeleted}
+            postEdited={onPostEdit}
         />;
 
     return (
