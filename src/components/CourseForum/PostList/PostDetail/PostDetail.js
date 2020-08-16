@@ -99,23 +99,25 @@ const PostDetail = (props) => {
                         {props.postData.content}
                     </div>
 
-                    <div className={classes.PostDetail__Cta}>
-                        { props.userId === props.postData.author._id ? <>
+                    {props.isAuth ? 
+                        <div className={classes.PostDetail__Cta}>
+                            { props.userId === props.postData.author._id ? <>
+                                <Button
+                                    btnType='BtnDanger'
+                                    btnSize='BtnSmall'
+                                    clicked={() => props.postDeleted(props.postData._id)}>Delete</Button>
+                                <Button
+                                    btnType='BtnSecondary'
+                                    btnSize='BtnSmall'
+                                    clicked={() => props.postEdited(props.postData._id)}>Edit</Button>
+                            </> : null }
+                            
                             <Button
-                                btnType='BtnDanger'
+                                btnType='BtnPrimary'
                                 btnSize='BtnSmall'
-                                clicked={() => props.postDeleted(props.postData._id)}>Delete</Button>
-                            <Button
-                                btnType='BtnSecondary'
-                                btnSize='BtnSmall'
-                                clicked={() => props.postEdited(props.postData._id)}>Edit</Button>
-                        </> : null }
-                        
-                        <Button
-                            btnType='BtnPrimary'
-                            btnSize='BtnSmall'
-                            clicked={() => togglePostComment(true)}>Reply</Button>
-                    </div>
+                                clicked={() => togglePostComment(true)}>Reply</Button>
+                        </div>
+                    : null}
                 </div>
 
                 <div className={classes.PostComments}>
@@ -145,6 +147,7 @@ const PostDetail = (props) => {
 
 const mapStateToProps = state => {
     return {
+        isAuth: state.isAuth,
         userId: state.userId
     }
 }
