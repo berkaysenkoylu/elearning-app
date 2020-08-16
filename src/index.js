@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
@@ -17,9 +17,9 @@ const store = createStore(authReducer, composeEnhancer(applyMiddleware(thunk)));
 
 const app = (
     <Provider store={store}>
-        <BrowserRouter>
+        <HashRouter basename="elearning-app">
             <App />
-        </BrowserRouter>
+        </HashRouter>
     </Provider>
 );
 
