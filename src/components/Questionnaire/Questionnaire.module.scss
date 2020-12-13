@@ -1,0 +1,59 @@
+@import "../../variables";
+
+.Questionnaire {
+    height: 100%;
+    width: 100%;
+    position: relative;
+
+    &__Exit {
+        position: absolute;
+        top: 0;
+        right: 0;
+
+        button {
+            padding: 1rem !important;
+        }
+
+        button:hover {
+            span {
+                &::before {
+                    transform: translate(-50%, -50%) rotateZ(135deg);
+                }
+
+                &::after {
+                    transform: translate(-50%, -50%) rotateZ(-135deg);
+                }
+            }
+        }
+
+        span {
+            display: block;
+            position: relative;
+            width: 3rem;
+            height: 3rem;
+
+            &::before, &::after {
+                content: '';
+                position: absolute;
+                background-color: $color-white;
+                transition: transform 0.2s ease-out;
+            }
+
+            &::before {
+                width: 2.5rem;
+                height: 0.5rem;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%) rotateZ(-45deg);
+            }
+
+            &::after {
+                width: 2.5rem;
+                height: 0.5rem;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%) rotateZ(45deg);
+            }
+        }
+    }
+}

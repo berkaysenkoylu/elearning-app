@@ -1,0 +1,13 @@
+@import "../../../variables";
+
+.Content {
+    margin: 5rem 0;
+    height: calc(100% - 10rem);
+
+    &__Cta {
+        position: absolute;
+        bottom: 0.5rem;
+        right: 50%;
+        transform: translateX(50%);
+    }
+}

@@ -1,0 +1,86 @@
+{
+    "questionnaires": [
+        {
+            "id": "1234abcd",
+            "name": "Temel Pediyatrik Deformite Anketi",
+            "numberOfQuestions": 6,
+            "finishedUsers": [],
+            "questions": [
+                {
+                    "text": "Adınız?",
+                    "type": "text",
+                    "questionNumber": 1,
+                    "value": "",
+                    "required": true
+                },
+                {
+                    "text": "Yaşınız?",
+                    "type": "number",
+                    "questionNumber": 2,
+                    "value": 0,
+                    "required": true
+                },
+                {
+                    "text": "Mesleğiniz?",
+                    "type": "text",
+                    "questionNumber": 3,
+                    "value": "",
+                    "required": true
+                },
+                {
+                    "text": "Bla bla tekniği günlük profesyonel yaşamınızda ne sıklıkla kullanıyorsunuz?",
+                    "type": "multiple-choice",
+                    "questionNumber": 4,
+                    "choices": [
+                        {
+                            "text": "Hiç kullanmam",
+                            "isSelected": false
+                        },
+                        {
+                            "text": "Nadiren kullanırım",
+                            "isSelected": false
+                        },
+                        {
+                            "text": "Bazen kullanırım",
+                            "isSelected": false
+                        },
+                        {
+                            "text": "Hep kullanırım",
+                            "isSelected": false
+                        }
+                    ],
+                    "required": true
+                },
+                {
+                    "text": "Kendinizi bla bla yönünden nasıl derecelendirirsiniz?",
+                    "type": "slider",
+                    "sliderStep": 5,
+                    "questionNumber": 5,
+                    "value": 0,
+                    "required": true
+                },
+                {
+                    "text": "Kendinizi aşağıdaki yönlerden nasıl derecelendirirsiniz?",
+                    "type": "slider-combination",
+                    "sliderStep": 10,
+                    "subTexts": [
+                        {
+                            "text": "Kendimi yetersiz görüyorum",
+                            "value": 0
+                        },
+                        {
+                            "text": "Kurs sonunda daha yeterli olacağıma inanıyorum",
+                            "value": 0
+                        },
+                        {
+                            "text": "Kurs sonunda daha fazla kullanacağıma inanıyorum",
+                            "value": 0
+                        }
+                    ],
+                    "questionNumber": 6,
+                    "required": true
+                }
+            ]
+        }
+    ]
+}

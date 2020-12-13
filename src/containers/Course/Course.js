@@ -11,6 +11,7 @@ import CourseForum from '../../components/CourseForum/CourseForum';
 import CourseMenu from '../../components/CourseMenu/CourseMenu';
 import CourseSection from '../../components/CourseSection/CourseSection';
 import Quiz from '../../components/Quiz/QuizContainer';
+import Questionnaire from '../../components/Questionnaire/Questionnaire';
 
 class Course extends Component {
     state = {
@@ -37,7 +38,8 @@ class Course extends Component {
         currentPage: 0,
         isOnMainMenu: true,
         isOnQuizMode: false,
-        isOnCreatePostMode: false
+        isOnCreatePostMode: false,
+        isOnQuestionnaireMode: false
     }
 
     componentDidMount() {
@@ -56,8 +58,6 @@ class Course extends Component {
 
             return axiosForum.get('/course/' + fetchedCourse._id);
         }).then(forumResp => {
-            // console.log(forumResp.data.forum)
-
             this.setState({
                 courseForum: forumResp.data.forum
             });
@@ -66,13 +66,6 @@ class Course extends Component {
 
             this.props.history.push('/courses');
         });
-
-        // TODO: REMOVE
-        // const content = require('../../assets/course_poc.json');
-
-        // this.setState({
-        //     courseData: content
-        // });
     }
 
     onNavigationItemClickedHandler = (index) => {
@@ -93,17 +86,30 @@ class Course extends Component {
         });
     }
 
-    onQuizModeActivatedHandler = () => {
-        this.setState({
-            isOnMainMenu: false,
-            isOnQuizMode: true
-        });
+    onCourseActivityEnabledHandler = (type) => {
+        switch(type) {
+            case 'quiz':
+                this.setState({
+                    isOnMainMenu: false,
+                    isOnQuizMode: true
+                });
+                break;
+            case 'questionnaire':
+                this.setState({
+                    isOnMainMenu: false,
+                    isOnQuestionnaireMode: true
+                });
+                break;
+            default:
+                break;
+        }
     }
 
-    onQuizExitedHandler = () => {
+    onCourseActivityExitedHandler = () => {
         this.setState({
             isOnMainMenu: true,
-            isOnQuizMode: false
+            isOnQuizMode: false,
+            isOnQuestionnaireMode: false
         });
     }
 
@@ -242,16 +248,21 @@ class Course extends Component {
                                 courseIntro={courseIntro}
                                 onSectionSelect={this.onSectionSelectedHandler}
                                 courseQuiz={courseQuiz._id}
-                                onQuizModeActivated={this.onQuizModeActivatedHandler}
+                                onCourseActivityEnabled={this.onCourseActivityEnabledHandler}
                             />
                         : !this.state.isOnQuizMode ?
-                            <CourseSection
-                                onBackToMainMenu={this.onBackToMainMenuHandler}
-                                sectionData={section}
-                            /> :
+                            !this.state.isOnQuestionnaireMode ?
+                                <CourseSection
+                                    onBackToMainMenu={this.onBackToMainMenuHandler}
+                                    sectionData={section}
+                                /> :
+                                <Questionnaire
+                                    onQuestionnaireExited={this.onCourseActivityExitedHandler}
+                                    />
+                            :
                             <Quiz
                                 quizData={courseQuiz}
-                                onQuizExited={this.onQuizExitedHandler} />
+                                onQuizExited={this.onCourseActivityExitedHandler} />
                         }
                     </div>
                 );

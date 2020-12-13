@@ -4,13 +4,19 @@ import classes from './CourseMenu.module.scss';
 import Button from '../UI/Button/Button';
 
 const CourseMenu = (props) => {
+
+    const onActivityEnabled = (type) => {
+        props.onCourseActivityEnabled(type);
+    }
+
     return (
         <Fragment>
             <div className={classes.CourseMenu__Intro} dangerouslySetInnerHTML={{__html: props.courseIntro}}></div>
 
             <div className={classes.CourseMenu__Misc}>
                 {typeof props.courseQuiz !== 'undefined' ?
-                    <Button clicked={props.onQuizModeActivated}>Quiz</Button> : null}
+                    <Button clicked={() => onActivityEnabled('quiz')}>Quiz</Button> : null}
+                <Button clicked={() => onActivityEnabled('questionnaire')}>Questionnaire</Button>
             </div>
 
             <div className={classes.CourseMenu__Cta}>

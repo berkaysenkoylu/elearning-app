@@ -9,6 +9,10 @@
 
     &__Misc {
         margin-top: 10%;
+
+        & > *:not(:last-child) {
+            margin-right: 1rem;
+        }
     }
 
     &__Cta {
