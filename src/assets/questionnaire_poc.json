@@ -9,20 +9,23 @@
                 {
                     "text": "Adınız?",
                     "type": "text",
+                    "elementType": "input",
                     "questionNumber": 1,
                     "value": "",
                     "required": true
                 },
                 {
                     "text": "Yaşınız?",
-                    "type": "number",
+                    "type": "text",
+                    "elementType": "input",
                     "questionNumber": 2,
-                    "value": 0,
+                    "value": "",
                     "required": true
                 },
                 {
                     "text": "Mesleğiniz?",
                     "type": "text",
+                    "elementType": "input",
                     "questionNumber": 3,
                     "value": "",
                     "required": true
@@ -30,6 +33,7 @@
                 {
                     "text": "Bla bla tekniği günlük profesyonel yaşamınızda ne sıklıkla kullanıyorsunuz?",
                     "type": "multiple-choice",
+                    "elementType": "radio",
                     "questionNumber": 4,
                     "choices": [
                         {
@@ -54,6 +58,7 @@
                 {
                     "text": "Kendinizi bla bla yönünden nasıl derecelendirirsiniz?",
                     "type": "slider",
+                    "elementType": "slider",
                     "sliderStep": 5,
                     "questionNumber": 5,
                     "value": 0,
@@ -62,6 +67,7 @@
                 {
                     "text": "Kendinizi aşağıdaki yönlerden nasıl derecelendirirsiniz?",
                     "type": "slider-combination",
+                    "elementType": "slider-comb",
                     "sliderStep": 10,
                     "subTexts": [
                         {
