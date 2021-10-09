@@ -12,10 +12,43 @@ const Content = (props) => {
         setQuestionnaireQuestions(props.questions);
     }, [props.questions]);
 
+    const onQuestionFinishedHandler = (index, answerData) => {
+        // console.log(`Question #${index}: ${answerData.answer} and its validity status: ${answerData.valid}`);
+
+        // console.log(questionnaireQuestions[index])
+
+        let copiedQuestionArr = [...questionnaireQuestions];
+        let copiedQuestionData = { ...copiedQuestionArr[index] };
+        let questionElementType = copiedQuestionData.elementType || '';
+
+        switch (questionElementType) {
+            case 'input':
+                copiedQuestionData.value = answerData.answer;
+                break;
+            default:
+                throw new Error('There is no such type of an element!');
+        }
+
+        copiedQuestionData.valid = answerData.valid;
+
+        copiedQuestionArr[index] = copiedQuestionData;
+
+        setQuestionnaireQuestions(copiedQuestionArr);
+
+        let isValid = true;
+
+        copiedQuestionArr.forEach(answeredQuestion => {
+            isValid = isValid && answeredQuestion.valid;
+        });
+
+        setIsFormValid(isValid);
+    }
+
     let pageContent = questionnaireQuestions.map((question, i) => {
         return <Question
             key={i}
             data={question}
+            questionAnswerFinish={(answer) => onQuestionFinishedHandler(i, answer)}
         />;
     });
 

@@ -1,0 +1,9 @@
+@import '../../../../variables';
+
+.MultipleChoiceQuestion {
+    font-size: $default-font-size;
+
+    &__Text {
+        margin-bottom: 1.5rem;
+    }
+}

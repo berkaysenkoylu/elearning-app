@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 
 // import classes from './Question.module.scss';
 import Input from '../../UI/Input/Input';
+import MultipleChoiceQuestion from './MultipleChoiceQuestion/MultipleChoiceQuestion';
 import updateQuestionaireState from '../../../utility/updateQuestionaireState';
+import checkValidity from '../../../utility/formValidation';
 
 const Question = (props) => {
     const [questionConfig, setQuestionConfig] = useState({
@@ -11,7 +13,7 @@ const Question = (props) => {
             text: '',
             type: '',
             elementType: '',
-            required: true
+            validation: {}
         },
         specificConfig: {
             value: '',
@@ -28,7 +30,30 @@ const Question = (props) => {
     }, [props.data]);
 
     const onInputChanged = (event) => {
-        console.log(event.target.value);
+        let inputValue = event.target.value;
+        let validationRules = ((questionConfig || {}).commonConfig ||{}).validation || {};
+        let validity = checkValidity(inputValue, validationRules);
+        let copiedQuestionState = { ...questionConfig };
+        let copiedQuestionSpecificConfig = { ...copiedQuestionState.specificConfig };
+
+        copiedQuestionSpecificConfig.value = inputValue;
+
+        copiedQuestionState.specificConfig = copiedQuestionSpecificConfig;
+
+        setIsValid(validity);
+        setIsTouched(true);
+        setQuestionConfig({...copiedQuestionState});
+    }
+
+    const onInputFocusLostHandler = () => {
+        props.questionAnswerFinish({
+            answer: ((questionConfig || {}).specificConfig ||{}).value || '',
+            valid: isValid
+        });
+    }
+
+    const onMultipleChoiceSelectedHandler = (index) => {
+        console.log(index)
     }
 
     let content = null;
@@ -47,9 +72,19 @@ const Question = (props) => {
                 touched={isTouched}
                 isValid={isValid}
                 changed={(event) => onInputChanged(event)}
+                focusLost={onInputFocusLostHandler}
             />;
             break;
         case 'multiple-choice':
+            let questionData = {
+                questionNumber: questionConfig.commonConfig.questionNumber,
+                text: questionConfig.commonConfig.text,
+                choices: questionConfig.specificConfig.choices
+            }
+            content = <MultipleChoiceQuestion
+                questionData={questionData}
+                answerSelected={onMultipleChoiceSelectedHandler}
+            />;
             break;
         case 'slider':
             break;

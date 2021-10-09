@@ -10,7 +10,12 @@ const Questionnaire = (props) => {
 
     // TODO: CHANGE
     const content = require('../../assets/questionnaire_poc.json');
-    const questionnaireQuestions = (((content || {}).questionnaires || [])[0] || {}).questions || [];
+    const questionnaireQuestions = ((((content || {}).questionnaires || [])[0] || {}).questions || []).map(question => {
+        return {
+            valid: false,
+            ...question
+        };
+    });
     // ~
 
     const onQuestionnaireStartedHandler = () => {

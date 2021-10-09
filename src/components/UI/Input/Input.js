@@ -24,6 +24,7 @@ const Input = (props) => {
                 {...props.elementConfig}
                 value={props.value} 
                 onChange={props.changed}
+                onBlur={props.focusLost}
             />;
             break;
         case 'textarea':

@@ -5,7 +5,7 @@ const updateQuestionaireState = (data) => {
             text: data.text || '',
             type: data.type || '',
             elementType: data.elementType || '',
-            required: data.required || true
+            validation: data.validation || {}
         },
         specificConfig: {
             value: '',
