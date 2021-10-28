@@ -1,0 +1,129 @@
+@import '../../../../../variables';
+
+.CourseCard {
+    background-color: $color-grey-light-0;
+    border-radius: 3px;
+
+    display: grid;
+    grid-template-rows: 20rem 12rem 5rem;
+    grid-template-columns: repeat(2, 1fr);
+    grid-row-gap: 1.5rem;
+
+    &__ImgSection {
+        width: 100%;
+
+        grid-row: 1 / 2;
+        grid-column: 1 / -1;
+        z-index: 1;
+
+        background-size: cover;
+        background-position: 50% 50%;
+        height: 20rem;
+        background-blend-mode: screen;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+    }
+
+    &__Name {
+        background-color: $color-primary-light-2;
+        font-size: $default-font-size;
+        text-align: center;
+        font-weight: 400;
+        color: #fff;
+        padding: 1.25rem;
+        width: 80%;
+        transform: translateY(50%);
+
+        grid-column: 1 / -1;
+        grid-row: 1 / 2;
+        justify-self: center;
+        align-self: end;
+        z-index: 3;
+    }
+
+    &__Body {
+        // margin-top: 1rem;
+        padding: 1.5rem 0 0 1rem;
+        grid-column: 1 / -1;
+        grid-row: 2 / 3;
+        list-style: none;
+
+        h5 {
+            font-size: $small-header-font-size;
+            display: flex;
+            align-content: center;
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            font-size: $default-font-size;
+        }
+
+        &__Icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            margin-right: 0.5rem;
+            fill: $color-black;
+        }
+    }
+
+    &__Cta {
+        grid-column: 1 / -1;
+        grid-row: 3 / 4;
+
+        align-self: end;
+        padding: 1rem;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+
+        & > button:not(:last-child) {
+            margin-right: 1rem;
+        }
+    }
+}
+
+
+// .home {
+
+//     &__like {
+//         grid-row: 1 / 2;
+//         grid-column: 2 / 3;
+
+//         fill: $color-primary;
+//         height: 2.5rem;
+//         width: 2.5rem;
+//         z-index: 2;
+//         justify-self: end;
+//         margin: 1rem;
+//     }
+
+
+
+//     &__location,
+//     &__rooms {
+//         margin-top: 2.5rem;
+//     }
+
+//     &__location,
+//     &__rooms,
+//     &__area,
+//     &__price {
+//         display: flex;
+//         align-items: center;
+//         font-size: 1.5rem;
+//         margin-left: 2rem;
+
+//         svg {
+//             fill: $color-primary;
+//             height: 2rem;
+//             width: 2rem;
+//             margin-right: 1rem;
+//         }
+//     }
+
+//     &__btn {
+//         grid-column: 1 / -1;
+//     }
+// }

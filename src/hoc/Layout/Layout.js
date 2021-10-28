@@ -10,7 +10,7 @@ const Layout = (props) => {
 
     return (
         <Fragment>
-            <Toolbar isAuth={props.isAuthenticated} />
+            <Toolbar isAuth={props.isAuthenticated} userStatus={props.userStatus} />
 
             <div style={testStyle}>
                 {props.children}
@@ -21,7 +21,8 @@ const Layout = (props) => {
 
 const mapStateToProps = state => {
     return {
-        isAuthenticated: state.isAuth
+        isAuthenticated: state.isAuth,
+        userStatus: state.userStatus
     }
 }
 

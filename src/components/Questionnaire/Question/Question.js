@@ -80,10 +80,10 @@ const Question = (props) => {
                 questionNumber: questionConfig.commonConfig.questionNumber,
                 text: questionConfig.commonConfig.text,
                 choices: questionConfig.specificConfig.choices
-            }
+            };
             content = <MultipleChoiceQuestion
                 questionData={questionData}
-                answerSelected={onMultipleChoiceSelectedHandler}
+                answerSelected={(answerIndex) => onMultipleChoiceSelectedHandler(answerIndex, questionData.questionNumber)}
             />;
             break;
         case 'slider':

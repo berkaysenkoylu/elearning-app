@@ -44,7 +44,7 @@ const Paginator = (props) => {
 
     return (
         <div className={classes.Paginator}>
-            <SelectInput itemPerPageList={props.itemPerPage} valueSelected={onValueSelectedHandler} />
+            <SelectInput label={'Items per page: '} itemPerPageList={props.itemPerPage} valueSelected={onValueSelectedHandler} />
             
             <PaginationRange 
                 itemPerPage={itemPerPage}

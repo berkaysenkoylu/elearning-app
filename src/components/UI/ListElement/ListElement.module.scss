@@ -1,0 +1,16 @@
+@import '../../../variables';
+
+.ListElement {
+    display: flex;
+    align-items: center;
+
+    &::before {
+        content: '';
+        display: inline-block;
+        width: 1.5rem;
+        height: 1.5rem;
+        background-color: $color-black;
+        clip-path: polygon(35% 50%, 0 0, 100% 50%, 0% 100%);
+        margin-right: 1rem;
+    }
+}

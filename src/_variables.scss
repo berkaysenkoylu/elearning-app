@@ -40,11 +40,32 @@ $color-misc-7: #6f5fff;
 $colors: $color-misc-1, $color-misc-3, $color-misc-6;
 $colors-active: $color-misc-2, $color-misc-4, $color-misc-5;
 
+// Variables
+$default-font-size: 1.6rem;
+$medium-font-size: 2.4rem;
+$header-font-size: 3rem;
+$page-header-font-size: 6rem;
+$fancy-font: 'Fredoka One', cursive;
+
 // Misc colors
 $color-white: #fff;
 $color-black: #000;
 $color-gray-dark:#4b4b4b;
 $color-gray-light: #eee;
+$color-grey-light-0: #e0e0e0;
+$color-grey-light-1: #f9f7f6;
+$color-grey-light-2: #aaa;
+$color-grey-dark-1: #54483A;
+$color-grey-dark-2: #6D5D4B;
+
+$green: #008744;
+$blue: #0057e7;
+$red: #d62d20;
+$yellow: #ffa700;
+$white: #eee;
+$black: #000;
+$gray: #ccc;
+$gray-dark: #aaa;
 
 // SHADOWS
 $shadow-dark: 0 2rem 6rem rgba(0, 0, 0, 0.3);

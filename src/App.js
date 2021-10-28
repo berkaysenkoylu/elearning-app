@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { connect, useDispatch } from 'react-redux';
 
+import Administration from './components/Admin/Administration';
 import Layout from './hoc/Layout/Layout';
 import Home from './components/Home/Home';
 import Authentication from './containers/Authentication/Authentication';
@@ -24,6 +25,7 @@ const App = (props) => {
 			<Route path='/contact' render={() => <div>CONTACT COMPONENT</div>} />
 			<Route path='/about' render={() => <div>ABOUT COMPONENT</div>} />
 			<Route path='/courses' component={CourseContainer} />
+            {props.userStatus === 'admin' ? <Route path='/administration' component={Administration} /> : null}
 			<Route path='/' exact component={Home} />
 			<Redirect to='/' />
 		</Switch>
@@ -38,7 +40,8 @@ const App = (props) => {
 
 const mapStateToProps = state => {
 	return {
-		isAuthenticated: state.isAuth
+		isAuthenticated: state.isAuth,
+        userStatus: state.userStatus
 	};
 };
 

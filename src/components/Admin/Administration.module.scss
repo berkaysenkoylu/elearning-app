@@ -1,0 +1,11 @@
+@import "../../variables";
+
+.Administration {
+    min-height: calc(100vh - 5rem);
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: repeat(5, minmax(min-content, 1fr));
+    grid-template-areas: "item1 item2 item2 item2 item2";
+    grid-gap: 3px;
+    padding-right: 2rem;
+}

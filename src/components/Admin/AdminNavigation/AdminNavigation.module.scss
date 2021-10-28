@@ -1,0 +1,45 @@
+@import "../../../variables";
+
+.AdminNavigation {
+    padding: 2rem 0 0 2rem;
+    grid-area: item1;
+    display: flex;
+    flex-direction: column;
+    font-size: $default-font-size;
+    background-image: linear-gradient(to bottom right, $color-tertiary 0%, $color-tertiary 50%, $color-white);
+
+    // TODO: Move it to the component later
+    & > div:not(:last-child) {
+        margin-bottom: 1rem;
+    }
+
+    &__Item {
+        
+
+        header {
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        &__Menu {
+            // visibility: hidden;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.15s ease-out;
+            // height: 0;
+
+            // animation: scaleDown 0.2s ease-out;
+            // animation-fill-mode: forwards;
+
+            &__Opened {
+                // visibility: visible;
+                max-height: 100rem;
+                transition: max-height 0.25s ease-in;
+                // height: 100%;
+
+                // animation: scaleUp 0.2s ease-out;
+                // animation-fill-mode: forwards;
+            }
+        }
+    }
+}

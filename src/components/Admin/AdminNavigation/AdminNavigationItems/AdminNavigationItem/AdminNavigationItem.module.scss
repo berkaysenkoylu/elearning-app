@@ -1,0 +1,28 @@
+@import "../../../../../variables";
+
+.AdminNavigationItem {
+    &:not(:last-child) {
+        margin-right: 1.5rem;
+    }
+
+    &:last-child {
+        margin-left: auto;
+    }
+}
+
+.Link {
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+    color: $color-white;
+    
+    &:hover {
+        color: $color-complement-light-1;
+    }
+}
+
+.ActiveLink {
+    &:link,
+    &:visited {
+        color: $color-complement;
+    }
+}
