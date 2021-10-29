@@ -12,7 +12,7 @@ const CourseList = (props) => {
     useEffect(() => {
         setIsLoading(true);
         axiosCourse.get('').then(response => {
-            setCourseList(response.data.courseList);
+            setCourseList(response.data.courseList.filter(course => course.isPublished));
             setIsLoading(false);
         })
     }, []);

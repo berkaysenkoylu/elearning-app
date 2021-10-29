@@ -15,7 +15,7 @@ const INPUT_TEMPLATE = {
 
 const addInputField = (inputObj, newInputObj) => {
     const copiedInputObj = { ...inputObj };
-    const { type, inputKey, placeholder, label, validation } = newInputObj;
+    const { type, inputKey, placeholder, label, validation, touched, value, valid } = newInputObj;
 
     let newFormControl = { ...INPUT_TEMPLATE };
     let copiedConfig = { ...newFormControl.elementConfig };
@@ -25,6 +25,9 @@ const addInputField = (inputObj, newInputObj) => {
     newFormControl.elementConfig = copiedConfig;
     newFormControl.label = label;
     newFormControl.validation = validation;
+    newFormControl.value = value || '';
+    newFormControl.touched = touched || false;
+    newFormControl.valid = valid || false;
 
     copiedInputObj[inputKey] = newFormControl;
 

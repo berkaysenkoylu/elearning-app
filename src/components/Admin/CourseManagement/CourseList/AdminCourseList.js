@@ -12,7 +12,13 @@ const AdminCourseList = (props) => {
 
             <div className={classes.AdminCourseList__Body}>
                 {(props.courseList || []).map(course => {
-                    return <CourseCard key={course._id} data={course} />
+                    return <CourseCard
+                        key={course._id}
+                        data={course}
+                        courseEdit={() => props.onCourseEdited(course)}
+                        courseDelete={() => props.onCourseDeleted(course._id)}
+                        coursePublish={() => props.onCoursePublished(course._id, !course.isPublished)}
+                    />
                 })}
             </div>
         </section>

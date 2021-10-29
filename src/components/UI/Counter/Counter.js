@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import classes from './Counter.module.scss';
 
 const Counter = (props) => {
     const [counter, setCounter] = useState(0);
+
+    useEffect(() => {
+        setCounter(props.initialValue);
+    }, [props.initialValue]);
 
     const counterChanged = (isIncrement) => {
         let newCounter = counter;

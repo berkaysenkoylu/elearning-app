@@ -10,8 +10,6 @@ const CourseCard = (props) => {
     const landingData = courseData.landing || {};
     const courseName = courseData.name || '';
 
-    console.log(courseData)
-
     return (
         <div className={classes.CourseCard}>
             <span
@@ -39,9 +37,9 @@ const CourseCard = (props) => {
             </div>
 
             <div className={classes.CourseCard__Cta}>
-                <Button btnType='BtnPrimary' btnSize='BtnSmall'>{courseData.isPublished ? 'UnPublish' : 'Publish'}</Button>
-                <Button btnType='BtnSecondary' btnSize='BtnSmall'>Edit</Button>
-                <Button btnType='BtnDanger' btnSize='BtnSmall'>Delete</Button>
+                <Button btnType='BtnPrimary' btnSize='BtnSmall' clicked={props.coursePublish}>{courseData.isPublished ? 'UnPublish' : 'Publish'}</Button>
+                <Button btnType='BtnSecondary' btnSize='BtnSmall' clicked={props.courseEdit}>Edit</Button>
+                <Button btnType='BtnDanger' btnSize='BtnSmall' clicked={props.courseDelete}>Delete</Button>
             </div>
         </div>
     );

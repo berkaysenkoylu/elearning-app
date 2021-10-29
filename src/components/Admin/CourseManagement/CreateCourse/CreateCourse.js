@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useParams } from 'react-router-dom';
 
 import classes from './CreateCourse.module.scss';
 import Input from '../../../UI/Input/Input';
@@ -11,6 +12,7 @@ import addInputField from '../../../../utility/addInputField';
 const QUIZ_LIST = ['Quiz 1', 'Quiz 2', 'Quiz 3', 'Quiz 4'];
 
 const CreateCourse = props => {
+    const params = useParams();
     const [isEditMode, setIsEditMode] = useState(false);
     const [courseDataFormControls, setCourseDataFormControls] = useState({
         name: {
@@ -63,6 +65,66 @@ const CreateCourse = props => {
     const [formValid, setFormValid] = useState(false);
     const [selectedQuiz, setSelectedQuiz] = useState(QUIZ_LIST[0]);
 
+    const populateFormFields = useCallback(() => {
+        const copiedFormControls = { ...courseDataFormControls };
+        const copiedNameFormCtrl = { ...copiedFormControls.name };
+
+        copiedNameFormCtrl.value = (props.savedCourseData || {}).name || '';
+        copiedNameFormCtrl.valid = true;
+        copiedNameFormCtrl.touched = true;
+        copiedFormControls.name = { ...copiedNameFormCtrl };
+
+        const copiedImageFormCtrl = { ...copiedFormControls.image };
+
+        copiedImageFormCtrl.value = ((props.savedCourseData || {}).landing || {}).image || '';
+        copiedImageFormCtrl.valid = true;
+        copiedImageFormCtrl.touched = true;
+        copiedFormControls.image = { ...copiedImageFormCtrl };
+
+        const copiedDescFormCtrl = { ...copiedFormControls.description };
+
+        copiedDescFormCtrl.value = ((props.savedCourseData || {}).landing || {}).info || '';
+        copiedDescFormCtrl.valid = true;
+        copiedDescFormCtrl.touched = true;
+        copiedFormControls.description = { ...copiedDescFormCtrl };
+
+        setCourseDataFormControls({...copiedFormControls});
+
+        // ======================================================== //
+        let copiedFacultyFormControls = { ...facultyFormControls };
+
+        (((props.savedCourseData || {}).landing || {}).faculty || []).forEach((facultyMember, index) => {
+            copiedFacultyFormControls = addInputField(copiedFacultyFormControls, {
+                type: 'input',
+                inputKey: `faculty${index}`,
+                placeholder: `Faculty ${index + 1}`,
+                label: `Faculty ${index + 1}`,
+                validation: {
+                    required: true,
+                    minLength: 8
+                },
+                valid: true,
+                touched: true,
+                value: [facultyMember.firstName, facultyMember.lastName].join(' ')
+            });
+        });
+
+        setFacultyFormControls(copiedFacultyFormControls)
+        
+        // TODO: Add sections and quiz later
+
+        // eslint-disable-next-line
+    }, [props.savedCourseData]);
+
+    useEffect(() => {
+        if (params.id && params.id !== '') {
+            setIsEditMode(true);
+
+            // Populate the form fields
+            populateFormFields();
+        }
+    }, [params, populateFormFields]);
+
     useEffect(() => {
         let facultyArr = Object.values(facultyFormControls);
         let courseContentTitleArr = Object.values(courseContentTitleFormControls);
@@ -78,26 +140,53 @@ const CreateCourse = props => {
     }
 
     const onCourseCreatedHandler = () => {
-        let courseData = {
-            name: (courseDataFormControls.name || {}).value || '',
-            landing: {
-                image: (courseDataFormControls.image || {}).value || '',
-                info: (courseDataFormControls.description || {}).value || '',
-                faculty: Object.keys(facultyFormControls).map(facultyFrmCtrl => {
-                    return facultyFormControls[facultyFrmCtrl].value || '';
-                })
-            },
-            introduction: '',
-            quiz: selectedQuiz,
-            sections: Object.keys(courseContentTitleFormControls).map(frmCtrl => {
-                return {
-                    sectionName: courseContentTitleFormControls[frmCtrl].value || '',
-                    sectionContent: []
-                }
-            })
-        };
+        let courseData = {};
 
-        props.courseCreated(courseData);
+        // TODO: Add edit mode logic
+        if (!isEditMode) {
+            courseData = {
+                name: (courseDataFormControls.name || {}).value || '',
+                landing: {
+                    image: (courseDataFormControls.image || {}).value || '',
+                    info: (courseDataFormControls.description || {}).value || '',
+                    faculty: Object.keys(facultyFormControls).map(facultyFrmCtrl => {
+                        return facultyFormControls[facultyFrmCtrl].value || '';
+                    })
+                },
+                introduction: '',
+                quiz: selectedQuiz,
+                weeks: Object.keys(courseContentTitleFormControls).map(frmCtrl => {
+                    return {
+                        sectionName: courseContentTitleFormControls[frmCtrl].value || '',
+                        sectionContent: []
+                    }
+                })
+            };
+
+            props.courseCreated(courseData);
+        } else {
+            courseData = {
+                ...props.savedCourseData,
+                name: (courseDataFormControls.name || {}).value || '',
+                landing: {
+                    image: (courseDataFormControls.image || {}).value || '',
+                    info: (courseDataFormControls.description || {}).value || '',
+                    faculty: Object.keys(facultyFormControls).map(facultyFrmCtrl => {
+                        return facultyFormControls[facultyFrmCtrl].value || '';
+                    })
+                },
+                introduction: '',
+                quiz: selectedQuiz,
+                weeks: Object.keys(courseContentTitleFormControls).map(frmCtrl => {
+                    return {
+                        sectionName: courseContentTitleFormControls[frmCtrl].value || '',
+                        sectionContent: []
+                    }
+                })
+            };
+
+            props.courseEdited(courseData)
+        }
     }
 
     const onInputChangedHandler = (event, formCtrl, operationType) => {
@@ -238,11 +327,17 @@ const CreateCourse = props => {
                 <SelectInput label={'Quiz list: '} itemPerPageList={QUIZ_LIST} valueSelected={onQuizSelectedHandler} />
 
                 <div className={classes.CreateCourse__Faculty}>
-                    <Counter label={'Faculty:'} counterAmountChanged={(operationType) => onCounterAmountChangedHandler(operationType, 'faculty')} />
+                    <Counter
+                        label={'Faculty:'}
+                        initialValue={!isEditMode ? 0 : (((props.savedCourseData || {}).landing || {}).faculty || []).length || 0}
+                        counterAmountChanged={(operationType) => onCounterAmountChangedHandler(operationType, 'faculty')} />
 
                     {createFormContent(facultyFormControls, 'faculty')}
 
-                    <Counter label={'Sections:'} counterAmountChanged={(operationType) => onCounterAmountChangedHandler(operationType, 'section')} />
+                    <Counter
+                        label={'Sections:'}
+                        initialValue={!isEditMode ? 0 : ((props.savedCourseData || {}).weeks || []).length || 0}
+                        counterAmountChanged={(operationType) => onCounterAmountChangedHandler(operationType, 'section')} />
 
                     {createFormContent(courseContentTitleFormControls, 'section')}
                 </div>
