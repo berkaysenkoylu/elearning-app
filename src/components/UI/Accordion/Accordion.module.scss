@@ -1,0 +1,84 @@
+@import '../../../variables';
+
+.Accordion {
+    background-color: $color-grey-light-3;
+	
+    &__label {
+        position: relative;
+        display: block;
+        width: 100%;
+        background: none;
+        border: none;
+        text-align: left;
+        padding: 2.5rem 6rem 2.5rem 2.5rem;
+        font-weight: 500;
+        font-size: $default-font-size;
+        transition: all 0.2s linear;
+        cursor: pointer;
+
+        &__border {
+            position: absolute;
+            display: block;
+            width: 0;
+            left: 0%;
+            bottom: 0;
+            height: 2px;
+            background-color: rgba($black, 0.7);
+            transition: width 0.2s linear;
+        }
+
+        &:focus {
+            outline: none;
+        }
+
+        &::before, &::after {
+            content: '';
+            position: absolute;
+            right: 2.5rem;
+            top: 50%;
+            width: 2.2rem;
+            height: 2px;
+            margin-top: 2px;
+            background-color: $black;
+        }
+
+        &::before {
+            transform: rotate(-90deg);
+            transition: transform 0.35s cubic-bezier(0.65, 0.5, 0.36, 1);
+        }
+    }
+
+    &__inner {
+        overflow: hidden;
+        will-change: height;
+        transition: height .4s cubic-bezier(0.65, 0.05, 0.36, 1);
+    }
+
+    &__content {
+        margin: 0.5rem 2.5rem 2.5rem;
+        font-size: $default-font-size;
+        color: $black;
+        opacity: 0;
+        transition: opacity 0.3s linear 0.18s;
+    }
+		
+	&:not(:last-child) {
+        margin-bottom: 3px;
+    }
+	
+    &[aria-expanded='true'] &__content {
+        opacity: 1;
+    }
+
+    &[aria-expanded='true'] &__label {
+        color: #957029;
+
+        &::before {
+            transform: rotate(0deg);
+        }
+    }
+
+    &[aria-expanded='true'] &__label__border {
+        width: 100%;
+    }
+}
