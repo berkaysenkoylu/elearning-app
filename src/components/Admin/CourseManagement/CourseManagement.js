@@ -30,7 +30,7 @@ const CourseManagement = (props) => {
 
                 setCourseList(newCourseList);
 
-                history.push(props.match.url);
+                history.push(props.match.url + '/course-management');
             }
         });
     };
@@ -56,7 +56,7 @@ const CourseManagement = (props) => {
 
                 setCourseList(copiedCourseList);
 
-                history.push(props.match.url);
+                history.push(props.match.url + '/course-management');
             }
         });
     }
@@ -93,7 +93,7 @@ const CourseManagement = (props) => {
             }
         }).catch(error => {
             console.log(error)
-        })
+        });
     }
 
     let routes = (
@@ -103,7 +103,8 @@ const CourseManagement = (props) => {
                     savedCourseData={courseToEdit}
                     courseEdited={onCourseEditedHandler}
                 />} />
-			<Route path={props.match.url + '/course-management/create-course'} render={() => <CreateCourse courseCreated={onCourseCreatedHandler} />} />
+			<Route path={props.match.url + '/course-management/create-course'} render={() =>
+                <CreateCourse courseCreated={onCourseCreatedHandler} />} />
 			<Route path={props.match.url} render={() => <AdminCourseList
                 courseList={courseList}
                 onCourseEdited={onCourseEditHandler}

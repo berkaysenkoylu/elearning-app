@@ -28,6 +28,16 @@ const checkValidity = (value, rules) => {
         isValid = pattern.test(value) && isValid;
     }
 
+    if (rules.containsNumeric) {
+        const pattern = /\d/g;
+        isValid = pattern.test(value) && isValid;
+    }
+
+    if (rules.containsSpecial) {
+        const pattern = /[!@#$%^&*]/g;
+        isValid = pattern.test(value) && isValid;
+    }
+
     if (rules.isEnglishOnly) {
         const pattern = /^[a-zA-Z]+$/;
         isValid = pattern.test(value) && isValid;

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useParams } from 'react-router-dom';
 
 import usePasswordValidation from '../../../../hooks/usePasswordValidation';
 import classes from './CreateUser.module.scss';
@@ -7,6 +8,7 @@ import Input from '../../../UI/Input/Input';
 import Button from '../../../UI/Button/Button';
 
 const CreateUser = React.memo(props => {
+    const params = useParams();
     const [isEditMode, setIsEditMode] = useState(false);
     const [userDataFormControls, setUserDataFormControls] = useState({
         firstName: {
@@ -65,7 +67,11 @@ const CreateUser = React.memo(props => {
             },
             label: "Password",
             validation: {
-                required: true
+                required: true,
+                minLength: 8,
+                maxLength: 16,
+                containsNumeric: true,
+                containsSpecial: true
             },
             valid: false,
             touched: false,
@@ -93,6 +99,69 @@ const CreateUser = React.memo(props => {
     });
     const [formIsValid, setFormIsValid] = useState(false);
     const [validLength, hasNumber, upperCase, specialChar] = usePasswordValidation(userDataFormControls.password.value);
+
+    const populateFormFields = useCallback(() => {
+        const userData = { ...props.savedUserData, password: ''};
+        const copiedFormControls = { ...userDataFormControls };
+        let copiedFormCtrl = {};
+
+        Object.keys(copiedFormControls).forEach(frmCtrl => {
+            copiedFormCtrl = { ...copiedFormControls[frmCtrl] };
+
+            copiedFormCtrl.value = userData[frmCtrl] || '';
+            copiedFormCtrl.touched = true;
+            copiedFormCtrl.valid = true;
+
+            copiedFormControls[frmCtrl] = {...copiedFormCtrl};
+        });
+
+        setUserDataFormControls(copiedFormControls);
+        setFormIsValid(true);
+        // eslint-disable-next-line
+    }, [props.savedUserData]);
+
+    const resetFormFields = useCallback(() => {
+        const copiedFormControls = { ...userDataFormControls };
+        let copiedFormCtrl = {};
+
+        Object.keys(copiedFormControls).forEach(frmCtrl => {
+            copiedFormCtrl = { ...copiedFormControls[frmCtrl] };
+
+            if (frmCtrl === 'status') {
+                copiedFormCtrl.value = 'user';
+                copiedFormCtrl.valid = true;
+            } else {
+                copiedFormCtrl.value = '';
+            }
+
+            copiedFormCtrl.touched = false;
+            copiedFormCtrl.valid = false;
+
+            copiedFormControls[frmCtrl] = {...copiedFormCtrl};
+        });
+
+        setUserDataFormControls(copiedFormControls);
+        setFormIsValid(false);
+        // eslint-disable-next-line
+    }, []);
+
+    useEffect(() => {
+        if (params.id && params.id !== '') {
+            setIsEditMode(true);
+
+            // Populate the form fields
+            populateFormFields();
+        } else {
+            // setIsEditMode(false);
+            if (isEditMode) {
+                setIsEditMode(false);
+
+                resetFormFields()
+            }
+            
+        }
+        // eslint-disable-next-line
+    }, [params, populateFormFields, resetFormFields]);
 
     const inputChangedHandler = (event, formControl) => {
         const copiedUserDataFormControls = { ...userDataFormControls };
@@ -132,11 +201,24 @@ const CreateUser = React.memo(props => {
 
             props.userCreated(userData);
         } else {
-            // TODO: Add edit mode logic later
+            userData = {
+                ...props.savedUserData,
+                firstName: (userDataFormControls.firstName || {}).value || '',
+                lastName: (userDataFormControls.lastName || {}).value || '',
+                email: (userDataFormControls.email || {}).value || '',
+                status: (userDataFormControls.status || {}).value || '',
+            };
+
+            let newPass = (userDataFormControls.password || {}).value || '';
+            if (newPass !== '') {
+                userData.password = newPass;
+            }
+
+            props.userEdited(userData);
         }
     };
 
-    let formContent = Object.keys(userDataFormControls).map(formControl => {        
+    let formContent = Object.keys(userDataFormControls).map(formControl => {
         return <Input
             key={formControl}
             elementType={userDataFormControls[formControl].elementType}
@@ -160,7 +242,7 @@ const CreateUser = React.memo(props => {
             <div className={classes.CreateUser__Form}>
                 {formContent}
             </div>
-            
+
             <Button
                 btnType='BtnSecondary'
                 disabled={!formIsValid}

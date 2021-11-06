@@ -21,7 +21,7 @@ const AdminUserList = props => {
                             <AdminUserCard
                                 email={user.email}
                                 status={user.status}
-                                userEdit={() => props.userEdited(user._id)}
+                                userEdit={() => props.userEdited(user)}
                                 userDelete={() => props.userDeleted(user._id)}
                             />
                         </Accordion>

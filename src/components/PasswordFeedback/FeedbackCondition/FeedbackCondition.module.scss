@@ -1,0 +1,15 @@
+@import '../../../variables';
+
+.FeedbackCondition {
+    display: flex;
+    align-items: center;
+    font-size: $default-font-size;
+
+    &__Icon {
+        margin-top: 3px;
+        width: 1.5rem;
+        height: 1.5rem;
+        margin-right: 0.5rem;
+        fill: $color-tertiary-dark-1;
+    }
+}

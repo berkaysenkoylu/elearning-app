@@ -109,7 +109,7 @@ const CreateCourse = props => {
             });
         });
 
-        setFacultyFormControls(copiedFacultyFormControls)
+        setFacultyFormControls(copiedFacultyFormControls);
         
         // TODO: Add sections and quiz later
 
