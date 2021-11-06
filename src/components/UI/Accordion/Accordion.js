@@ -39,9 +39,9 @@ const Accordion = (props) => {
                 style={innerStyle}
                 aria-hidden={!isActive}
                 ref={innerElementRef}>
-                <p className={classes.Accordion__content}>
+                <div className={classes.Accordion__content}>
                     {props.children}
-                </p>
+                </div>
             </div>
         </div>
     )

@@ -3,33 +3,49 @@ import { Route, Switch} from 'react-router-dom';
 
 import axiosAdmin from '../../../axiosUtility/axios-admin';
 import AdminUserList from './AdminUserList/AdminUserList';
-
-const CONFIG = {
-    headers: {
-        'Authorization': 'Bearer ' + localStorage.getItem('token')
-    }
-};
+import CreateUser from './CreateUser/CreateUser';
 
 const UserManagement = (props) => {
     const [userList, setUserList] = useState([]);
+    const config = {
+        headers: {
+            'Authorization': 'Bearer ' + props.token
+        }
+    };
 
     useEffect(() => {
-        axiosAdmin.get('/user', CONFIG).then(response => {
+        axiosAdmin.get('/user', config).then(response => {
             setUserList(response.data.userList);
         });
-    }, []);
+    }, [config]);
+
+    const onUserCreatedHandler = (userData) => {
+        console.log(userData)
+    }
+
+    const onUserEdit = (userId) => {
+        console.log(userId)
+    }
+
+    const onUserDeletedHandler = (userId) => {
+        console.log(userId)
+    }
 
     let routes = (
 		<Switch>
-            <Route path={props.match.url + '/edit-user/:id'} render={() => <div>EDIT USER</div>} />
-            <Route path={props.match.url + '/create-user'} render={() => <div>CREATE USER</div>} />
-			<Route path={props.match.url} render={() => <AdminUserList userList={userList} />} />
+            <Route path={props.match.url + '/user-management/edit-user/:id'} render={() => <div>EDIT USER</div>} />
+            <Route path={props.match.url + '/user-management/create-user'} render={() => <CreateUser 
+                userCreated={onUserCreatedHandler}/>} />
+			<Route path={props.match.url} render={() => <AdminUserList
+                userList={userList}
+                userEdited={onUserEdit}
+                userDeleted={onUserDeletedHandler} />} />
 		</Switch>
 	);
 
     return (
         routes
-    )
+    );
 }
 
 export default UserManagement;

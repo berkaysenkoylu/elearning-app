@@ -5,13 +5,12 @@ import axiosAdmin from '../../../axiosUtility/axios-admin';
 import CreateCourse from './CreateCourse/CreateCourse';
 import AdminCourseList from './CourseList/AdminCourseList';
 
-const CONFIG = {
-    headers: {
-        'Authorization': 'Bearer ' + localStorage.getItem('token')
-    }
-};
-
 const CourseManagement = (props) => {
+    const config = {
+        headers: {
+            'Authorization': 'Bearer ' + props.token
+        }
+    };
     const [courseToEdit, setCourseToEdit] = useState({});
     const [courseList, setCourseList] = useState([]);
     const history = useHistory();
@@ -23,7 +22,7 @@ const CourseManagement = (props) => {
     }, []);
 
     const onCourseCreatedHandler = (courseData) => {
-        axiosAdmin.post(`/course`, courseData, CONFIG).then(response => {
+        axiosAdmin.post(`/course`, courseData, config).then(response => {
             const responseData = response.data || {};
 
             if (responseData.isAdded) {
@@ -37,13 +36,13 @@ const CourseManagement = (props) => {
     };
 
     const onCourseEditHandler = (courseToEdit) => {
-        history.push(props.match.url + `/edit-course/${courseToEdit._id}`)
+        history.push(props.match.url + `/course-management/edit-course/${courseToEdit._id}`)
 
         setCourseToEdit(courseToEdit);
     }
 
     const onCourseEditedHandler = (newCourseData) => {
-        axiosAdmin.put(`/course/${newCourseData._id}`, newCourseData, CONFIG).then(response => {
+        axiosAdmin.put(`/course/${newCourseData._id}`, newCourseData, config).then(response => {
             if (response.data.isEdited) {
                 const copiedCourseList = courseList.map(course => {
                     if (course._id === newCourseData._id) {
@@ -63,7 +62,7 @@ const CourseManagement = (props) => {
     }
 
     const onCourseDeletedHandler = (courseId) => {
-        axiosAdmin.delete(`/course/${courseId}`, CONFIG).then(response => {
+        axiosAdmin.delete(`/course/${courseId}`, config).then(response => {
             const responseData = response.data || {};
 
             if (responseData.isDeleted || false) {
@@ -75,7 +74,7 @@ const CourseManagement = (props) => {
     }
 
     const onCoursePublishedHandler = (courseId, isPublished) => {
-        axiosAdmin.put(`/course/publish/${courseId}`, { isPublished: isPublished }, CONFIG).then(response => {
+        axiosAdmin.put(`/course/publish/${courseId}`, { isPublished: isPublished }, config).then(response => {
             const responseData = response.data || {};
 
             if (responseData.success || false) {
@@ -99,12 +98,12 @@ const CourseManagement = (props) => {
 
     let routes = (
 		<Switch>
-            <Route path={props.match.url + '/edit-course/:id'} render={() =>
+            <Route path={props.match.url + '/course-management/edit-course/:id'} render={() =>
                 <CreateCourse
                     savedCourseData={courseToEdit}
                     courseEdited={onCourseEditedHandler}
                 />} />
-			<Route path={props.match.url + '/create-course'} render={() => <CreateCourse courseCreated={onCourseCreatedHandler} />} />
+			<Route path={props.match.url + '/course-management/create-course'} render={() => <CreateCourse courseCreated={onCourseCreatedHandler} />} />
 			<Route path={props.match.url} render={() => <AdminCourseList
                 courseList={courseList}
                 onCourseEdited={onCourseEditHandler}

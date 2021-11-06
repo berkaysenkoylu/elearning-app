@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 
 import AdminNavigation from './AdminNavigation/AdminNavigation';
@@ -9,8 +10,8 @@ import classes from './Administration.module.scss';
 const Administration = (props) => {
     let routes = (
 		<Switch>
-			<Route path={props.match.url + '/user-management'} component={UserManagement} />
-			<Route path={props.match.url + '/course-management'} component={CourseManagement} />
+			<Route path={props.match.url + '/user-management'}  render={() => <UserManagement {...props} />} />
+			<Route path={props.match.url + '/course-management'} render={() => <CourseManagement {...props} />} />
 			<Route path={props.match.url} render={() => <div>ADMIN HOME COMPONENT</div>} />
 			{/* <Redirect to='/' /> */}
 		</Switch>
@@ -25,4 +26,10 @@ const Administration = (props) => {
     );
 };
 
-export default Administration;
+const mapStateToProps = state => {
+    return {
+        token: state.token
+    };
+};
+
+export default connect(mapStateToProps, null)(Administration);

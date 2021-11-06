@@ -142,7 +142,6 @@ const CreateCourse = props => {
     const onCourseCreatedHandler = () => {
         let courseData = {};
 
-        // TODO: Add edit mode logic
         if (!isEditMode) {
             courseData = {
                 name: (courseDataFormControls.name || {}).value || '',

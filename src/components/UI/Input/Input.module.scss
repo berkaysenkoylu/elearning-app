@@ -64,6 +64,10 @@
     }
 }
 
+// .InputElement[type="password"]:focus ~ #PasswordFeedback {
+//     background-color: orangered;
+// }
+
 .Invalid {
     background-color: rgba($color-primary-light-1, 0.5);
     border-bottom: 3px solid $color-primary;

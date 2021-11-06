@@ -1,0 +1,18 @@
+@import '../../../../../variables';
+
+.AdminUserCard {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 10rem;
+
+    &__Cta {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+
+        & > button:not(:last-child) {
+            margin-right: 1rem;
+        }
+    }
+}

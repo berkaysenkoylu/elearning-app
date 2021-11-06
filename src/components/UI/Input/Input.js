@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 
+import PasswordFeedback from '../../PasswordFeedback/PasswordFeedback';
 import classes from './Input.module.scss';
 
 const Input = (props) => {
+    const [passwordFeebackVisible, setPasswordFeedbackVisible] = useState(false);
+
     let inputElement = null;
     let inputClasses = [classes.InputElement];
     let validationError = '';
@@ -17,15 +20,28 @@ const Input = (props) => {
         }
     }
 
+    const onInputFocused = (event) => {
+        if (event.target.type === 'password') {
+            setPasswordFeedbackVisible(true)
+        }
+    }
+
+    const onInputFocusLost = (event) => {
+        if (event.target.type === 'password') {
+            setPasswordFeedbackVisible(false)
+        }
+    }
+
     switch(props.elementType) {
         case 'input':
-            inputElement = <input 
+            inputElement = (<input 
                 className={inputClasses.join(' ')} 
                 {...props.elementConfig}
                 value={props.value} 
                 onChange={props.changed}
-                onBlur={props.focusLost}
-            />;
+                onBlur={onInputFocusLost}
+                onFocus={onInputFocused}
+            />);
             break;
         case 'textarea':
             inputClasses.push(classes.TextArea)
@@ -61,6 +77,7 @@ const Input = (props) => {
             <p className={classes.ValidationError}>{validationError}</p>
             {inputElement}
             <label className={labelClassList.join(' ')}>{props.label}</label>
+            {props.isPassword && passwordFeebackVisible ? <PasswordFeedback validation={props.passwordValidationMap} /> : null}
         </div>
     )
 }

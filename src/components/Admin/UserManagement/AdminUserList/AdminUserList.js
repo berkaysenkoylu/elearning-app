@@ -2,25 +2,31 @@ import React from 'react';
 
 import classes from './AdminUserList.module.scss';
 import Accordion from '../../../UI/Accordion/Accordion';
+import AdminUserCard from './AdminUserCard/AdminUserCard';
 
-const AdminUserList = () => {
-    let demo = {
-		label: 'Alpaslan Senkoylu',
-		content: 'Icons are everywhere. These "little miracle workers" (as John Hicks described them) help us reinforce meaning in the interfaces we design and build. Their popularity in web design has never been greater; the conciseness and versatility of pictograms in particular make them a lovely fit for displays large and small. But icons on the web have had their fair share of challenges.',
-	}
-
+// TODO: ADD MORE FIELD AND CUSTOM DESIGN
+const AdminUserList = props => {
     return (
         <div className={classes.AdminUserList}>
-            <header>
-                ADMIN USER LIST
+            <header className={classes.AdminUserList__Header}>
+                <h1>User List</h1>
             </header>
 
             <section>
-                <Accordion label={demo.label}>{demo.content}</Accordion>
-
-                <Accordion label={demo.label}>{demo.content}</Accordion>
-
-                <Accordion label={demo.label}>{demo.content}</Accordion>
+                {(props.userList || []).map(user => {
+                    return (
+                        <Accordion 
+                            key={user._id}
+                            label={[user.firstName, user.lastName].join(' ')}>
+                            <AdminUserCard
+                                email={user.email}
+                                status={user.status}
+                                userEdit={() => props.userEdited(user._id)}
+                                userDelete={() => props.userDeleted(user._id)}
+                            />
+                        </Accordion>
+                    )
+                })}
             </section>
         </div>
     )
