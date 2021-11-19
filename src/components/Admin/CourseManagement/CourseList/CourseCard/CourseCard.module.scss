@@ -39,6 +39,12 @@
         justify-self: center;
         align-self: end;
         z-index: 3;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+
+        &:hover {
+            background-color: $color-misc-7;
+        }
     }
 
     &__Body {

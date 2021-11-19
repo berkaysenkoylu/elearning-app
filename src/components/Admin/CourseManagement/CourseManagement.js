@@ -2,6 +2,7 @@ import React, { useState, useEffect  } from 'react';
 import { Route, Switch, useHistory} from 'react-router-dom';
 
 import axiosAdmin from '../../../axiosUtility/axios-admin';
+import Course from './Course/Course';
 import CreateCourse from './CreateCourse/CreateCourse';
 import AdminCourseList from './CourseList/AdminCourseList';
 
@@ -11,6 +12,7 @@ const CourseManagement = (props) => {
             'Authorization': 'Bearer ' + props.token
         }
     };
+    const [selectedCourse, setSelectedCourse] = useState({});
     const [courseToEdit, setCourseToEdit] = useState({});
     const [courseList, setCourseList] = useState([]);
     const history = useHistory();
@@ -20,6 +22,12 @@ const CourseManagement = (props) => {
             setCourseList(response.data.courseList);
         });
     }, []);
+
+    const onCourseNameClickedHandler = (course) => {
+        setSelectedCourse(course);
+
+        history.push(props.match.url + `/course-management/${course._id}`);
+    }
 
     const onCourseCreatedHandler = (courseData) => {
         axiosAdmin.post(`/course`, courseData, config).then(response => {
@@ -103,10 +111,15 @@ const CourseManagement = (props) => {
                     savedCourseData={courseToEdit}
                     courseEdited={onCourseEditedHandler}
                 />} />
-			<Route path={props.match.url + '/course-management/create-course'} render={() =>
+            <Route path={props.match.url + '/course-management/create-course'} render={() =>
                 <CreateCourse courseCreated={onCourseCreatedHandler} />} />
-			<Route path={props.match.url} render={() => <AdminCourseList
+            <Route path={props.match.url + '/course-management/:id'} render={() =>
+                <Course
+                    courseData={selectedCourse}
+                />} />
+			<Route path={props.match.url  + '/course-management/'} render={() => <AdminCourseList
                 courseList={courseList}
+                onCourseNameClicked={onCourseNameClickedHandler}
                 onCourseEdited={onCourseEditHandler}
                 onCourseDeleted={onCourseDeletedHandler}
                 onCoursePublished={onCoursePublishedHandler}

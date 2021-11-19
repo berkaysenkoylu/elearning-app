@@ -18,6 +18,7 @@ const AdminCourseList = (props) => {
                         courseEdit={() => props.onCourseEdited(course)}
                         courseDelete={() => props.onCourseDeleted(course._id)}
                         coursePublish={() => props.onCoursePublished(course._id, !course.isPublished)}
+                        courseNameClicked={() => props.onCourseNameClicked(course)}
                     />
                 })}
             </div>

@@ -17,7 +17,7 @@ const CourseCard = (props) => {
                 className={classes.CourseCard__ImgSection}
             ></span>
 
-            <h5 className={classes.CourseCard__Name}>{courseName.length > 25 ? courseName.slice(0, 25) + '...' : courseName}</h5>
+            <h5 className={classes.CourseCard__Name} onClick={props.courseNameClicked}>{courseName.length > 25 ? courseName.slice(0, 25) + '...' : courseName}</h5>
             
             <div className={classes.CourseCard__Body}>
                 <h5>
