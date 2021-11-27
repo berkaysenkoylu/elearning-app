@@ -34,9 +34,9 @@ const CreateCourse = props => {
             elementType: 'input',
             elementConfig: {
                 type: 'url',
-                placeholder: 'Image URL'
+                placeholder: 'Landing Image URL'
             },
-            label: "Image URL",
+            label: "Landing Image URL",
             validation: {
                 required: true,
                 isURL: true
@@ -61,7 +61,6 @@ const CreateCourse = props => {
         }
     });
     const [facultyFormControls, setFacultyFormControls] = useState({});
-    const [courseContentTitleFormControls, setCourseContentTitleFormControls] = useState({});
     const [formValid, setFormValid] = useState(false);
     const [selectedQuiz, setSelectedQuiz] = useState(QUIZ_LIST[0]);
 
@@ -110,8 +109,6 @@ const CreateCourse = props => {
         });
 
         setFacultyFormControls(copiedFacultyFormControls);
-        
-        // TODO: Add sections and quiz later
 
         // eslint-disable-next-line
     }, [props.savedCourseData]);
@@ -127,13 +124,12 @@ const CreateCourse = props => {
 
     useEffect(() => {
         let facultyArr = Object.values(facultyFormControls);
-        let courseContentTitleArr = Object.values(courseContentTitleFormControls);
 
-        if (facultyArr.length === 0 || courseContentTitleArr.length === 0)
+        if (facultyArr.length === 0)
             setFormValid(false);
         else
-            checkFormValidity([...Object.values(courseDataFormControls), ...facultyArr, ...courseContentTitleArr]);
-    }, [courseDataFormControls, facultyFormControls, courseContentTitleFormControls]);
+            checkFormValidity([...Object.values(courseDataFormControls), ...facultyArr]);
+    }, [courseDataFormControls, facultyFormControls]);
 
     const onQuizSelectedHandler = (selectedQuiz) => {
         setSelectedQuiz(selectedQuiz);
@@ -152,14 +148,7 @@ const CreateCourse = props => {
                         return facultyFormControls[facultyFrmCtrl].value || '';
                     })
                 },
-                introduction: '',
-                quiz: selectedQuiz,
-                weeks: Object.keys(courseContentTitleFormControls).map(frmCtrl => {
-                    return {
-                        sectionName: courseContentTitleFormControls[frmCtrl].value || '',
-                        sectionContent: []
-                    }
-                })
+                quiz: selectedQuiz
             };
 
             props.courseCreated(courseData);
@@ -174,14 +163,7 @@ const CreateCourse = props => {
                         return facultyFormControls[facultyFrmCtrl].value || '';
                     })
                 },
-                introduction: '',
-                quiz: selectedQuiz,
-                weeks: Object.keys(courseContentTitleFormControls).map(frmCtrl => {
-                    return {
-                        sectionName: courseContentTitleFormControls[frmCtrl].value || '',
-                        sectionContent: []
-                    }
-                })
+                quiz: selectedQuiz
             };
 
             props.courseEdited(courseData)
@@ -204,18 +186,6 @@ const CreateCourse = props => {
 
                 setFacultyFormControls(copiedFacultyFormControls);
                 break;
-            case 'section':
-                let copiedCourseContentTitleFormControls = { ...courseContentTitleFormControls };
-                let copiedCourseTitleFormCtrl = { ...copiedCourseContentTitleFormControls[formCtrl] };
-
-                copiedCourseTitleFormCtrl.value = inputtedValue;
-                copiedCourseTitleFormCtrl.touched = true;
-                copiedCourseTitleFormCtrl.valid = checkValidity(inputtedValue, copiedCourseTitleFormCtrl.validation);
-
-                copiedCourseContentTitleFormControls[formCtrl] = copiedCourseTitleFormCtrl;
-
-                setCourseContentTitleFormControls(copiedCourseContentTitleFormControls);
-                break;
             default:
                 let copiedCourseDataFormControls = { ...courseDataFormControls };
                 let copiedFormCtrl = { ...copiedCourseDataFormControls[formCtrl] };
@@ -231,58 +201,32 @@ const CreateCourse = props => {
         }
     }
 
-    const onCounterAmountChangedHandler = (operation, operationType) => {
+    const onCounterAmountChangedHandler = (operation) => {
         // Operation: 1 (Increment)
         // Operation: -1 (Decrement)
-        if (operationType === 'faculty') {
-            let copiedFacultyFormControls = { ...facultyFormControls };
-            let keyArr = Object.keys(copiedFacultyFormControls);
-    
-            if (operation === 1) {
-                let formCtrlCount = keyArr.length;
-    
-                copiedFacultyFormControls = addInputField(copiedFacultyFormControls, {
-                    type: 'input',
-                    inputKey: `faculty${formCtrlCount}`,
-                    placeholder: `Faculty ${formCtrlCount + 1}`,
-                    label: `Faculty ${formCtrlCount + 1}`,
-                    validation: {
-                        required: true,
-                        minLength: 8
-                    }
-                });
-    
-                setFormValid(false);
-            } else {
-                delete copiedFacultyFormControls[keyArr.pop()];
-            }
+        let copiedFacultyFormControls = { ...facultyFormControls };
+        let keyArr = Object.keys(copiedFacultyFormControls);
 
-            setFacultyFormControls(copiedFacultyFormControls);
+        if (operation === 1) {
+            let formCtrlCount = keyArr.length;
+
+            copiedFacultyFormControls = addInputField(copiedFacultyFormControls, {
+                type: 'input',
+                inputKey: `faculty${formCtrlCount}`,
+                placeholder: `Faculty ${formCtrlCount + 1}`,
+                label: `Faculty ${formCtrlCount + 1}`,
+                validation: {
+                    required: true,
+                    minLength: 8
+                }
+            });
+
+            setFormValid(false);
         } else {
-            let copiedCourseContentTitleFormControls = { ...courseContentTitleFormControls };
-            let keyArr = Object.keys(copiedCourseContentTitleFormControls);
-    
-            if (operation === 1) {
-                let formCtrlCount = keyArr.length;
-    
-                copiedCourseContentTitleFormControls = addInputField(copiedCourseContentTitleFormControls, {
-                    type: 'input',
-                    inputKey: `section${formCtrlCount}`,
-                    placeholder: `Section ${formCtrlCount + 1}`,
-                    label: `Section ${formCtrlCount + 1}`,
-                    validation: {
-                        required: true,
-                        minLength: 6
-                    }
-                });
-    
-                setFormValid(false);
-            } else {
-                delete copiedCourseContentTitleFormControls[keyArr.pop()];
-            }
+            delete copiedFacultyFormControls[keyArr.pop()];
+        }
 
-            setCourseContentTitleFormControls(copiedCourseContentTitleFormControls);
-        } 
+        setFacultyFormControls(copiedFacultyFormControls);
     }
 
     const checkFormValidity = (wholeForm) => {
@@ -332,13 +276,6 @@ const CreateCourse = props => {
                         counterAmountChanged={(operationType) => onCounterAmountChangedHandler(operationType, 'faculty')} />
 
                     {createFormContent(facultyFormControls, 'faculty')}
-
-                    <Counter
-                        label={'Sections:'}
-                        initialValue={!isEditMode ? 0 : ((props.savedCourseData || {}).weeks || []).length || 0}
-                        counterAmountChanged={(operationType) => onCounterAmountChangedHandler(operationType, 'section')} />
-
-                    {createFormContent(courseContentTitleFormControls, 'section')}
                 </div>
             </section>
 

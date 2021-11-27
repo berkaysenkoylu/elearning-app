@@ -16,11 +16,6 @@
         }
     }
 
-    &__Introduction {
-        height: 20rem;
-        background-color: orangered;
-    }
-
     &__SectionList {
         margin-top: 2rem;
         font-size: $default-font-size;
@@ -66,5 +61,16 @@
                 }
             }
         }
+
+        &__Cta {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 1.5rem;
+        }
+    }
+
+    & > div:last-child {
+        margin: 3rem auto 0 auto;
+        width: 80%;
     }
 }

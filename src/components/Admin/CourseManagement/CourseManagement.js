@@ -30,6 +30,7 @@ const CourseManagement = (props) => {
     }
 
     const onCourseCreatedHandler = (courseData) => {
+        // console.log(courseData)
         axiosAdmin.post(`/course`, courseData, config).then(response => {
             const responseData = response.data || {};
 

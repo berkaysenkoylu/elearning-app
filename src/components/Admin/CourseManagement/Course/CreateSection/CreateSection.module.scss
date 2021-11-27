@@ -1,0 +1,54 @@
+@import "../../../../../variables";
+
+.CreateSection {
+    grid-area: item2;
+    margin-bottom: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    // height: 80vh;
+
+    &__Header {
+        font-size: $header-font-size;
+        margin-bottom: 1rem;
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+    }
+
+    &__Body {
+        flex: 1;
+        
+        display: grid;
+        grid-template-rows: 1fr;
+        grid-template-columns: repeat(4, minmax(min-content, 1fr));
+        grid-template-areas: "item1 item1 item1 item2";
+        grid-gap: 3px;
+        height: 100%;
+        padding: 1.5rem;
+        background-color: $color-gray-light;
+
+        &__FormField {
+            padding: 2rem;
+            grid-area: item1;
+
+            height: 100%;
+            overflow-x: hidden;
+            overflow-y: auto;
+            max-height: 60vh;
+        }
+
+        &__Menu {
+            padding-left: 1.5rem;
+            grid-area: item2;
+        }
+    }
+
+    &__Cta {
+        flex: none;
+        margin-top: 2.5rem;
+        display: flex;
+        justify-content: center;
+    }
+}

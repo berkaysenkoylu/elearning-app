@@ -10,8 +10,8 @@ const CourseSection = (props) => {
     const [subSectionPageIndex, setSubSectionPageIndex] = useState(0); // Signifies where we are in the subsection
 
     let sectionData = props.sectionData;
-    let totalSectionCount = (sectionData.sections || []).length;
-    let currentSectionLength = (((sectionData.sections || [])[subSectionIndex] || {}).content || []).length;
+    let totalSectionCount = (sectionData.subsections || []).length;
+    let currentSectionLength = (((sectionData.subsections || [])[subSectionIndex] || {}).content || []).length;
 
     const resetToSectionMenu = () => {
         setIsAtIntro(true);
@@ -32,7 +32,7 @@ const CourseSection = (props) => {
         if (subSectionIndex - 1 < 0) {
             resetToSectionMenu();
         } else {
-            let prevSubSectionLength = (((sectionData.sections || [])[subSectionIndex - 1] || {}).content || []).length;
+            let prevSubSectionLength = (((sectionData.subsections || [])[subSectionIndex - 1] || {}).content || []).length;
 
             setSubSectionIndex(subSectionIndex - 1);
             setSubSectionPageIndex(prevSubSectionLength - 1);
@@ -82,7 +82,7 @@ const CourseSection = (props) => {
                     <h3>Konu Dağılımı</h3>
                     
                     <ul className={classes.Section__List}>
-                        {sectionData.sections.map((section, i) => {
+                        {sectionData.subsections.map((section, i) => {
                             return <li key={i} className={classes.Section__ListItem}>
                                 <span>
                                     {section.title}
@@ -97,7 +97,7 @@ const CourseSection = (props) => {
                         })}
                     </ul>
                 </section> : <CourseSubSection 
-                    subSectionData={sectionData.sections[subSectionIndex] || {}}
+                    subSectionData={sectionData.subsections[subSectionIndex] || {}}
                     subSectionPageIndex={subSectionPageIndex}
                     onBackClicked={onBackClickedHandler}
                     onNextClicked={onNextClickedHandler}

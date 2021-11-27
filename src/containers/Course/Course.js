@@ -230,7 +230,7 @@ class Course extends Component {
     render() {
         let courseLandingData = (this.state.courseData || {}).landing || {};
         let activeNavigation = (this.state.courseNavItems.find(item => item.active) || {}).name;
-        let section = ((this.state.courseData || {}).weeks || [])[this.state.sectionIndex] || {};
+        let section = ((this.state.courseData || {}).sections || [])[this.state.sectionIndex] || {};
         let courseName = (this.state.courseData || {}).name;
         let courseQuiz = (this.state.courseData || {}).quiz;
         let courseIntro = (this.state.courseData || {}).introduction;
