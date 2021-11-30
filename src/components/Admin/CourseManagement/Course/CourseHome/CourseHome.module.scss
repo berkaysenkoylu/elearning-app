@@ -31,39 +31,11 @@
             li:not(:last-child) {
                 margin-bottom: 1rem;
             }
-
-            li {
-                display: flex;
-                align-items: center;
-
-                &::before {
-                    content: '';
-                    display: inline-block;
-                    height: 1.2rem;
-                    width: 1.2rem;
-                    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-                    background-color: $black;
-                    margin-right: 5px;
-                }
-
-                span {
-                    cursor: pointer;
-                    width: 1rem;
-                    height: 1rem;
-                    margin-left: 1rem;
-                    clip-path: polygon(0 0, 100% 50%, 0 100%, 0 100%, 35% 50%, 0 0);
-                    background-color: $color-misc-2;
-                    transition: background-color 0.2s ease-in;
-
-                    &:hover {
-                        background-color: $color-misc-1;
-                    }
-                }
-            }
         }
 
         &__Cta {
             display: flex;
+            align-items: flex-start;
             justify-content: flex-end;
             margin-top: 1.5rem;
         }

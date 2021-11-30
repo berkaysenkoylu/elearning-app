@@ -1,0 +1,17 @@
+@import "../../../../../../../variables";
+
+.SubSectionItem {
+    display: flex;
+
+    &__Name {
+
+    }
+
+    &__Cta {
+        margin-left: 1rem;
+
+        button:last-child {
+            margin-left: 0.5rem;
+        }
+    }
+}

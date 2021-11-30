@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { withRouter } from 'react-router';
 
 import addInputField from '../../../../../utility/addInputField';
 import checkValidity from '../../../../../utility/formValidation';
-import classes from './CreateSection.module.scss';
+import classes from './CreateSubSection.module.scss';
 import Button from '../../../../UI/Button/Button';
 import Menu from '../../../../UI/Menu/Menu';
 import SectionFormControl from './SectionFormControl/SectionFormControl';
 
 const SECTION_ELEMENTS = ['Title', 'Paragraph', 'Text', 'List', 'Image Url', 'Video Url', 'Teacher', 'Pagebreak'];
 
-const CreateSection = props => {
+const CreateSubSection = props => {
     const [isEditMode, setIsEditMode] = useState(false);
     const [formValid, setFormValid] = useState(false);
     const [sectionFormControls, setSectionFormControls] = useState({
@@ -17,9 +18,9 @@ const CreateSection = props => {
             elementType: 'input',
             elementConfig: {
                 type: 'text',
-                placeholder: 'Section Name'
+                placeholder: 'Sub Section Name'
             },
-            label: "Section Name",
+            label: "Sub Section Name",
             validation: {
                 required: true
             },
@@ -28,6 +29,13 @@ const CreateSection = props => {
             value: ''
         }
     });
+
+    useEffect(() => {
+        let sectionId = ((props.match || {}).params || {}).sectionId || '';
+        let currentSection = props.sectionList.find(section => section._id === sectionId) || {}
+
+        console.log(currentSection);
+    }, [props.sectionList, props.match]);
 
     const onMenuItemClickedHandler = item => {
         let copiedSectionFormControls = { ...sectionFormControls };
@@ -168,7 +176,7 @@ const CreateSection = props => {
         }
     }
 
-    const onSectionCreatedHandler = () => {
+    const onSubSectionCreatedHandler = () => {
         // Subsections
         let formControlArr = Object.keys(sectionFormControls).slice(1);
         let sectionCount = formControlArr.filter(item => item.toLowerCase().indexOf('pagebreak') !== -1).length + 1;
@@ -208,7 +216,8 @@ const CreateSection = props => {
             subSections[activeIndex] = {...copiedSubSection};
         }
 
-        console.log({
+        props.createdSubSection({
+            section: ((props.match || {}).params || {}).sectionId || '',
             name: sectionFormControls['name'].value,
             content: subSections
         });
@@ -233,7 +242,7 @@ const CreateSection = props => {
     return (
         <section className={classes.CreateSection}>
             <header className={classes.CreateSection__Header}>
-                <h1>{!isEditMode ? 'Create a section' : 'Edit the section'}</h1>
+                <h1>{!isEditMode ? 'Create a subsection' : 'Edit the subsection'}</h1>
 
                 <SectionFormControl
                     label={'Section Name'}
@@ -259,10 +268,10 @@ const CreateSection = props => {
             <div className={classes.CreateSection__Cta}>
                 <Button
                     disabled={!formValid}
-                    clicked={onSectionCreatedHandler}>{!isEditMode ? 'Create' : 'Edit'}</Button>
+                    clicked={onSubSectionCreatedHandler}>{!isEditMode ? 'Create' : 'Edit'}</Button>
             </div>
         </section>
     )
 }
 
-export default CreateSection;
+export default withRouter(CreateSubSection);

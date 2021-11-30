@@ -116,6 +116,7 @@ const CourseManagement = (props) => {
                 <CreateCourse courseCreated={onCourseCreatedHandler} />} />
             <Route path={props.match.url + '/course-management/:id'} render={() =>
                 <Course
+                    token={props.token}
                     courseData={selectedCourse}
                 />} />
 			<Route path={props.match.url  + '/course-management/'} render={() => <AdminCourseList

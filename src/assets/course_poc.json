@@ -6,43 +6,134 @@
         "info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
         "faculty": ["Prof. Dr. Alpaslan Şenköylü", "Prof. Dr. Emre Acaroğlu"]
     },
-    "introduction": "<h2 style='text-align: center; margin-bottom: 1rem;'>GİRİŞ</h2><ul><li>Temel pediatrik deformite kursu iki bölümden oluşmaktadır: Uzaktan ve yüz yüze. Uzaktan kısmına katılmayanlar yüz yüze kısmına da katılamayacaktır.<br></li><li>Kursa kayıt olmak için yapmanız gereken kısa sınav ve daha sonra öğrenim hedefleri anketini tamamlamaktır.<br></li></ul><p></p>",
     "quiz": "1234abcd",
-    "weeks": [
+    "sections": [
         {
-            "name": "1. Hafta",
-            "sections": [
+            "name": "Introduction",
+            "subsections": [
                 {
-                    "title": "Omurgaya Posterior Yaklaşım",
-                    "teacher": "Prof. Dr. Alpaslan Şenköylü",
+                    "title": "Temel pediatrik deformite kursuna hoş geldiniz.",
                     "content": [
                         {
-                            "index": "<p><em>Dr. Alpaslan Şenköylü</em>&nbsp;<br></p><p><br></p><h5><b>Öğrenim hedefleri</b>:</h5><br><p><span>Bu ders sonunda katılımcı;</span></p><br><ul><li>Torakolumbar omurga posteriorunun kaba anatomisini tanımlar,<br></li><li>Anatomik referansları kullanarak seviye tanımlaması yapar,<br></li><li>Disseksiyon sırasında kanamayı engellemek için püf noktaları sıralar,<br></li><li><div>Pedikül vidası yerleştirme ve posterolateral füzyon için temel&nbsp;<span>anatomik yapıları açıklar.</span></div></li></ul><p><br></p>"
-                        },
-                        {
-                            "index": "<div style='text-align: center; margin-top: 1rem;'><iframe src='https://www.youtube.com/embed/g1wZWPmahfk' gesture='media' allow='encrypted-media' allowfullscreen='' width='560' height='315' frameborder='0'></iframe></div>"
+                            "title0": {
+                                "type": "title",
+                                "index": "Öğrenim hedefleri"
+                            },
+                            "list0": {
+                                "type": "list",
+                                "index": [
+                                    "Temel pediatrik deformite kursu iki bölümden oluşmaktadır: Uzaktan ve yüz yüze. Uzaktan kısmına katılmayanlar yüz yüze kısmına da katılamayacaktır",
+                                    "Kursa kayıt olmak için yapmanız gereken kısa sınav ve daha sonra öğrenim hedefleri anketini tamamlamaktır"
+                                ]
+                            }
                         }
                     ]
-                },
+                }
+            ]
+        },
+        {
+            "name": "1. Hafta",
+            "subsections": [
                 {
-                    "title": "Omurga Deformitelerinin Sınıflandırılması ve 3 Boyutlu Terminolojisi",
-                    "teacher": "Prof. Dr. Emre Acaroğlu",
+                    "title": "Omurgaya Posterior Yaklaşım",
                     "content": [
                         {
-                            "index": "<em>Dr. Emre Acaroğlu</em><br><br><h5><b>Öğrenim hedefleri</b>:</h5><br><p>Bu ders sonrasında katılımcı:</p><br><ul><li>Omurga deformitelerinin sınıflandırılması için tanımlanmış sistemleri sıralar,</li><li>Bu sistemlerin özelliklerini, göreceli üstün ve zayıf yanlarını tartışır,</li><li>Üç boyutlu uzayda omurga dizilimini tanımlar,</li><li>Bu amaçla farklı karteziyen referans sistemlerini kullanır,</li><li>Dizilimin bozulması ile ortaya çıkan deformiteleri tanımlar ve isimlendirir.</li></ul><br>"
+                            "teacher0": {
+                                "type": "teacher",
+                                "index": "Prof. Dr. Alpaslan Şenköylü"
+                            },
+                            "title0": {
+                                "type": "title",
+                                "index": "Öğrenim hedefleri"
+                            },
+                            "text0": {
+                                "type": "text",
+                                "index": "Bu ders sonunda katılımcı;"
+                            },
+                            "list0": {
+                                "type": "list",
+                                "index": [
+                                    "Torakolumbar omurga posteriorunun kaba anatomisini tanımlar",
+                                    "Anatomik referansları kullanarak seviye tanımlaması yapar",
+                                    "Disseksiyon sırasında kanamayı engellemek için püf noktaları sıralar",
+                                    "Pedikül vidası yerleştirme ve posterolateral füzyon için temel anatomik yapıları açıklar"
+                                ]
+                            }
                         },
                         {
-                            "index": "<p>Dersimizin bu birinci kısmında omurga deformitelerinin sınıflandırılmasında kullanılan ve kullanılabilecek çeşitli sistemleri inceleyeceğiz. Sunuma geçmeden önce belirtmek istediğim birkaç önemli nokta mevcut:</p><p><br><ul><li>Sunumdaki sistemlerin bazılarını biliyor, bazılarını bilmiyor olabilirsiniz, bildiklerinizi de bilmedikleriniz ve yeni öğrendikleriniz ışığında tekrar düşünmenizi öneririm.</li></ul><ul><li>Bu sınıflamalar birbirilerinin alternatifi değil, deformiteler anlam çabalarımızın önemli yapıtaşlarıdır. Bu nedenle, bunlar arasından şunu ya da bunu seçmeniz değil, hepsini anlamanız ve kullanmanız gerekli. </li></ul>"
-
+                            "video1": {
+                                "type": "video",
+                                "index": "https://www.youtube.com/embed/g1wZWPmahfk"
+                            }
+                        }
+                    ]
+                }, {
+                    "title": "Omurga Deformitelerinin Sınıflandırılması ve 3 Boyutlu Terminolojisi",
+                    "content": [
+                        {
+                            "teacher0": {
+                                "type": "teacher",
+                                "index": "Prof. Dr. Emre Acaroğlu"
+                            },
+                            "title0": {
+                                "type": "title",
+                                "index": "Öğrenim hedefleri"
+                            },
+                            "text0": {
+                                "type": "text",
+                                "index": "Bu ders sonunda katılımcı;"
+                            },
+                            "list0": {
+                                "type": "list",
+                                "index": [
+                                    "Omurga deformitelerinin sınıflandırılması için tanımlanmış sistemleri sıralar",
+                                    "Bu sistemlerin özelliklerini, göreceli üstün ve zayıf yanlarını tartışır",
+                                    "Üç boyutlu uzayda omurga dizilimini tanımlar",
+                                    "Bu amaçla farklı karteziyen referans sistemlerini kullanır",
+                                    "Dizilimin bozulması ile ortaya çıkan deformiteleri tanımlar ve isimlendirir"
+                                ]
+                            }
                         },
                         {
-                            "index": "<div style='text-align: center; margin-top: 1rem;'><iframe src='https://www.youtube.com/embed/MYMS1V8GwBk' gesture='media' allow='encrypted-media' allowfullscreen='' width='560' height='315' frameborder='0'></iframe></div>"
+                            "paragraph0": {
+                                "type": "paragraph",
+                                "index": "Dersimizin bu birinci kısmında omurga deformitelerinin sınıflandırılmasında kullanılan ve kullanılabilecek çeşitli sistemleri inceleyeceğiz. Sunuma geçmeden önce belirtmek istediğim birkaç önemli nokta mevcut:"
+                            },
+                            "list0": {
+                                "type": "list",
+                                "index": [
+                                    "Sunumdaki sistemlerin bazılarını biliyor, bazılarını bilmiyor olabilirsiniz, bildiklerinizi de bilmedikleriniz ve yeni öğrendikleriniz ışığında tekrar düşünmenizi öneririm",
+                                    "Bu sınıflamalar birbirilerinin alternatifi değil, deformiteler anlam çabalarımızın önemli yapıtaşlarıdır. Bu nedenle, bunlar arasından şunu ya da bunu seçmeniz değil, hepsini anlamanız ve kullanmanız gerekli."
+                                ]
+                            }
                         },
                         {
-                            "index": "<h5>Bu ikinci kısımda ise, büyük ölçüde Scoliosis Research Society’nin çabaları ile oluşturulmuş üç boyutlu terminolojiyi sunmaya ve önemini vurgulamaya çalışacağım. Önerim, önce aşağıdaki linklerde yer alan yazıları okumanız, daha sonra ise kısa bir pratik uygulama içeren sunumu seyretmeniz.</h5><h5><br><ul><li>Stokes IA ve SRS terminoloji komitesi makalesi <a href='https://www.ncbi.nlm.nih.gov/pubmed/8153835' target='_blank'><b><u>burada</u></b></a></li></ul><ul><li>SRS online eğitim materyalleri: Omurga deformitelerinin 3D terminolojisi (Stokes makalesinin özeti) <a href='http://www.srs.org/professionals/online-education-and-resources/glossary/three-dimensional-terminology-of-spinal-deformity' target='_blank'><b><u>burada</u></b></a></li></ul></h5><h5><br></h5>"
+                            "video0": {
+                                "type": "video",
+                                "index": "https://www.youtube.com/embed/MYMS1V8GwBk"
+                            }
                         },
                         {
-                            "index": "<div style='text-align: center; margin-top: 1rem;'><iframe src='https://www.youtube.com/embed/DqaN14QIWHE' gesture='media' allow='encrypted-media' allowfullscreen='' width='560' height='315' frameborder='0'></iframe></div>"
+                            "paragraph0": {
+                                "type": "paragraph",
+                                "index": "Bu ikinci kısımda ise, büyük ölçüde Scoliosis Research Society’nin çabaları ile oluşturulmuş üç boyutlu terminolojiyi sunmaya ve önemini vurgulamaya çalışacağım. Önerim, önce aşağıdaki linklerde yer alan yazıları okumanız, daha sonra ise kısa bir pratik uygulama içeren sunumu seyretmeniz."
+                            },
+                            "link0": {
+                                "type": "link",
+                                "text": "Stokes IA ve SRS terminoloji komitesi makalesi",
+                                "url": "https://www.ncbi.nlm.nih.gov/pubmed/8153835"
+                            },
+                            "link1": {
+                                "type": "link",
+                                "text": "SRS online eğitim materyalleri: Omurga deformitelerinin 3D terminolojisi (Stokes makalesinin özeti)",
+                                "url": "http://www.srs.org/professionals/online-education-and-resources/glossary/three-dimensional-terminology-of-spinal-deformity"
+                            }
+                        },
+                        {
+                            "video0": {
+                                "type": "video",
+                                "index": "https://www.youtube.com/embed/DqaN14QIWHE"
+                            }
                         }
                     ]
                 }
