@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Route, Switch, withRouter} from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
+import { Route, Switch, withRouter, useHistory } from 'react-router-dom';
 
 // import classes from './Course.module.scss';
 import axiosAdmin from '../../../../axiosUtility/axios-admin';
@@ -8,16 +8,26 @@ import CreateSubSection from './CreateSubSection/CreateSubSection';
 
 // TODO: Instead of using state management here, move all the logic to its parent component
 const Course = props => {
-    const [courseData, setCourseData] = useState({});
+    const [subSectionToEdit, setSubSectionToEdit] = useState({});
     const config = {
         headers: {
             'Authorization': 'Bearer ' + props.token
         }
     };
+    const history = useHistory();
+
+    const timeout = useRef();
+
+    // useEffect(() => {
+    //     setCourseData(props.courseData);
+    // }, [props.courseData]);
 
     useEffect(() => {
-        setCourseData(props.courseData);
-    }, [props.courseData]);
+        timeout.current = null;
+        return () => {
+            clearTimeout(timeout.current);
+        }
+    }, [])
 
     const onSectionAddedHandler = (sectionName) => {
         axiosAdmin.post(`/section`, {
@@ -26,47 +36,128 @@ const Course = props => {
         }, config).then(response => {
             const responseData = response.data || {};
 
-            console.log(responseData)
+            if (responseData.isSectionAdded) {
+                props.courseListUpdated(responseData.newCourseData);
+            }
+        });
+    }
 
-        //     if (responseData.isAdded) {
-        //         const newCourseList = courseList.concat(responseData.addedProduct);
+    const onSectionDeletedHandler = (sectionId) => {
+        axiosAdmin.delete(`/section/${sectionId}`, config).then(response => {
+            const responseData = response.data || {};
 
-        //         setCourseList(newCourseList);
+            if (responseData.isSectionDeleted) {
+                // props.courseListUpdated(responseData.newCourseData);
+                let copiedCourseData = { ...props.courseData };
+                let deletedSectionId = (responseData.result || {})._id || '';
+                let copiedCourseSections = [ ...copiedCourseData.sections ];
+                let newSections =  copiedCourseSections.filter(section => section._id !== deletedSectionId);
 
-        //         // history.push(props.match.url + '/course-management');
-        //     }
+                copiedCourseData.sections = [...newSections];
+
+                props.courseListUpdated(copiedCourseData);
+            }
+        });
+    }
+
+    const courseSectionDataChangedHandler = (newSectionData) => {
+        let copiedCourseData = { ...props.courseData };
+
+        let copiedCourseSections = [ ...copiedCourseData.sections ];
+        let newSections =  copiedCourseSections.map(section => {
+            if (section._id === newSectionData._id) {
+                section = {...newSectionData};
+            }
+
+            return section;
+        });
+
+        copiedCourseData.sections = [...newSections];
+
+        return copiedCourseData;
+    }
+
+    const onSubsectionDeletedHandler = (subsectionId) => {
+        axiosAdmin.delete(`/section/subsection/${subsectionId}`, config).then(response => {
+            const responseData = response.data || {};
+
+            if (responseData.isSubSectionDeleted) {
+                props.courseListUpdated(courseSectionDataChangedHandler(responseData.newSectionData));
+            }
+        });
+    }
+
+    const onSubsectionEdit = (data) => {
+        const subSectionToEdit = ((props.courseData.sections.find(section => section._id === data.section) ||
+            {}).subsections || []).find(subsection => subsection._id === data.subsection) || {};
+
+        setSubSectionToEdit(subSectionToEdit);
+
+        history.push(props.match.url + `/${data.section}/edit-subsection/${data.subsection}`);
+    }
+
+    const onSubSectionEditedHandler = (data) => {
+        axiosAdmin.put(`/section/subsection/${data.subsection}`, data, config).then(response => {
+            const responseData = response.data || {};
+
+            if (responseData.isSubSectionEdited) {
+                props.courseListUpdated(courseSectionDataChangedHandler(responseData.newSectionData));
+
+                props.history.push(props.match.url + `/course-management/${props.courseData._id}`);
+            }
         });
     }
 
     const onSubSectionCreatedHandler = (data) => {
-        console.log(data)
+        axiosAdmin.post(`/section/${data.section}/add-subsection`, {
+            ...data
+        }, config).then(response => {
+            const responseData = response.data || {};
 
-        // props.history.push(props.match.url + `/course-management/${courseData._id}`);
-        // axiosAdmin.post(`/section/${data.section}/add-subsection`, {
-        //     ...data
-        // }, config).then(response => {
-        //     const responseData = response.data || {};
+            if (responseData.isSubSectionAdded) {
+                // let newSectionData = responseData.newSectionData;
 
-        //     if (responseData.isSubSectionAdded) {
-        //         const newCourseList = courseList.concat(responseData.addedProduct);
+                props.courseListUpdated(courseSectionDataChangedHandler(responseData.newSectionData))
 
-        //         setCourseList(newCourseList);
+                // let copiedCourseData = { ...props.courseData };
 
-        //         // history.push(props.match.url + '/course-management');
-        //     }
-        // });
+                // let copiedCourseSections = [ ...copiedCourseData.sections ];
+                // let newSections =  copiedCourseSections.map(section => {
+                //     if (section._id === newSectionData._id) {
+                //         section = {...newSectionData};
+                //     }
+
+                //     return section;
+                // });
+
+                // copiedCourseData.sections = [...newSections];
+
+                // props.courseListUpdated(copiedCourseData)
+
+                // setCourseData(copiedCourseData);
+
+                props.history.push(props.match.url + `/course-management/${props.courseData._id}`);
+            }
+        });
     }
 
     const routes = (
         <Switch>
+            <Route path={props.match.url + '/:sectionId/edit-subsection/:subsectionId'} render={() => <CreateSubSection
+                savedSubSectionData={subSectionToEdit}
+                editedSubSection={onSubSectionEditedHandler} />}
+            />
             <Route path={props.match.url + '/:sectionId/create-subsection'} render={() => <CreateSubSection
-                sectionList={courseData.sections}
+                sectionList={props.courseData.sections}
                 createdSubSection={onSubSectionCreatedHandler} />}
             />
             {/* <Route path={props.match.url + '/:sectionName'} render={() => <span>Section Management</span>} /> */}
             <Route path={props.match.url + '/'} render={() => <CourseHome
                 sectionAdded={onSectionAddedHandler}
-                courseData={courseData}
+                deletedSection={onSectionDeletedHandler}
+                deletedSubsection={onSubsectionDeletedHandler}
+                editedSubsection={onSubsectionEdit}
+                courseData={props.courseData}
                 {...props} />}
             />
 		</Switch>

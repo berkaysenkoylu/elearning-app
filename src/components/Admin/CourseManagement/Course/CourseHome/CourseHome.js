@@ -24,10 +24,12 @@ const CourseHome = props => {
         value: ''
     });
 
+    // console.log('I AM RENDERED')
     const courseData = props.courseData || {};
+    // console.log(courseData)
     
     const onSubSectionAddedHandler = (sectionId) => {
-        console.log(sectionId)
+        // console.log(sectionId)
         props.history.push(props.match.url + `/${sectionId}/create-subsection`)
     }
 
@@ -63,6 +65,9 @@ const CourseHome = props => {
                             key={section._id}
                             sectionData={section}
                             subsectionAdded={onSubSectionAddedHandler}
+                            subsectionDeleted={props.deletedSubsection}
+                            subsectionEdited={props.editedSubsection}
+                            sectionDeleted={props.deletedSection}
                         />;
                     })}
                 </ul>

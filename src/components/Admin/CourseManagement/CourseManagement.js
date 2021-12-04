@@ -105,6 +105,21 @@ const CourseManagement = (props) => {
         });
     }
 
+    // TODO: FIX/CHANGE LATER
+    const onCourseListUpdatedHandler = (newCourseData) => {
+        const copiedCourseList = [...courseList].map(course => {
+            if (course._id === newCourseData._id) {
+                course = {...newCourseData};
+            }
+
+            return course;
+        });
+
+        // console.log(copiedCourseList)
+        setCourseList(copiedCourseList);
+        setSelectedCourse(newCourseData);
+    }
+
     let routes = (
 		<Switch>
             <Route path={props.match.url + '/course-management/edit-course/:id'} render={() =>
@@ -118,6 +133,7 @@ const CourseManagement = (props) => {
                 <Course
                     token={props.token}
                     courseData={selectedCourse}
+                    courseListUpdated={onCourseListUpdatedHandler}
                 />} />
 			<Route path={props.match.url  + '/course-management/'} render={() => <AdminCourseList
                 courseList={courseList}

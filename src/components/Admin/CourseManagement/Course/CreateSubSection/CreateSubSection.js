@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { withRouter } from 'react-router';
+import React, { useState, useEffect, useCallback } from 'react';
+import { withRouter, useParams } from 'react-router';
 
+import firstLetterUpper from '../../../../../utility/firstLetterUpper';
 import addInputField from '../../../../../utility/addInputField';
 import checkValidity from '../../../../../utility/formValidation';
 import classes from './CreateSubSection.module.scss';
@@ -11,6 +12,7 @@ import SectionFormControl from './SectionFormControl/SectionFormControl';
 const SECTION_ELEMENTS = ['Title', 'Paragraph', 'Text', 'List', 'Image Url', 'Video Url', 'Teacher', 'Pagebreak'];
 
 const CreateSubSection = props => {
+    const params = useParams();
     const [isEditMode, setIsEditMode] = useState(false);
     const [formValid, setFormValid] = useState(false);
     const [sectionFormControls, setSectionFormControls] = useState({
@@ -30,14 +32,83 @@ const CreateSubSection = props => {
         }
     });
 
+    // TODO: Revisit this function
+    const populateFormFields = useCallback(() => {
+        const subsectionToEdit = props.savedSubSectionData || {};
+        const subsectionContent = subsectionToEdit.content ||[];
+
+        // Set the name of the subsection
+        let  copiedFormControls = { ...sectionFormControls };
+        const copiedNameFormCtrl = { ...copiedFormControls.name };
+
+        copiedNameFormCtrl.value = subsectionToEdit.name || '';
+        copiedNameFormCtrl.valid = true;
+        copiedNameFormCtrl.touched = true;
+        copiedFormControls.name = { ...copiedNameFormCtrl };
+
+        let index = 0;
+        let currContent = [];
+        let currItemValue = '';
+        let formControlArr = Object.keys(copiedFormControls);
+        let formControllerNumbers = [];
+
+        while (index < subsectionContent.length) {
+            if (index > 0) {
+                if (formControlArr.pop().indexOf('Pagebreak') === -1) {
+                    copiedFormControls[`Pagebreak${index - 1}`] = true;
+                }
+            }
+
+            currContent = subsectionContent[index];
+
+            let contentArr = Object.keys(currContent);
+            let itemKey = '';
+
+            for (let i = 0; i < contentArr.length; i++) {
+                formControlArr = Object.keys(copiedFormControls);
+                itemKey = contentArr[i];
+
+                let currItem = firstLetterUpper(itemKey);
+
+                formControllerNumbers = formControlArr.filter(frmCtrller => frmCtrller
+                    .indexOf(currItem.replace(/[0-9]/g, '')) !== -1);
+
+                currItemValue = currContent[itemKey].index;
+                let keyIndex = formControllerNumbers.length;
+
+                currItem = currItem.replace(/\d+/g, '')
+
+                copiedFormControls = addInputField(copiedFormControls, {
+                    type: currItem !== 'Paragraph' && currItem !== 'List' ? 'input' : 'textarea',
+                    inputKey: `${currItem + keyIndex}`,
+                    placeholder: `${currItem + ' ' + (keyIndex + 1)}`,
+                    label: `${currItem + ' ' + (keyIndex + 1)}`,
+                    validation: {
+                        required: true
+                    },
+                    valid: true,
+                    touched: true,
+                    value: currItem !== 'List' ? currItemValue : currItemValue.join('\n')
+                });
+            }
+
+            index++;
+        }
+        
+        setSectionFormControls(copiedFormControls);
+        setFormValid(true);
+        // eslint-disable-next-line
+    }, [props.savedSubSectionData]);
+
     useEffect(() => {
-        let sectionId = ((props.match || {}).params || {}).sectionId || '';
-        let currentSection = props.sectionList.find(section => section._id === sectionId) || {}
+        if (params.subsectionId && params.subsectionId !== '') {
+            setIsEditMode(true);
+        }
 
-        console.log(currentSection);
-    }, [props.sectionList, props.match]);
+        populateFormFields();
+    }, [params, populateFormFields]);
 
-    const onMenuItemClickedHandler = item => {
+    const onMenuItemClickedHandler = (item) => {
         let copiedSectionFormControls = { ...sectionFormControls };
         let formControlArr = Object.keys(copiedSectionFormControls);
         
@@ -127,44 +198,6 @@ const CreateSubSection = props => {
             }
         }
 
-        // TODO: FIX HERE
-        // // Flatten the key names
-        // // e.g; ['Title0', 'Title1', 'Text0', 'Text2', 'Text1'] ==> ['Title0', 'Title1', 'Text0', 'Text1', 'Text2']
-        // let newFrmControlArr = Object.keys(copiedSectionFormControls).slice(1);
-        // let currIndex = 1;
-        // let lastKey = newFrmControlArr[0].replace(/[0-9]/g, '');
-        // let keyNumber = 0;
-        // let currFormCtrlKey = newFrmControlArr[0];
-        // let currFormCtrlKeyNo = 0;
-
-        // // Check if the first element's key no is 0
-        // if (parseInt(currFormCtrlKey.replace(/^[0-9]/g, '')) !== keyNumber) {
-        //     newFrmControlArr[0] = lastKey + keyNumber;
-
-        //     keyNumber = keyNumber + 1;
-        // }
-
-        // while (currIndex < newFrmControlArr.length) {
-        //     // if (parseInt(currFormCtrlKey.replace(/^[0-9]/g, '')) === keyNumber) {
-        //     //     keyNumber = keyNumber + 1;
-        //     // }
-
-        //     // lastKey = currFormCtrlKey.replace(/[0-9]/g, '');
-
-        //     for (let i = currIndex; i < newFrmControlArr.length; i++) {
-        //         currFormCtrlKey = newFrmControlArr[i];
-        //         currFormCtrlKeyNo = parseInt(currFormCtrlKey.replace(/^[0-9]/g, ''));
-
-        //         if (currFormCtrlKeyNo !== keyNumber) {
-        //             newFrmControlArr[i] = lastKey + keyNumber++;
-        //         }
-        //     }
-
-        //     currIndex++;
-        // }
-        
-        // console.log(newFrmControlArr)
-
         setSectionFormControls(copiedSectionFormControls);
 
         let formControlArr = Object.values(copiedSectionFormControls);
@@ -210,17 +243,27 @@ const CreateSubSection = props => {
 
             copiedSubSection[keyElementName.replace(/[^A-Za-z\s+]/g, '') + index] = {
                 type: elementType,
-                index: elementType !== 'list' ? sectionFormControls[formControlArr[i]].value : sectionFormControls[formControlArr[i]].value.split('\n')
+                index: elementType !== 'list' ? sectionFormControls[formControlArr[i]].value :
+                    sectionFormControls[formControlArr[i]].value.split('\n')
             };
 
             subSections[activeIndex] = {...copiedSubSection};
         }
 
-        props.createdSubSection({
-            section: ((props.match || {}).params || {}).sectionId || '',
-            name: sectionFormControls['name'].value,
-            content: subSections
-        });
+        if (!isEditMode) {
+            props.createdSubSection({
+                section: ((props.match || {}).params || {}).sectionId || '',
+                name: sectionFormControls['name'].value,
+                content: subSections
+            });
+        } else {
+            props.editedSubSection({
+                subsection: ((props.match || {}).params || {}).subsectionId || '',
+                section: ((props.match || {}).params || {}).sectionId || '',
+                name: sectionFormControls['name'].value,
+                content: subSections
+            })
+        }
     }
 
     // Exclude the first form control

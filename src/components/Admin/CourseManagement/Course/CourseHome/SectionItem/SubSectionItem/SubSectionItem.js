@@ -8,9 +8,9 @@ const SubSectionItem = props => {
             <span className={classes.SubSectionItem__Name}>{props.name}</span>
 
             <span className={classes.SubSectionItem__Cta}>
-                <button>Edit</button>
+                <button onClick={props.subsectionEdited}>Edit</button>
 
-                <button>Delete</button>
+                <button onClick={props.subsectionDeleted}>Delete</button>
             </span>
         </li>
     )

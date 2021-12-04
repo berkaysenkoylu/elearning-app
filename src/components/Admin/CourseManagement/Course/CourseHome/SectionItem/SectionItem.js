@@ -10,18 +10,36 @@ const SectionItem = props => {
         props.subsectionAdded(sectionData._id);
     }
 
+    const onSectionDelete = () => {
+        props.sectionDeleted(sectionData._id);
+    }
+
+    const onSubSectionEdited = (subsectionId) => {
+        props.subsectionEdited({
+            section: sectionData._id,
+            subsection: subsectionId
+        });
+    }
+
     return (
         <li className={classes.SectionItem}>
             <div className={classes.SectionItem__Name}>
                 {sectionData.name}
                 
                 <button className={classes.SectionItem__Add} onClick={onSubSectionAdd}>Add</button>
+
+                <button className={classes.SectionItem__Add} onClick={onSectionDelete}>Delete</button>
             </div>
 
             <ul className={classes.SectionItem__List}>
-                <SubSectionItem name='Subsection 1' />
-
-                <SubSectionItem name='Subsection 2' />
+                {sectionData.subsections.map(subsection => {
+                    return <SubSectionItem
+                        key={subsection._id}
+                        name={subsection.name}
+                        subsectionEdited={() => onSubSectionEdited(subsection._id)}
+                        subsectionDeleted={() => props.subsectionDeleted(subsection._id)}
+                    />;
+                })}
             </ul>
         </li>
     )
