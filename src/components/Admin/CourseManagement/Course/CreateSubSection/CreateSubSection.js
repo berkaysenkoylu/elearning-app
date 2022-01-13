@@ -9,7 +9,7 @@ import Button from '../../../../UI/Button/Button';
 import Menu from '../../../../UI/Menu/Menu';
 import SectionFormControl from './SectionFormControl/SectionFormControl';
 
-const SECTION_ELEMENTS = ['Title', 'Paragraph', 'Text', 'List', 'Image Url', 'Video Url', 'Teacher', 'Pagebreak'];
+const SECTION_ELEMENTS = ['Index'];
 
 const CreateSubSection = props => {
     const params = useParams();
@@ -52,13 +52,9 @@ const CreateSubSection = props => {
         let formControlArr = Object.keys(copiedFormControls);
         let formControllerNumbers = [];
 
-        while (index < subsectionContent.length) {
-            if (index > 0) {
-                if (formControlArr.pop().indexOf('Pagebreak') === -1) {
-                    copiedFormControls[`Pagebreak${index - 1}`] = true;
-                }
-            }
+        console.log(subsectionContent)
 
+        while (index < subsectionContent.length) {
             currContent = subsectionContent[index];
 
             let contentArr = Object.keys(currContent);
@@ -73,13 +69,14 @@ const CreateSubSection = props => {
                 formControllerNumbers = formControlArr.filter(frmCtrller => frmCtrller
                     .indexOf(currItem.replace(/[0-9]/g, '')) !== -1);
 
-                currItemValue = currContent[itemKey].index;
+                currItemValue = currContent.index;
+
                 let keyIndex = formControllerNumbers.length;
 
                 currItem = currItem.replace(/\d+/g, '')
 
                 copiedFormControls = addInputField(copiedFormControls, {
-                    type: currItem !== 'Paragraph' && currItem !== 'List' ? 'input' : 'textarea',
+                    type: 'textarea',
                     inputKey: `${currItem + keyIndex}`,
                     placeholder: `${currItem + ' ' + (keyIndex + 1)}`,
                     label: `${currItem + ' ' + (keyIndex + 1)}`,
@@ -88,7 +85,7 @@ const CreateSubSection = props => {
                     },
                     valid: true,
                     touched: true,
-                    value: currItem !== 'List' ? currItemValue : currItemValue.join('\n')
+                    value: currItemValue
                 });
             }
 
@@ -121,29 +118,19 @@ const CreateSubSection = props => {
             index++;
         }
 
-        if (item !== 'Pagebreak') {
-            copiedSectionFormControls = addInputField(copiedSectionFormControls, {
-                type: item !== 'Paragraph' && item !== 'List' ? 'input' : 'textarea',
-                inputKey: `${item + index}`,
-                placeholder: `${item + ' ' + (index + 1)}`,
-                label: `${item + ' ' + (index + 1)}`,
-                validation: {
-                    required: true
-                }
-            });
-
-            setSectionFormControls(copiedSectionFormControls);
-
-            setFormValid(false)
-        } else {
-            if (formControlArr.length > 0) {
-                if (formControlArr.pop().indexOf('Pagebreak') === -1) {
-                    copiedSectionFormControls[`${item + index}`] = true;
-
-                    setSectionFormControls(copiedSectionFormControls);
-                }
+        copiedSectionFormControls = addInputField(copiedSectionFormControls, {
+            type: 'textarea',
+            inputKey: `${item + index}`,
+            placeholder: `${item + ' ' + (index + 1)}`,
+            label: `${item + ' ' + (index + 1)}`,
+            validation: {
+                required: true
             }
-        }
+        });
+
+        setSectionFormControls(copiedSectionFormControls);
+
+        setFormValid(false)
     }
 
     const checkFormValidity = (wholeForm) => {
@@ -212,42 +199,13 @@ const CreateSubSection = props => {
     const onSubSectionCreatedHandler = () => {
         // Subsections
         let formControlArr = Object.keys(sectionFormControls).slice(1);
-        let sectionCount = formControlArr.filter(item => item.toLowerCase().indexOf('pagebreak') !== -1).length + 1;
-
-        let activeIndex = 0;
+        let sectionCount = formControlArr.length;
         let subSections = new Array(sectionCount).fill({});
 
         for (let i = 0; i < formControlArr.length; i++) {
-            let keyElementName = formControlArr[i].toLowerCase();
-
-            if (keyElementName.indexOf('pagebreak') !== -1) {
-                activeIndex++;
-
-                continue;
-            }
-
-            let copiedSubSection = {
-                ...subSections[activeIndex]
+            subSections[i] = {
+                index: sectionFormControls[formControlArr[i]].value
             };
-
-            // Find how many of the same element is in the object
-            let sectionElementNumbers = Object.keys(copiedSubSection).filter(sectionElement => sectionElement.indexOf(keyElementName
-                .replace(/[^A-Za-z\s+]/g, '')) !== -1).map(item => parseInt(item.replace(/[^0-9]/g, '')));
-            let index = 0;
-
-            while (sectionElementNumbers.indexOf(index) !== -1) {
-                index++;
-            }
-
-            let elementType = keyElementName.replace(/[^A-Za-z]/g, '');
-
-            copiedSubSection[keyElementName.replace(/[^A-Za-z\s+]/g, '') + index] = {
-                type: elementType,
-                index: elementType !== 'list' ? sectionFormControls[formControlArr[i]].value :
-                    sectionFormControls[formControlArr[i]].value.split('\n')
-            };
-
-            subSections[activeIndex] = {...copiedSubSection};
         }
 
         if (!isEditMode) {

@@ -8,6 +8,7 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.21.4",
+    "dompurify": "^2.3.4",
     "gh-pages": "^3.1.0",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
@@ -36,7 +37,7 @@
       "not dead",
       "not op_mini all"
     ],
-  "development": [
+    "development": [
       ">0.3%",
       "not ie 11",
       "not dead",

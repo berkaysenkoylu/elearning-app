@@ -7,6 +7,7 @@ import Input from '../../../../UI/Input/Input';
 import Button from '../../../../UI/Button/Button';
 import Accordion from '../../../../UI/Accordion/Accordion';
 import CourseInfo from '../../../../CourseInfo/CourseInfo';
+import Select from '../../../../UI/Select/Select';
 
 const CourseHome = props => {
     const [sectionNameFormCtrl, setSectionNameFormCtrl] = useState({
@@ -23,14 +24,23 @@ const CourseHome = props => {
         touched: false,
         value: ''
     });
+    const [courseActivities, setCourseActivities] = useState({
+        'quiz': {
+            'label': 'Quiz',
+            'createLink': '/create-quiz',
+            'selected': true
+        },
+        'questionnaire': {
+            'label': 'Questionnaire',
+            'createLink': '/create-questionnaire',
+            'selected': false
+        }
+    })
 
-    // console.log('I AM RENDERED')
     const courseData = props.courseData || {};
-    // console.log(courseData)
     
     const onSubSectionAddedHandler = (sectionId) => {
-        // console.log(sectionId)
-        props.history.push(props.match.url + `/${sectionId}/create-subsection`)
+        props.history.push(props.match.url + `/${sectionId}/create-subsection`);
     }
 
     const inputChangedHandler = (event) => {
@@ -48,6 +58,29 @@ const CourseHome = props => {
 
     const onSectionAddHandler = () => {
         props.sectionAdded(sectionNameFormCtrl.value);
+    }
+
+    const onSelectChangedHandler = (label) => {
+        const copiedCourseActivities = {...courseActivities};
+        const keys = Object.keys(copiedCourseActivities);
+
+        for (let i = 0; i < keys.length; i++) {
+            let copiedActivity = {...copiedCourseActivities[keys[i]]};
+
+            copiedActivity.selected = copiedActivity.label === label;
+
+            copiedCourseActivities[keys[i]] = {...copiedActivity};
+        }
+
+        setCourseActivities(copiedCourseActivities);
+    }
+
+    const onActivityAdd = () => {
+        let link = (Object.values(courseActivities).find(item => item.selected) || {}).createLink || '';
+
+        console.log(link)
+
+        props.history.push(props.match.url + '/create-quiz');
     }
 
     return (
@@ -89,6 +122,27 @@ const CourseHome = props => {
                         disabled={!sectionNameFormCtrl.valid}
                         clicked={onSectionAddHandler}>Add</Button>
                 </div>
+            </Accordion>
+
+            <Accordion label="Course Activities">
+                <div className={classes.CourseHome__Activities}>
+                    <ul className={classes.CourseHome__Activities__List}>
+                        <li>Quiz #1 - EDIT | DELETE</li>
+                        <li>Questionnaire - EDIT | DELETE</li>
+                    </ul>
+
+                    <div className={classes.CourseHome__Activities__Cta}>
+                        <Select data={courseActivities} selectChanged={onSelectChangedHandler} />
+
+                        <Button
+                            btnType='BtnPrimary'
+                            btnSize='BtnSmall'
+                            clicked={onActivityAdd}>Add</Button>
+                    </div>
+                </div>
+                
+
+                
             </Accordion>
         </section>
     )

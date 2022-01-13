@@ -41,8 +41,38 @@
         }
     }
 
-    & > div:last-child {
+    & > div:not(:first-child) {
         margin: 3rem auto 0 auto;
         width: 80%;
+    }
+
+    &__Activities {
+        margin-top: 2rem;
+        font-size: $default-font-size;
+
+        h2 {
+            font-size: $small-header-font-size;
+        }
+
+        &__List {
+            list-style: none;
+            margin: 1rem 0 0 2rem;
+
+            li:not(:last-child) {
+                margin-bottom: 1rem;
+            }
+        }
+
+        &__Cta {
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-end;
+            margin-top: 1.5rem;
+
+            button {
+                margin-left: 1rem;
+                height: 100%;
+            }
+        }
     }
 }

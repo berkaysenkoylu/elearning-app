@@ -10,6 +10,9 @@ const CourseSection = (props) => {
     const [subSectionPageIndex, setSubSectionPageIndex] = useState(0); // Signifies where we are in the subsection
 
     let sectionData = props.sectionData;
+
+    console.log(sectionData)
+
     let totalSectionCount = (sectionData.subsections || []).length;
     let currentSectionLength = (((sectionData.subsections || [])[subSectionIndex] || {}).content || []).length;
 
@@ -85,7 +88,7 @@ const CourseSection = (props) => {
                         {sectionData.subsections.map((section, i) => {
                             return <li key={i} className={classes.Section__ListItem}>
                                 <span>
-                                    {section.title}
+                                    {section.name}
                                 </span>
                                 
                                 <button className={classes.Section__ListButton} onClick={() => onSubSectionSelectedHandler(i)}>

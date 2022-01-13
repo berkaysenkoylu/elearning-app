@@ -143,6 +143,8 @@ const Course = props => {
 
     const routes = (
         <Switch>
+            <Route path={props.match.url + '/create-quiz'} render={() => <div>CREATE QUIZ</div>}
+            />
             <Route path={props.match.url + '/:sectionId/edit-subsection/:subsectionId'} render={() => <CreateSubSection
                 savedSubSectionData={subSectionToEdit}
                 editedSubSection={onSubSectionEditedHandler} />}

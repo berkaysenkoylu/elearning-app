@@ -6,6 +6,7 @@ import Button from '../../UI/Button/Button';
 
 const CourseSubSection = (props) => {
     let subSectionData = props.subSectionData;
+    console.log(subSectionData)
     // console.log(((subSectionData || {}).content || [])[props.subSectionPageIndex] || 'END');
 
     return (

@@ -1,0 +1,42 @@
+@import '../../../variables';
+
+.Select {
+    position: relative;
+    display: flex;
+    width: 12em;
+    height: 2em;
+    border-radius: .25em;
+    overflow: hidden;
+
+    &::-ms-expand {
+        display: none;
+    }
+
+    &::after {
+        content: '\25BC';
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 0.35em;
+        background-color: #4c759e;
+        transition: .25s all ease;
+        pointer-events: none;
+    }
+
+    &:hover::after {
+        color: #f39c12;
+    }
+
+    & > select {
+        appearance: none;
+        outline: 0;
+        border: 0;
+        box-shadow: none;
+        flex: 1;
+        padding: 0 1em;
+        color: #fff;
+        background-color: #4c759e;
+        background-image: none;
+        cursor: pointer;
+    }
+}
