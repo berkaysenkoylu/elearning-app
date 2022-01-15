@@ -5,6 +5,7 @@ import { Route, Switch, withRouter, useHistory } from 'react-router-dom';
 import axiosAdmin from '../../../../axiosUtility/axios-admin';
 import CourseHome from './CourseHome/CourseHome';
 import CreateSubSection from './CreateSubSection/CreateSubSection';
+import CreateQuiz from '../Course/CourseActivities/CreateQuiz/CreateQuiz';
 
 // TODO: Instead of using state management here, move all the logic to its parent component
 const Course = props => {
@@ -143,8 +144,8 @@ const Course = props => {
 
     const routes = (
         <Switch>
-            <Route path={props.match.url + '/create-quiz'} render={() => <div>CREATE QUIZ</div>}
-            />
+            <Route path={props.match.url + '/create-questionnaire'} render={() => <div>CREATE QUESTIONNAIRE</div>} />
+            <Route path={props.match.url + '/create-quiz'} render={() => <CreateQuiz />} />
             <Route path={props.match.url + '/:sectionId/edit-subsection/:subsectionId'} render={() => <CreateSubSection
                 savedSubSectionData={subSectionToEdit}
                 editedSubSection={onSubSectionEditedHandler} />}

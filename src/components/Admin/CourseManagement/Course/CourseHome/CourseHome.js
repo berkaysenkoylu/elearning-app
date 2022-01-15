@@ -78,9 +78,7 @@ const CourseHome = props => {
     const onActivityAdd = () => {
         let link = (Object.values(courseActivities).find(item => item.selected) || {}).createLink || '';
 
-        console.log(link)
-
-        props.history.push(props.match.url + '/create-quiz');
+        props.history.push(props.match.url + link);
     }
 
     return (
