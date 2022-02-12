@@ -1,0 +1,11 @@
+@import '../../variables';
+
+.CreateQuestion {
+    font-size: $default-font-size;
+
+    &__Header {
+        text-align: center;
+        font-size: $small-header-font-size;
+        font-weight: 500;
+    }
+}

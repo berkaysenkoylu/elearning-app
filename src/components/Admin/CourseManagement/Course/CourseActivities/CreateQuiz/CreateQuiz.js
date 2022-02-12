@@ -1,70 +1,52 @@
 import React, { useState } from 'react';
 
 import classes from './CreateQuiz.module.scss';
-import Input from '../../../../../UI/Input/Input';
-import Menu from '../../../../../UI/Menu/Menu';
+import axiosAdmin from '../../../../../../axiosUtility/axios-admin';
+import FileUpload from '../../../../../FileUpload/FileUpload';
+// import Input from '../../../../../UI/Input/Input';
 import Button from '../../../../../UI/Button/Button';
-import formValidation from '../../../../../../utility/formValidation';
+// import formValidation from '../../../../../../utility/formValidation';
 
-const QUESTION_TYPES = ['multiple-choice', 'case study'];
+const CreateQuiz = props => {
+    const [quizName, setquizName] = useState('Test');
+    const [file, setFile] = useState(undefined);
 
-const CreateQuiz = () => {
-    const [quizFormControls, setQuizFormControls] = useState({
-        name: {
-            elementType: 'input',
-            elementConfig: {
-                type: 'text',
-                placeholder: 'Quiz Name'
-            },
-            label: "Quiz Name",
-            validation: {
-                required: true
-            },
-            valid: false,
-            touched: false,
-            value: ''
-        }
-    });
-    const [formIsValid, setFormIsValid] = useState(false);
-
-    const onMenuItemClickedHandler = item => {
-        console.log(item);
-    }
-
-    const inputChangedHandler = (event, formControl) => {
-        const copiedFormControls = { ...quizFormControls };
-
-        const copiedFormControl = { ...copiedFormControls[formControl] };
-
-        copiedFormControl.value = event.target.value;
-
-        // Also check validity & mark it as touched
-        let isValid = formValidation(event.target.value, copiedFormControl.validation);
-        copiedFormControl.valid = isValid;
-        copiedFormControl.touched = true;
-
-        copiedFormControls[formControl] = copiedFormControl;
-
-        // Set the validiity of the form
-        let formValid = true;
-        Object.keys(copiedFormControls).forEach(formCtrl => {
-            formValid = formValid && copiedFormControls[formCtrl].valid;
-        });
-
-        setFormIsValid(formValid);
-        setQuizFormControls(copiedFormControls);
+    const onFileSelectedHandler = (selectedFile) => {
+        setFile(selectedFile);
     }
 
     const onQuizCreatedHandler = () => {
-        console.log('HEY')
+
+        const formData = new FormData();
+        formData.append('quizName', quizName);
+        formData.append('file', file);
+
+        
+        axiosAdmin.post('/quiz', formData, props.config).then(response => {
+            const responseData = response.data || {};
+
+            console.log(response)
+
+            // if (responseData.isAdded) {
+            //     const newCourseList = courseList.concat(responseData.addedProduct);
+
+            //     setCourseList(newCourseList);
+
+            //     history.push(props.match.url + '/course-management');
+            // }
+        }).catch(error => {
+            console.log(error)
+        });
     }
 
     return (
         <section className={classes.CreateQuiz}>
             <header className={classes.CreateQuiz__Header}>
                 <h1>Create a quiz</h1>
+            </header>
 
-                <Input
+            <div className={classes.CreateQuiz__Body}>
+                {/* <Input
                     elementType={quizFormControls.name.elementType}
                     elementConfig={quizFormControls.name.elementConfig}
                     label={quizFormControls.name.label}
@@ -72,24 +54,13 @@ const CreateQuiz = () => {
                     touched={quizFormControls.name.touched}
                     isValid={quizFormControls.name.valid}
                     changed={(event) => inputChangedHandler(event, 'name')}
-                />
-            </header>
+                /> */}
 
-            <div className={classes.CreateQuiz__Body}>
-                <div className={classes.CreateQuiz__Body__FormField}>
-                    CONTENT WILL BE HERE
-                </div>
-
-                <div className={classes.CreateQuiz__Body__Menu}>
-                    <Menu
-                        items={QUESTION_TYPES}
-                        menuItemClicked={onMenuItemClickedHandler} />
-                </div>
+                <FileUpload fileSelected={onFileSelectedHandler} />
             </div>
 
             <div className={classes.CreateQuiz__Cta}>
                 <Button
-                    disabled={!formIsValid}
                     clicked={onQuizCreatedHandler}>Create</Button>
             </div>
         </section>
@@ -97,3 +68,35 @@ const CreateQuiz = () => {
 }
 
 export default CreateQuiz;
+
+/*
+
+{
+    text: "Aşağıdaki özelliklerden hangisi 'nöromuskuler' omurga deformitelerinin tipik özelliklerinden değildir?",
+    type: "multiple-choice",
+    questionNumber: 1,
+    choices: [
+        {
+            text: "Özellikle erken dönemlerinde oldukça yumuşaktır, pasif olarak düzeltilebilir",
+            isCorrect: false
+        },
+        {
+            text: "Pelvisi içine alabilir",
+            isCorrect: false
+        },
+        {
+            text: "Vertebral kolonun çökmesi ile ortaya çıkar",
+            isCorrect: false
+        },
+        {
+            text: "İlerlemesi büyümenin sona ermesi ile sona ermez",
+            isCorrect: false
+        },
+        {
+            text: "Genellikle az sayıda vertebral içerir",
+            isCorrect: true
+        }
+    ]
+}
+
+*/
