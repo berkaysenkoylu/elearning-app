@@ -125,7 +125,7 @@ const CourseHome = props => {
             <Accordion label="Course Activities">
                 <div className={classes.CourseHome__Activities}>
                     <ul className={classes.CourseHome__Activities__List}>
-                        <li>Quiz #1 - EDIT | DELETE</li>
+                        <li>{((props.courseData || {}).quiz || {}).name || ''} - EDIT | DELETE</li>
                         <li>Questionnaire - EDIT | DELETE</li>
                     </ul>
 
@@ -138,9 +138,6 @@ const CourseHome = props => {
                             clicked={onActivityAdd}>Add</Button>
                     </div>
                 </div>
-                
-
-                
             </Accordion>
         </section>
     )

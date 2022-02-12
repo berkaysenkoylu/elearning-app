@@ -142,10 +142,43 @@ const Course = props => {
         });
     }
 
+    const onCourseActivityCreatedHandler = (activityType, data) => {
+        let requestUrl = '';
+
+        switch (activityType) {
+            case 'quiz':
+                requestUrl = '/quiz';
+                break;
+            default:
+                break;
+        }
+
+        let courseId = props.courseData._id;
+
+        if (typeof data.append !== 'undefined') {
+            data.append('courseId', courseId);
+        } else {
+            data['courseId'] = courseId;
+        }
+
+        axiosAdmin.post(requestUrl, data, config).then(response => {
+            const responseData = response.data || {};
+
+            if (responseData.isAdded) {
+                props.courseActivityAdded(responseData.newCourseData);
+
+                props.history.push(props.match.url + `/course-management/${props.courseData._id}`);
+            }
+        }).catch(error => {
+            console.log(error)
+        });
+    }
+
     const routes = (
         <Switch>
             <Route path={props.match.url + '/create-questionnaire'} render={() => <div>CREATE QUESTIONNAIRE</div>} />
-            <Route path={props.match.url + '/create-quiz'} render={() => <CreateQuiz config={config} />} />
+            <Route path={props.match.url + '/create-quiz'} render={() => <CreateQuiz
+                onQuizCreated={(quizData) => onCourseActivityCreatedHandler('quiz', quizData) } />} />
             <Route path={props.match.url + '/:sectionId/edit-subsection/:subsectionId'} render={() => <CreateSubSection
                 savedSubSectionData={subSectionToEdit}
                 editedSubSection={onSubSectionEditedHandler} />}
