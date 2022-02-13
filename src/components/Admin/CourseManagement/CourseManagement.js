@@ -135,6 +135,7 @@ const CourseManagement = (props) => {
                     courseData={selectedCourse}
                     courseListUpdated={onCourseListUpdatedHandler}
                     courseActivityAdded={onCourseListUpdatedHandler}
+                    courseActivityEdited={onCourseListUpdatedHandler}
                 />} />
 			<Route path={props.match.url  + '/course-management/'} render={() => <AdminCourseList
                 courseList={courseList}

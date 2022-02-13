@@ -19,23 +19,8 @@
     &__Body {
         flex: 1;
         height: 100%;
-        padding: 1.5rem;
+        padding: 3rem;
         background-color: $color-gray-light;
-
-        &__FormField {
-            padding: 2rem;
-            grid-area: item1;
-
-            height: 100%;
-            overflow-x: hidden;
-            overflow-y: auto;
-            // max-height: 60vh;
-        }
-
-        &__Menu {
-            padding-left: 1.5rem;
-            grid-area: item2;
-        }
     }
 
     &__Cta {

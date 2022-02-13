@@ -174,10 +174,62 @@ const Course = props => {
         });
     }
 
+    const onCourseActivityEditedHandler = (activityType, data) => {
+        let requestUrl = '';
+
+        // console.log(data.get('quizId'))
+
+        switch (activityType) {
+            case 'quiz':
+                requestUrl = '/quiz/' + data.get('quizId');
+                break;
+            default:
+                break;
+        }
+
+        axiosAdmin.put(requestUrl, data, config).then(response => {
+            const responseData = response.data || {};
+
+            if (responseData.isEdited) {
+                props.courseActivityEdited(responseData.newCourseData);
+
+                props.history.push(props.match.url + `/course-management/${props.courseData._id}`);
+            }
+        }).catch(error => {
+            console.log(error)
+        });
+    }
+
+    const onCourseActivityDeletedHandler = (activityType, id) => {
+        let requestUrl = '';
+
+        switch (activityType) {
+            case 'quiz':
+                requestUrl = '/quiz/' + id;
+                break;
+            default:
+                break;
+        }
+
+        axiosAdmin.delete(requestUrl, config).then(response => {
+            const responseData = response.data || {};
+
+            if (responseData.isDeleted) {
+                props.courseListUpdated(responseData.newCourseData);
+            }
+        }).catch(error => {
+            console.log(error)
+        });
+    }
+
     const routes = (
         <Switch>
             <Route path={props.match.url + '/create-questionnaire'} render={() => <div>CREATE QUESTIONNAIRE</div>} />
+            <Route path={props.match.url + '/edit-quiz/:quizId'} render={() => <CreateQuiz
+                currentQuizData={(props.courseData || {}).quiz || {}}
+                onQuizEdited={(quizData) => onCourseActivityEditedHandler('quiz', quizData)} />} />
             <Route path={props.match.url + '/create-quiz'} render={() => <CreateQuiz
+                currentQuizData={undefined}
                 onQuizCreated={(quizData) => onCourseActivityCreatedHandler('quiz', quizData) } />} />
             <Route path={props.match.url + '/:sectionId/edit-subsection/:subsectionId'} render={() => <CreateSubSection
                 savedSubSectionData={subSectionToEdit}
@@ -194,6 +246,7 @@ const Course = props => {
                 deletedSubsection={onSubsectionDeletedHandler}
                 editedSubsection={onSubsectionEdit}
                 courseData={props.courseData}
+                courseActivityDeleted={onCourseActivityDeletedHandler}
                 {...props} />}
             />
 		</Switch>

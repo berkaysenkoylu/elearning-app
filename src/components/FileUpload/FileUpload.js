@@ -19,7 +19,12 @@ const FileUpload = props => {
             </header>
             
             <div className={classes.Form}>
-                <DragAndDrop dropHandle={onSelectFile} file={file} fileSelect={onSelectFile} />
+                <DragAndDrop
+                    dropHandle={onSelectFile}
+                    file={file}
+                    fileSelect={onSelectFile}
+                    preSelectedFileName={props.preSelectedFile}
+                />
             </div>
         </section>
     )

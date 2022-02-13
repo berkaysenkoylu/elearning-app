@@ -11,8 +11,8 @@ const Select = props => {
     }
 
     let content = Object.keys(data).map(option => {
-        return <option key={option} value={data[option].label}>{data[option].label}</option>
-    })
+        return !data[option].alreadyExists ? <option key={option} value={data[option].label}>{data[option].label}</option> : null
+    });
 
     return (
         <div className={classes.Select}>

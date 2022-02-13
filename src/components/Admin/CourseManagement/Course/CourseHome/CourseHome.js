@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import formValidation from '../../../../../utility/formValidation';
 import classes from './CourseHome.module.scss';
@@ -28,14 +28,31 @@ const CourseHome = props => {
         'quiz': {
             'label': 'Quiz',
             'createLink': '/create-quiz',
-            'selected': true
+            'selected': true,
+            'alreadyExists': typeof props.courseData.quiz !== 'undefined'
         },
         'questionnaire': {
             'label': 'Questionnaire',
             'createLink': '/create-questionnaire',
-            'selected': false
+            'selected': false,
+            'alreadyExists': typeof props.courseData.questionnaire !== 'undefined'
         }
-    })
+    });
+
+    useEffect(() => {
+        let copiedCourseActivities = { ...courseActivities };
+        let copiedQuizData = copiedCourseActivities.quiz;
+        let copiedQuestionnaireData = copiedCourseActivities.questionnaire;
+
+        copiedQuizData.alreadyExists = typeof props.courseData.quiz !== 'undefined';
+        copiedQuestionnaireData.alreadyExists = typeof props.courseData.questionnaire !== 'undefined';
+
+        copiedCourseActivities.quiz = { ...copiedQuizData };
+        copiedCourseActivities.questionnaire = { ...copiedQuestionnaireData };
+
+        setCourseActivities(copiedCourseActivities);
+        // eslint-disable-next-line
+    }, [props.courseData])
 
     const courseData = props.courseData || {};
     
@@ -81,6 +98,42 @@ const CourseHome = props => {
         props.history.push(props.match.url + link);
     }
 
+    const onCourseActivityEdit = (activityName, activityId) => {
+        // console.log(`The activity: ${activityName} with the id: ${activityId} is gonna be edited.`)
+
+        props.history.push(props.match.url + `/edit-${activityName}/${activityId}`);
+    }
+
+    const onCourseActivityDelete = (activityName, activityId) => {
+        props.courseActivityDeleted(activityName, activityId);
+    }
+
+    let courseActivityContent = (
+        <span>No course activity has been added yet!</span>
+    );
+
+    if (typeof courseData.quiz !== 'undefined' || typeof courseData.questionnaire !== 'undefined') {
+        courseActivityContent = (
+            <ul className={classes.CourseHome__Activities__List}>
+                { typeof courseData.quiz !== 'undefined' ?
+                    <li>
+                        {courseData.quiz.name}
+
+                        <button onClick={() => onCourseActivityEdit('quiz', courseData.quiz._id)}>Edit</button>
+                        <button onClick={() => onCourseActivityDelete('quiz', courseData.quiz._id)}>Delete</button>
+                    </li> : null }
+                
+                { typeof courseData.questionnaire !== 'undefined' ?
+                    <li>
+                        {courseData.questionnaire.name}
+
+                        <button>Edit</button>
+                        <button>Delete</button>
+                    </li> : null }
+            </ul>
+        )
+    }
+
     return (
         <section className={classes.CourseHome}>
             <header className={classes.CourseHome__Header}>
@@ -124,10 +177,7 @@ const CourseHome = props => {
 
             <Accordion label="Course Activities">
                 <div className={classes.CourseHome__Activities}>
-                    <ul className={classes.CourseHome__Activities__List}>
-                        <li>{((props.courseData || {}).quiz || {}).name || ''} - EDIT | DELETE</li>
-                        <li>Questionnaire - EDIT | DELETE</li>
-                    </ul>
+                    {courseActivityContent}
 
                     <div className={classes.CourseHome__Activities__Cta}>
                         <Select data={courseActivities} selectChanged={onSelectChangedHandler} />

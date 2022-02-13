@@ -3,12 +3,11 @@ import React, { Component, createRef } from 'react';
 import classes from './DragAndDrop.module.scss';
 import File from '../../components/UI/File/File';
 
-// TODO:
 const MIME_TYPE_MAP = {
     "image/png": "png",
     "image/jpeg": "jpeg",
     "image/jpg": "jpg",
-    "application/json": "json" // ?
+    "application/json": "json"
 };
 
 class DragAndDrop extends Component {
@@ -17,13 +16,23 @@ class DragAndDrop extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            classList: [classes.DropContainer],
-            content: 'DRAG YOUR FILE HERE (.png, .jpeg, .jpg, .json)',
-            contentClassList: [classes.ContentText],
-            dataTransferFiles: undefined,
-            selectedFileName: undefined
-        };
+        if (this.props.preSelectedFileName) {
+            this.state = {
+                classList: [classes.DropContainer, classes.DropContainerEnter],
+                content: `Selected file: ${this.props.preSelectedFileName}`,
+                contentClassList: [classes.ContentText, classes.ValidFileType],
+                dataTransferFiles: undefined,
+                selectedFileName: this.props.preSelectedFileName
+            };
+        } else {
+            this.state = {
+                classList: [classes.DropContainer],
+                content: 'DRAG YOUR FILE HERE (.png, .jpeg, .jpg, .json)',
+                contentClassList: [classes.ContentText],
+                dataTransferFiles: undefined,
+                selectedFileName: undefined
+            };
+        }
 
         this.dragCounter = 0;
     }
@@ -45,11 +54,22 @@ class DragAndDrop extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if(prevProps.file !== this.props.file && (prevProps.file !== undefined && this.props.file === undefined)) {
+        if (prevProps.file !== this.props.file && (prevProps.file !== undefined && this.props.file === undefined)) {
             this.resetState();
         }
 
-        return ((prevProps.file !== this.props.file) && (prevProps.file !== undefined && this.props.file === undefined));
+        if (prevProps.preSelectedFileName !== this.props.preSelectedFileName) {
+            this.setState({
+                classList: [classes.DropContainer, classes.DropContainerEnter],
+                content: `Selected file: ${this.props.preSelectedFileName}`,
+                contentClassList: [classes.ContentText, classes.ValidFileType],
+                dataTransferFiles: undefined,
+                selectedFileName: this.props.preSelectedFileName
+            });
+        }
+
+        return ((prevProps.file !== this.props.file) && (prevProps.file !== undefined && this.props.file === undefined)) ||
+            prevProps.preSelectedFileName !== this.props.preSelectedFileName;
     }
 
     checkMimeType = (file) => {
