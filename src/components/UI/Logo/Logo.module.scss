@@ -1,0 +1,11 @@
+@import '../../../variables';
+
+.Logo {
+    background-image: url(../../../assets/images/icon.png);
+    background-repeat: no-repeat;
+    background-size: 12rem 3rem;
+    display: inline-block;
+    height: 3rem;
+    margin-top: 2.4rem;
+    width: 15rem;
+}

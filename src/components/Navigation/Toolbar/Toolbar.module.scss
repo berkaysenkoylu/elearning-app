@@ -1,22 +1,30 @@
-@import "../../../variables";
+@import '../../../variables';
+
+.ToolbarWrapper {
+    color: rgba($color-grey-dark, 0.85);
+    background-color: $color-white;
+    font-size: $default-font-size;
+    border-bottom: 1px solid rgba($color-grey-dark, 0.5);
+}
 
 .Toolbar {
-    position: fixed;
-    width: 100%;
-    height: 5rem;
-    top: 0;
-    background-color: $color-tertiary;
-    font-size: $default-font-size;
-    z-index: 1000;
+    width: 65%;
+    margin: 0 auto;
     display: flex;
-    -webkit-box-align: center;
-    -moz-box-align: center;
-    -ms-flex-align: center;
-    -webkit-align-items: center;
-    align-items: center;
+    height: 7.5rem;
+    font-weight: 600;
 
-    // & > * {
-    //     max-width: 140rem;
-    //     margin: 0 auto;
-    // }
+    &__Main {
+        width: 100%;
+        margin-left: 3rem;
+        display: flex;
+
+        & > span:not(:last-child) {
+            margin-right: 2rem;
+        }
+
+        & > span:not(:first-child) {
+            margin-left: 2rem;
+        }
+    }
 }

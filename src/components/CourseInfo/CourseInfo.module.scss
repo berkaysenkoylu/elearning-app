@@ -1,12 +1,12 @@
 @import "../../variables";
 
 .CourseInfo {
-    width: 80%;
+    // width: 80%;
     height: 60rem;
     margin: 0 auto;
     padding: 1.5rem;
     font-size: $default-font-size;
-    box-shadow: 0.25rem 0.5rem 0.75rem rgba($color-tertiary-dark-2, 0.75);
+    box-shadow: 1px 2px 3px rgba($color-tertiary-dark-2, 0.75);
     background-color: rgba($color-tertiary-dark-2, 0.2);
     display: flex;
 

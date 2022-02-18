@@ -14,18 +14,20 @@ const NavigationItems = (props) => {
                 <NavigationItem exact to="/administration">Administration</NavigationItem> :
                 null
             }
-            
-            { props.isAuth ?
-                <NavigationItem exact to="/logout">Logout</NavigationItem> :
-                <NavigationItem exact to="/auth">Sign in</NavigationItem>
-            }
         </>
     );
 
     return (
         <nav className={classes.Navigation}>
-            <ul className={classes.NavigationItems}>
+            <ul className={classes.Navigation__Items}>
                 {navList}
+            </ul>
+
+            <ul className={classes.Navigation__Auth}>
+                { props.isAuth ?
+                    <NavigationItem exact to="/logout">Logout</NavigationItem> :
+                    <NavigationItem exact to="/auth">Sign in</NavigationItem>
+                }
             </ul>
         </nav>
     )

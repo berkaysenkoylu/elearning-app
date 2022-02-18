@@ -1,11 +1,20 @@
 @import "../../../variables";
 
 .Navigation {
-    width: 100%;
-}
-
-.NavigationItems {
     display: flex;
-    list-style: none;
-    padding: 1rem 2rem;
+    align-items: center;
+    width: 100%;
+
+    &__Items, &__Auth {
+        list-style: none;
+    }
+
+    &__Items {
+        display: flex;
+        padding: 0.5rem 0.75rem;
+    }
+
+    &__Auth {
+        margin-left: auto;
+    }
 }

@@ -11,7 +11,13 @@ const CourseSection = (props) => {
 
     let sectionData = props.sectionData;
 
-    console.log(sectionData)
+    // console.log(sectionData.subsections.map(subsection=> {
+    //     return {
+    //         id: subsection._id,
+    //         name: subsection.name,
+    //         contentTitleArr: subsection.content.map(content => content.title)
+    //     };
+    // }));
 
     let totalSectionCount = (sectionData.subsections || []).length;
     let currentSectionLength = (((sectionData.subsections || [])[subSectionIndex] || {}).content || []).length;
@@ -68,6 +74,23 @@ const CourseSection = (props) => {
         }
     }
 
+    const onNewSubSectionSelectedHandler = (newIndices) => {
+        setSubSectionIndex(newIndices[0]);
+        setSubSectionPageIndex(newIndices[1]);
+    }
+
+    let subSectionNavigationData = {
+        subSectionPageIndex: subSectionPageIndex,
+        subSectionIndex: subSectionIndex,
+        subSectionMap: sectionData.subsections.map(subsection=> {
+            return {
+                id: subsection._id,
+                name: subsection.name,
+                contentTitleArr: subsection.content.map(content => content.title)
+            };
+        })
+    }
+
     return (
         <div className={classes.Section}>
             <button className={classes.BackMenu__Button} onClick={props.onBackToMainMenu}>
@@ -99,7 +122,9 @@ const CourseSection = (props) => {
                             </li>;
                         })}
                     </ul>
-                </section> : <CourseSubSection 
+                </section> : <CourseSubSection
+                    onNewSubSectionSelected={onNewSubSectionSelectedHandler}
+                    subSectionSideBarData={subSectionNavigationData}
                     subSectionData={sectionData.subsections[subSectionIndex] || {}}
                     subSectionPageIndex={subSectionPageIndex}
                     onBackClicked={onBackClickedHandler}

@@ -7,13 +7,13 @@
     &__Header {
         text-align: center;
         font-size: $default-header-font-size;
-        margin: 3rem 0 5rem 0;
+        margin: 0 0 2.5rem 0;
     }
 
     &__Content {
         height: calc(100% - 12rem);
         font-size: $default-font-size;
-        width: 75%;
+        // width: 75%;
         margin: 0 auto;
         display: flex;
     }

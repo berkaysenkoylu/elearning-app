@@ -1,18 +1,23 @@
 @import "../../../variables";
 
 .CourseSubSection {
-    height: 100%;
     display: flex;
-    flex-direction: column;
+    height: 100%;
 
-    &__Header {
-        margin-bottom: 1rem;
-    }
-
-    &__Cta {
-        margin-top: auto;
+    &__Content {
+        width: 100%;
         display: flex;
-        justify-content: space-between;
+        flex-direction: column;
+
+        &__Header {
+            margin-bottom: 1rem;
+        }
+
+        &__Cta {
+            display: flex;
+            justify-content: space-between;
+            margin-top: auto;
+        }
     }
 
     &__ButtonIcon {

@@ -4,8 +4,8 @@
     perspective: 150rem;
     -moz-perspective: 150rem;
     position: relative;
-    height: 44rem;
-    width: 32rem;
+    height: 36rem;
+    width: 26rem;
 
     &__Content {
         position: relative;
@@ -49,7 +49,7 @@
     &__Picture {
         background-size: cover;
         background-position: 50% 50%;
-        height: 20rem;
+        height: 16rem;
         background-blend-mode: screen;
         border-top-left-radius: 3px;
         border-top-right-radius: 3px;
@@ -59,7 +59,7 @@
     }
 
     &__Heading {
-        font-size: $small-header-font-size;
+        font-size: $default-font-size;
         font-weight: 400;
         line-height: 2;
         padding-top: 2px;
@@ -68,8 +68,8 @@
         color: $color-white;
         text-align: center;
         position: absolute;
-        height: 5rem;
-        top: -2.5rem;
+        height: 4rem;
+        top: -2rem;
         left: 50%;
         transform: translateX(-50%);
         width: 90%;
@@ -84,7 +84,7 @@
     &__Description {
         line-height: 1.4;
         padding: 5rem 1rem;
-        font-size: $default-font-size;
+        font-size: $small-font-size;
 
         &__FacultyList {
             margin-top: 1rem;
@@ -116,7 +116,7 @@
     }
 
     &__Cta {
-        font-size: 3rem;
+        font-size: 2.2rem;
         position: absolute;
         top: 50%;
         left: 50%;
@@ -134,8 +134,8 @@
             color: $color-white;
 
             &__Icon {
-                width: 5rem;
-                height: 5rem;
+                width: 4rem;
+                height: 4rem;
                 fill: $color-white;
                 transition: all 0.2s ease-out;
             }
@@ -147,7 +147,7 @@
                 left: 0;
                 background-color: $color-white;
                 width: 100%;
-                height: 3px;
+                height: 2px;
                 transform-origin: right;
                 transform: scaleX(0) translate3d(0,0,0);
                 -webkit-transform: scaleX(0) translate3d(0,0,0);
