@@ -5,6 +5,7 @@ import axiosAdmin from '../../../axiosUtility/axios-admin';
 import Course from './Course/Course';
 import CreateCourse from './CreateCourse/CreateCourse';
 import AdminCourseList from './CourseList/AdminCourseList';
+import CourseEnrollment from './CourseEnrollment/CourseEnrollment';
 
 const CourseManagement = (props) => {
     const config = {
@@ -122,6 +123,9 @@ const CourseManagement = (props) => {
 
     let routes = (
 		<Switch>
+            <Route path={props.match.url + '/course-management/:id/user-enrollment'} render={() =>
+                <CourseEnrollment
+                />} />
             <Route path={props.match.url + '/course-management/edit-course/:id'} render={() =>
                 <CreateCourse
                     savedCourseData={courseToEdit}

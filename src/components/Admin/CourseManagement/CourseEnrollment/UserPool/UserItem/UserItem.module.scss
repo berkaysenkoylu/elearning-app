@@ -1,0 +1,14 @@
+@import '../../../../../../variables';
+
+.UserItem {
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+        background-color: $gray;
+    }
+
+    &__Active {
+        background-color: $gray-dark;
+    }
+}

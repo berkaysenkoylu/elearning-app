@@ -75,4 +75,16 @@
             }
         }
     }
+
+    &__UserEnrollment {
+        display: flex;
+        flex-direction: column;
+
+        &__Cta {
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-end;
+            margin-top: 1.5rem;
+        }
+    }
 }

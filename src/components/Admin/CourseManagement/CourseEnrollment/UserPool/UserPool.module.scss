@@ -1,0 +1,14 @@
+@import '../../../../../variables';
+
+.UserPool {
+    text-align: center;
+    width: 40%;
+
+    &__Body {
+        background-color: rgba($gray, 0.2);
+        border-style: inset;
+        border-width: 3px;
+        height: 40rem;
+        list-style: none;
+    }
+}

@@ -108,6 +108,10 @@ const CourseHome = props => {
         props.courseActivityDeleted(activityName, activityId);
     }
 
+    const onUserEnroll = () => {
+        props.history.push(props.match.url + '/user-enrollment');
+    }
+
     let courseActivityContent = (
         <span>No course activity has been added yet!</span>
     );
@@ -186,6 +190,19 @@ const CourseHome = props => {
                             btnType='BtnPrimary'
                             btnSize='BtnSmall'
                             clicked={onActivityAdd}>Add</Button>
+                    </div>
+                </div>
+            </Accordion>
+
+            <Accordion label="User Enrollment">
+                <div className={classes.CourseHome__UserEnrollment}>
+                    {`There are currently ${courseData.enrolledUsers.length} users in this course.`}
+
+                    <div className={classes.CourseHome__UserEnrollment__Cta}>
+                        <Button
+                            btnType='BtnPrimary'
+                            btnSize='BtnSmall'
+                            clicked={onUserEnroll}>Enroll Users</Button>
                     </div>
                 </div>
             </Accordion>
