@@ -1,0 +1,37 @@
+@import '../../../../../variables';
+
+.AdminAccordionMenuItem {
+    display: flex;
+    align-items: center;
+    
+    &:not(:last-child) {
+        margin-bottom: 1rem;
+    }
+
+    &__Icon {
+        width: 1.8rem;
+        height: 1.8rem;
+        fill: $color-tertiary-dark-1;
+        margin-right: 0.5rem;
+    }
+
+    &__Link {
+        text-decoration: none;
+        color: $black;
+        transition: all 0.2s ease-out;
+
+        &:hover {
+            color: $color-tertiary-dark-1;
+        }
+    }
+
+    &__ActiveLink {
+        &:link,
+        &:visited {
+            font-weight: 700;
+            text-decoration: none;
+            color: $color-tertiary-dark-1;
+            transform: scale(1.1);
+        }
+    }
+}

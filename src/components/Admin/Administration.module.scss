@@ -1,7 +1,7 @@
 @import "../../variables";
 
 .Administration {
-    min-height: calc(100vh - 5rem);
+    min-height: calc(100vh - 100px);
     display: grid;
     grid-template-rows: 1fr;
     grid-template-columns: repeat(5, minmax(min-content, 1fr));
@@ -9,7 +9,7 @@
     grid-gap: 3px;
 
     & > :not(:first-child) {
-        padding: 0 2rem 2rem 2rem;
+        padding: 0 0 2rem 2rem;
     }
 
     // padding-right: 2rem;

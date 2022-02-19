@@ -1,0 +1,13 @@
+@import '../../../variables';
+
+.AdminHome {
+    grid-area: item2;
+    padding-right: 2rem;
+    display: grid;
+    grid-template-rows: 0.65fr repeat(2,  minmax(min-content, 1fr));
+    grid-template-columns: repeat(3, minmax(min-content, 1fr));
+    grid-template-areas: "item1 item1 item1"
+                         "item2 item2 item2"
+                         "item3 item3 item3";
+    grid-gap: 1rem;
+}

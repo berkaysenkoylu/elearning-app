@@ -9,7 +9,7 @@
         letter-spacing: 0.3em;
         text-transform: uppercase;
         padding: 1rem;
-        margin-bottom: 2rem;
+        margin-bottom: 1.5rem;
         
         h1 {
             font-weight: 400;
@@ -43,7 +43,7 @@
 
     & > div:not(:first-child) {
         margin: 3rem auto 0 auto;
-        width: 80%;
+        // width: 80%;
     }
 
     &__Activities {

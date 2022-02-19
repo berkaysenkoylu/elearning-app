@@ -17,7 +17,7 @@
 
     &__Body {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(25rem, 30rem));
+        grid-template-columns: repeat(auto-fit, minmax(15rem, 25rem));
         grid-gap: 5rem;
         padding: 2rem;
     }

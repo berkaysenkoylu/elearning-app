@@ -1,0 +1,48 @@
+@import '../../../../variables';
+
+.FeaturedInfo {
+    grid-area: item1;
+
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: repeat(3, minmax(min-content, 1fr));
+    grid-gap: 3rem;
+    font-size: $default-font-size;
+
+    &__Body {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        font-size: $default-font-size;
+
+        &__Amount {
+            font-weight: 600;
+            font-size: $bigger-header-font-size;
+            margin-right: 2.5rem;
+        }
+
+        &__Percentage {
+            margin-right: 1rem;
+        }
+
+        &__Icon {
+            width: 2rem;
+            height: 2rem;
+            
+            &__Increase {
+                fill: $green;
+            }
+
+            &__Decrease {
+                fill: $red;
+            }
+        }
+    }
+
+    &__Footer {
+        margin-top: 1rem;
+        font-weight: 700;
+        color: $gray-dark;
+    }
+}

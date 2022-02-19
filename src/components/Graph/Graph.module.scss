@@ -1,0 +1,18 @@
+@import '../../variables';
+
+.Graph {
+    padding: 1rem 1.5rem;
+    grid-area: item2;
+    box-shadow: $shadow-mild;
+    display: flex;
+    flex-direction: column;
+
+    &__Header {
+        margin-bottom: 2rem;
+
+        h2 {
+            font-weight: 700;
+            font-size: $small-header-font-size;
+        }
+    }
+}
