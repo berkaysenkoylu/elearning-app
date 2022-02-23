@@ -16,12 +16,18 @@ const CourseManagement = (props) => {
     const [selectedCourse, setSelectedCourse] = useState({});
     const [courseToEdit, setCourseToEdit] = useState({});
     const [courseList, setCourseList] = useState([]);
+    const [userList, setUserList] = useState([]);
     const history = useHistory();
 
     useEffect(() => {
         axiosAdmin.get('/course').then(response => {
             setCourseList(response.data.courseList);
         });
+
+        axiosAdmin.get('/user', config).then(response => {
+            setUserList(response.data.userList);
+        });
+        // eslint-disable-next-line
     }, []);
 
     const onCourseNameClickedHandler = (course) => {
@@ -121,10 +127,35 @@ const CourseManagement = (props) => {
         setSelectedCourse(newCourseData);
     }
 
+    const onUserEnrollmentSubmittedHandler = (submittedUsers) => {
+        axiosAdmin.put(`/course/${selectedCourse._id}/enroll-users`, { userList: submittedUsers }, config).then(response => {
+            let responseData = response.data;
+
+            if (responseData.areUsersEnrolled) {
+                const copiedCourseList = courseList.map(course => {
+                    if (course._id === selectedCourse._id) {
+                        return {
+                            ...responseData.newCourse
+                        };
+                    }
+
+                    return course
+                });
+
+                setCourseList(copiedCourseList);
+
+                history.push(props.match.url + '/course-management');
+            }
+        });
+    }
+
     let routes = (
 		<Switch>
             <Route path={props.match.url + '/course-management/:id/user-enrollment'} render={() =>
                 <CourseEnrollment
+                    userList={userList}
+                    enrolledUsers={selectedCourse.enrolledUsers}
+                    onUserEnrollmentSubmitted={onUserEnrollmentSubmittedHandler}
                 />} />
             <Route path={props.match.url + '/course-management/edit-course/:id'} render={() =>
                 <CreateCourse

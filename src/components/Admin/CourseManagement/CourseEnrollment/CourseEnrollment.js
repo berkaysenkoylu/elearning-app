@@ -1,23 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import classes from './CourseEnrollment.module.scss';
 import UserPool from './UserPool/UserPool';
+import Button from '../../../UI/Button/Button';
 
-const CourseEnrollment = () => {
-    const [enrolledUsers, setEnrolledUsers] = useState([]);
-    const [nonEnrolledUsers, setNonEnrolledUsers] = useState([{
-        _id: '1',
-        name: 'John Doe',
-        isSelected: false
-    }, {
-        _id: '2',
-        name: 'Jane Doe',
-        isSelected: false
-    }, {
-        _id: '3',
-        name: 'Leroy Jenkins',
-        isSelected: false
-    }]);
+const CourseEnrollment = props => {
+    const [enrolledUsers, setEnrolledUsers] = useState(props.enrolledUsers.map(user => {
+        return {
+            _id: user._id,
+            name: user.firstName + ' ' + user.lastName,
+            isSelected: false
+        }
+    }));
+    const [nonEnrolledUsers, setNonEnrolledUsers] = useState([]);
+
+    useEffect(() => {
+        let idArr = props.enrolledUsers.map(user => user._id);
+
+        const modifiedUserList = props.userList
+            .filter(user => user.status !== 'admin' && idArr.indexOf(user._id) === -1)
+            .map(user => {
+                return {
+                    _id: user._id,
+                    name: user.firstName + ' ' + user.lastName,
+                    isSelected: false
+                };
+            });
+
+        setNonEnrolledUsers(modifiedUserList)
+    }, [props.userList, props.enrolledUsers]);
 
     const onUserSelectedHandler = (action, userId) => {
         let copiedList = {};
@@ -79,6 +90,10 @@ const CourseEnrollment = () => {
         setEnrolledUsers(copiedEnrolledUsers);
     }
 
+    const onUserEnrollmentSubmit = () => {
+        props.onUserEnrollmentSubmitted(enrolledUsers.map(enrolledUser => enrolledUser._id));
+    }
+
     return (
         <section className={classes.CourseEnrollment}>
             <header className={classes.CourseEnrollment__Header}>
@@ -103,6 +118,12 @@ const CourseEnrollment = () => {
                     userList={nonEnrolledUsers}
                     userSelected={(userId) => onUserSelectedHandler('enrol', userId)}
                 />
+            </div>
+
+            <div className={classes.CourseEnrollment__Cta}>
+                <Button
+                    btnType="BtnPrimary"
+                    clicked={onUserEnrollmentSubmit}>Submit</Button>
             </div>
         </section>
     );
