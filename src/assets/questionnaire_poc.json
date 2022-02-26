@@ -42,24 +42,7 @@
                     "type": "multiple-choice",
                     "elementType": "radio",
                     "questionNumber": 4,
-                    "choices": [
-                        {
-                            "text": "Hiç kullanmam",
-                            "isSelected": false
-                        },
-                        {
-                            "text": "Nadiren kullanırım",
-                            "isSelected": false
-                        },
-                        {
-                            "text": "Bazen kullanırım",
-                            "isSelected": false
-                        },
-                        {
-                            "text": "Hep kullanırım",
-                            "isSelected": false
-                        }
-                    ],
+                    "choices": ["Hiç kullanmam", "Nadiren kullanırım", "Bazen kullanırım", "Hep kullanırım"],
                     "validation": {
                         "required": true
                     }
@@ -68,6 +51,7 @@
                     "text": "Kendinizi bla bla yönünden nasıl derecelendirirsiniz?",
                     "type": "slider",
                     "elementType": "slider",
+                    "sliderRange": [0, 100],
                     "sliderStep": 5,
                     "questionNumber": 5,
                     "value": 0,
@@ -79,8 +63,10 @@
                     "text": "Kendinizi aşağıdaki yönlerden nasıl derecelendirirsiniz?",
                     "type": "slider-combination",
                     "elementType": "slider-comb",
-                    "sliderStep": 10,
-                    "subTexts": [
+                    "sliderRange": [0, 100],
+                    "sliderStep": 5,
+                    "value": [],
+                    "subSliders": [
                         {
                             "text": "Kendimi yetersiz görüyorum",
                             "value": 0
@@ -95,6 +81,18 @@
                         }
                     ],
                     "questionNumber": 6,
+                    "validation": {
+                        "required": true
+                    }
+                },
+                {
+                    "text": "Kendinizi başka bir yönden nasıl derecelendirirsiniz?",
+                    "type": "slider",
+                    "elementType": "slider",
+                    "sliderRange": [0, 100],
+                    "sliderStep": 5,
+                    "questionNumber": 7,
+                    "value": 0,
                     "validation": {
                         "required": true
                     }

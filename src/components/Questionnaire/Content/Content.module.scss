@@ -1,8 +1,16 @@
 @import "../../../variables";
 
-.Content {
-    margin: 5rem auto;
+.ContentWrapper {
+    position: relative;
+    margin: 5rem auto 5rem 0;
     height: calc(100% - 10rem);
+    width: 90%;
+    overflow-y: scroll;
+}
+
+.Content {
+    padding-bottom: 3rem;
+    margin: 0 auto;
     width: 80%;
 
     &__Cta {

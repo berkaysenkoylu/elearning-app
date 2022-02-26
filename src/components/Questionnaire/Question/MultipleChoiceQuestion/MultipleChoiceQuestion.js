@@ -18,7 +18,7 @@ const MultipleChoiceQuestion = (props) => {
                         id={'question' + questionData.questionNumber + '' + index}
                         key={'question' + questionData.questionNumber + '' + index}
                         name={'question' + questionData.questionNumber}
-                        label={choice.text}
+                        label={choice}
                         selected={() => props.answerSelected(index)}
                     />;
                 })}

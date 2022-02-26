@@ -10,6 +10,7 @@ const updateQuestionaireState = (data) => {
         specificConfig: {
             value: '',
             choices: [],
+            sliderRange: [],
             sliderStep: 10,
             subText: []
         }
@@ -25,10 +26,14 @@ const updateQuestionaireState = (data) => {
             break;
         case 'slider':
             questionConfig.specificConfig['value'] = data.value || 0;
+            questionConfig.specificConfig['sliderRange'] = data.sliderRange || [0, 100];
             questionConfig.specificConfig['sliderStep'] = data.sliderStep || 5;
             break;
         case 'slider-combination':
-            questionConfig.specificConfig['subTexts'] = data.subTexts || {};
+            questionConfig.specificConfig['value'] = data.subSliders || [];
+            questionConfig.specificConfig['subSliders'] = data.subSliders || [];
+            questionConfig.specificConfig['sliderRange'] = data.sliderRange || [0, 100];
+            questionConfig.specificConfig['sliderStep'] = data.sliderStep || 5;
             break;
         default:
             break;

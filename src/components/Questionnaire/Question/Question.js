@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
-// import classes from './Question.module.scss';
+import classes from './Question.module.scss';
 import Input from '../../UI/Input/Input';
 import MultipleChoiceQuestion from './MultipleChoiceQuestion/MultipleChoiceQuestion';
+import SliderQuestion from './SliderQuestion/SliderQuestion';
+import SliderCombinationQuestion from './SliderCombinationQuestion/SliderCombinationQuestion';
 import updateQuestionaireState from '../../../utility/updateQuestionaireState';
 import checkValidity from '../../../utility/formValidation';
 
@@ -18,6 +20,7 @@ const Question = (props) => {
         specificConfig: {
             value: '',
             choices: [],
+            sliderRange: [],
             sliderStep: 10,
             subText: []
         }
@@ -53,10 +56,56 @@ const Question = (props) => {
     }
 
     const onMultipleChoiceSelectedHandler = (index) => {
-        console.log(index)
+        let copiedQuestionState = { ...questionConfig };
+        let copiedQuestionSpecificConfig = { ...copiedQuestionState.specificConfig };
+        let copiedChoices = [...copiedQuestionSpecificConfig.choices];
+        let selectedChoice = copiedChoices[index];
+
+        if (copiedQuestionSpecificConfig.value === selectedChoice) {
+            return;
+        }
+
+        let validationRules = ((questionConfig || {}).commonConfig ||{}).validation || {};
+        let validity = checkValidity(selectedChoice, validationRules);
+
+        copiedQuestionSpecificConfig.value = selectedChoice;
+
+        copiedQuestionState.specificConfig = copiedQuestionSpecificConfig;
+
+        setIsValid(validity);
+        setIsTouched(true);
+        setQuestionConfig({...copiedQuestionState});
+        
+        props.questionAnswerFinish({
+            answer: selectedChoice,
+            valid: validity
+        });
+    }
+
+    const onSliderCombinationValueChangedHandler = (sliderCombData) => {
+        let copiedQuestionState = { ...questionConfig };
+        let copiedQuestionSpecificConfig = { ...copiedQuestionState.specificConfig };
+
+        let newSubSliderValues = copiedQuestionSpecificConfig.value.map((subSliderValue, index) => {
+            if (sliderCombData.sliderIndex === index) {
+                subSliderValue.value = sliderCombData.value;
+            }
+
+            return subSliderValue;
+        });
+
+        copiedQuestionSpecificConfig.value = newSubSliderValues;
+        copiedQuestionState.specificConfig = copiedQuestionSpecificConfig;
+
+        setQuestionConfig({...copiedQuestionState});
+
+        props.questionAnswerFinish({
+            newSubSliderData: newSubSliderValues
+        });
     }
 
     let content = null;
+    let questionData = {};
 
     switch(questionConfig.commonConfig.type || '') {
         case 'text':
@@ -76,7 +125,7 @@ const Question = (props) => {
             />;
             break;
         case 'multiple-choice':
-            let questionData = {
+            questionData = {
                 questionNumber: questionConfig.commonConfig.questionNumber,
                 text: questionConfig.commonConfig.text,
                 choices: questionConfig.specificConfig.choices
@@ -87,18 +136,40 @@ const Question = (props) => {
             />;
             break;
         case 'slider':
+            content = <SliderQuestion
+                sliderLabel={questionConfig.commonConfig.text}
+                sliderRange={questionConfig.specificConfig.sliderRange}
+                sliderStep={questionConfig.specificConfig.sliderStep}
+                value={questionConfig.specificConfig.value}
+                focusLost={onInputFocusLostHandler}
+                sliderChanged={(event) => onInputChanged(event)}
+            />;
             break;
         case 'slider-combination':
+            questionData = {
+                questionNumber: questionConfig.commonConfig.questionNumber,
+                text: questionConfig.commonConfig.text,
+                subSliders: questionConfig.specificConfig.subSliders
+            };
+
+            content = <SliderCombinationQuestion
+                questionData={questionData}
+                sliderConfig={{
+                    range: questionConfig.specificConfig.sliderRange,
+                    step: questionConfig.specificConfig.sliderStep
+                }}
+                sliderCombinationValueChanged={onSliderCombinationValueChangedHandler}
+            />;
             break;
         default:
             break;
     }
 
     return (
-        <>
+        <div className={classes.QuestionWrapper}>
             {content}
-        </>
-    )
+        </div>
+    );
 }
 
 export default Question;

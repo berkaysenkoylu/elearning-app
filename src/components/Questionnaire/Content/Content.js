@@ -12,6 +12,7 @@ const Content = (props) => {
         setQuestionnaireQuestions(props.questions);
     }, [props.questions]);
 
+    // TODO: fix
     const onQuestionFinishedHandler = (index, answerData) => {
         // console.log(`Question #${index}: ${answerData.answer} and its validity status: ${answerData.valid}`);
 
@@ -19,17 +20,21 @@ const Content = (props) => {
 
         let copiedQuestionArr = [...questionnaireQuestions];
         let copiedQuestionData = { ...copiedQuestionArr[index] };
-        let questionElementType = copiedQuestionData.elementType || '';
+        let questionElementType = copiedQuestionData.type || '';
 
         switch (questionElementType) {
-            case 'input':
+            case 'text':
+            case 'multiple-choice':
+            case 'slider':
                 copiedQuestionData.value = answerData.answer;
+                copiedQuestionData.valid = answerData.valid;
+                break;
+            case 'slider-combination':
+                copiedQuestionData.value = answerData.newSubSliderData;
                 break;
             default:
                 throw new Error('There is no such type of an element!');
         }
-
-        copiedQuestionData.valid = answerData.valid;
 
         copiedQuestionArr[index] = copiedQuestionData;
 
@@ -44,6 +49,21 @@ const Content = (props) => {
         setIsFormValid(isValid);
     }
 
+    const onQuestionnaireSubmitted = () => {
+        let questionnaireData = {
+            userId: '',
+            questionnaireId: '',
+            data: questionnaireQuestions.map(question => {
+                return {
+                    questionNo: question.questionNumber,
+                    type: question.type,
+                    answer: question.value
+                }
+            })
+        }
+        props.questionnaireSubmitted(questionnaireData)
+    }
+
     let pageContent = questionnaireQuestions.map((question, i) => {
         return <Question
             key={i}
@@ -54,12 +74,17 @@ const Content = (props) => {
 
     return (
         <>
-            <section className={classes.Content}>
-                {pageContent}
+            <section className={classes.ContentWrapper}>
+                <div className={classes.Content}>
+                    {pageContent}
+                </div>
             </section>
 
             <div className={classes.Content__Cta}>
-                <Button disabled={!isFormValid}>Gönder</Button>
+                <Button
+                    disabled={!isFormValid}
+                    clicked={onQuestionnaireSubmitted}
+                >Submit</Button>
             </div>
         </>
     )

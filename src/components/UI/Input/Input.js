@@ -30,6 +30,8 @@ const Input = (props) => {
         if (event.target.type === 'password') {
             setPasswordFeedbackVisible(false)
         }
+
+        props.focusLost();
     }
 
     switch(props.elementType) {
