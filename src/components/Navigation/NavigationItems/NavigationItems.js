@@ -2,6 +2,7 @@ import React from 'react';
 
 import classes from './NavigationItems.module.scss';
 import NavigationItem from './NavigationItem/NavigationItem';
+import AccountItem from '../AccountItem/AccountItem';
 
 const NavigationItems = (props) => {
     let navList = (
@@ -25,8 +26,9 @@ const NavigationItems = (props) => {
 
             <ul className={classes.Navigation__Auth}>
                 { props.isAuth ?
-                    <NavigationItem exact to="/logout">Logout</NavigationItem> :
-                    <NavigationItem exact to="/auth">Sign in</NavigationItem>
+                    // <NavigationItem exact to="/logout">Logout</NavigationItem> :
+                    // <NavigationItem exact to="/auth">Sign in</NavigationItem>
+                    <AccountItem /> : <NavigationItem exact to="/auth">Sign in</NavigationItem>
                 }
             </ul>
         </nav>

@@ -1,0 +1,79 @@
+@import '../../variables';
+
+.Account {
+    &__Header, &__Content {
+        box-shadow: $shadow-custom-3;
+        border-radius: 8px;
+    }
+
+    &__Header {
+        padding: 1rem 0;
+        margin-bottom: 2rem;
+
+        h2 {
+            font-size: $default-header-font-size;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.6em;
+            font-weight: 400;
+        }
+    }
+
+    &__Content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        &__ImageContainer, &__FormContainer {
+            width: 100%;
+        }
+
+        &__ImageContainer {
+            padding: 1rem;
+            border-bottom: 1px rgba($color-grey-light-2, 0.6) solid;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            figure {
+                -webkit-clip-path: circle(50% at 50% 50%);
+                clip-path: circle(50% at 50% 50%);
+                shape-outside: circle(50% at 50% 50%);
+                border-radius: 50%;
+                height: 25rem;
+                overflow: hidden;
+                position: relative;
+                // -webkit-transform: translateX(-3rem);
+                // transform: translateX(-3rem);
+                width: 25rem;
+                margin: 0 auto;
+                transform: scale(0.8);
+                border: 1px #a5a5a5b0 solid;
+            }
+
+            &__Image {
+                -webkit-backface-visibility: hidden;
+                backface-visibility: hidden;
+                background-image: url(../../assets/images/avatar-default.png);
+                background-position: 50% 50%;
+                background-size: cover;
+                height: 100%;
+            }
+        }
+
+        &__FormContainer {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: flex-start;
+            background-color: $color-grey-light-1;
+
+            // form {
+            //     padding: 1rem;
+            //     width: 50%;
+            // }
+        }
+    }
+}

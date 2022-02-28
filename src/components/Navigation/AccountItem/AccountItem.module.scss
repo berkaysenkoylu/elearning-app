@@ -1,0 +1,60 @@
+@import '../../../variables';
+
+.AccountItem {
+    position: relative;
+
+    &__Profile {
+        width: 4rem;
+        height: 4rem;
+        clip-path: circle(50% at 50% 50%);
+        shape-outside: circle(50% at 50% 50%);
+        cursor: pointer;
+
+        &__Picture {
+            height: 100%;
+            background-image: url(../../../assets/images/avatar-default.png);
+            background-size: cover;
+            background-position: 50% 50%;
+            backface-visibility: hidden;
+            transition: all 0.5s;
+            border: 1px rgba($gray, 0.75) solid;
+            border-radius: 50%;
+        }
+    }
+
+    &__Menu {
+        position: absolute;
+        right: 0;
+        margin-top: 1.2rem;
+        background-color: $color-gray-light;
+        width: 12rem;
+        box-shadow: $shadow-mild;
+        overflow: hidden;
+        height: 0;
+        will-change: height;
+        transition: height 0.2s ease;
+
+        // &::before {
+        //     content: '';
+        //     display: block;
+        //     position: absolute;
+        //     width: 1.2rem;
+        //     height: 1.2rem;
+        //     background-color: $color-gray-light;
+        //     top: -0.6rem;
+        //     right: 1.4rem;
+        //     transform: translateX(-50%) rotateZ(-45deg);
+        // }
+
+        & > li {
+            &:not(:first-child) {
+                margin-top: 1rem;
+            }
+            margin-right: 0 !important;
+
+            // a {
+            //     padding: 0;
+            // }
+        }
+    }
+}

@@ -31,7 +31,7 @@ const Input = (props) => {
             setPasswordFeedbackVisible(false)
         }
 
-        props.focusLost();
+        // props.focusLost();
     }
 
     switch(props.elementType) {
@@ -55,7 +55,7 @@ const Input = (props) => {
             />;
             break;
         case 'select':
-            inputElement =  <select 
+            inputElement = <select 
                 className={classes.SelectElement} 
                 value={props.value} 
                 onChange={props.changed}>
