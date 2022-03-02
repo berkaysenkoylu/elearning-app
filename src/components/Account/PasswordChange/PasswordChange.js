@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import classes from './PasswordChange.module.scss';
+import changeInputObjectValue from '../../../utility/changeInputObjectValue';
 import usePasswordValidation from '../../../hooks/usePasswordValidation';
 import formValidation from '../../../utility/formValidation';
 import Input from '../../UI/Input/Input';
@@ -107,6 +108,19 @@ const PasswordChange = props => {
         });
 
         props.passwordChange(data);
+
+        // Reset the form fields.
+        let copiedFormControls = {...passwordChangeFormControls};
+
+        Object.keys(copiedFormControls).forEach(key => {
+            copiedFormControls = changeInputObjectValue(copiedFormControls, key, {
+                value: '',
+                touched: false,
+                valid: false
+            });
+        });
+
+        setPasswordChangeFormControls(copiedFormControls);
     }
 
     let formContent = Object.keys(passwordChangeFormControls).map(formControl => {

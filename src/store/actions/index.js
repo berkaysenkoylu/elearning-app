@@ -5,5 +5,6 @@ export {
     logout,
     authCheckState,
     passwordResetRequest,
-    resetPassword
+    resetPassword,
+    changeAvatar
 } from './auth';

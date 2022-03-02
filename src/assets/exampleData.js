@@ -63,3 +63,46 @@ export const userData = [
       "Active User": 3000,
     },
 ];
+
+export const quizData = [
+    {
+        _id: 'abcd1',
+        firstName: 'John',
+        lastName: 'Doe',
+        answers: [
+            { questionNumber: 1, selectedIndex: 2, correctIndex: 1, isCorrect: false },
+            { questionNumber: 2, selectedIndex: 0, correctIndex: 0, isCorrect: true },
+            { questionNumber: 3, selectedIndex: 3, correctIndex: 3, isCorrect: true },
+            { questionNumber: 4, selectedIndex: 1, correctIndex: 0, isCorrect: false },
+            { questionNumber: 5, selectedIndex: 3, correctIndex: 3, isCorrect: true },
+            { questionNumber: 6, selectedIndex: 2, correctIndex: 1, isCorrect: false },
+            { questionNumber: 7, selectedIndex: 0, correctIndex: 0, isCorrect: true }
+        ]
+    }, {
+        _id: 'abcd2',
+        firstName: 'Jane',
+        lastName: 'Doedoe',
+        answers: [
+            { questionNumber: 1, selectedIndex: 1, correctIndex: 1, isCorrect: true },
+            { questionNumber: 2, selectedIndex: 0, correctIndex: 0, isCorrect: true },
+            { questionNumber: 3, selectedIndex: 3, correctIndex: 3, isCorrect: true },
+            { questionNumber: 4, selectedIndex: 2, correctIndex: 0, isCorrect: false },
+            { questionNumber: 5, selectedIndex: 2, correctIndex: 3, isCorrect: false },
+            { questionNumber: 6, selectedIndex: 1, correctIndex: 1, isCorrect: true },
+            { questionNumber: 7, selectedIndex: 0, correctIndex: 0, isCorrect: true }
+        ]
+    }, {
+        _id: 'abcd3',
+        firstName: 'Jordan',
+        lastName: 'Do',
+        answers: [
+            { questionNumber: 1, selectedIndex: 1, correctIndex: 1, isCorrect: true },
+            { questionNumber: 2, selectedIndex: 0, correctIndex: 0, isCorrect: true },
+            { questionNumber: 3, selectedIndex: 2, correctIndex: 3, isCorrect: false },
+            { questionNumber: 4, selectedIndex: 1, correctIndex: 0, isCorrect: false },
+            { questionNumber: 5, selectedIndex: 2, correctIndex: 3, isCorrect: false },
+            { questionNumber: 6, selectedIndex: 1, correctIndex: 1, isCorrect: true },
+            { questionNumber: 7, selectedIndex: 3, correctIndex: 0, isCorrect: false }
+        ]
+    }
+]

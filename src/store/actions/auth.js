@@ -62,9 +62,9 @@ export const authCheckState = () => {
 
                 const response = await axiosAuth.get(`/${userId}`);
                 const status = response.data.user.status;
-                const email = response.data.user.email;
+                const userImage = response.data.user.avatarUrl;
 
-                dispatch(loginSuccess(token, userId, email, status));
+                dispatch(loginSuccess(token, userId, userImage, status));
                 dispatch(authTimeout((expirationDate.getTime() - new Date().getTime()) / 1000));
             } else {
                 dispatch(logout());
@@ -79,12 +79,12 @@ export const loginStart = () => {
     };
 }
 
-export const loginSuccess = (token, userId, email, status) => {
+export const loginSuccess = (token, userId, userImage, status) => {
     return {
         type: actionTypes.LOGIN_SUCCESS,
         token: token,
         userId: userId,
-        email: email,
+        userImage: userImage,
         path: '/',
         status: status
     };
@@ -108,7 +108,7 @@ export const login = (userData) => {
             localStorage.setItem("token", response.data.token);
             localStorage.setItem("expirationTime", expirationTime);
 
-            dispatch(loginSuccess(response.data.token, response.data.userId, response.data.email, response.data.status));
+            dispatch(loginSuccess(response.data.token, response.data.userId, response.data.userImage, response.data.status));
             dispatch(authTimeout(+response.data.expiresIn));
         }).catch(error => {
             dispatch(loginFail(error.response.data.message));
@@ -197,4 +197,11 @@ export const resetPassword = (formData) => {
             dispatch(resetPasswordFail(error.response.data.message));
         });
     }
+}
+
+export const changeAvatar = (newAvatarUrl) => {
+    return {
+        type: actionTypes.AVATAR_CHANGE,
+        newUrl: newAvatarUrl
+    };
 }

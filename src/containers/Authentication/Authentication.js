@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
 
 import classes from './Authentication.module.scss';
-import ErrorDialogue from '../../components/ErrorDialogue/ErrorDialogue';
+import FeedbackDialogue from '../../components/FeedbackDialogue/FeedbackDialogue';
 import Login from '../../components/Auth/Login/Login';
 import Signup from '../../components/Auth/Signup/Signup';
 import SignupSuccess from '../../components/Auth/SignupSuccess/SignupSuccess';
@@ -41,7 +41,7 @@ class Authentication extends Component {
         }
     }
 
-    onCloseErrorDialogueHandler = () => {
+    onCloseFeedBackDialogueHandler = () => {
         this.setState({
             showError: false
         });
@@ -122,10 +122,11 @@ class Authentication extends Component {
 
         return (
             <>
-                <ErrorDialogue
+                <FeedbackDialogue
                     show={this.state.showError}
-                    errorMessage={this.props.error}
-                    closed={this.onCloseErrorDialogueHandler}
+                    feedbackMessage={this.props.error}
+                    closed={this.onCloseFeedBackDialogueHandler}
+                    isError={true}
                 />
 
                 {content}

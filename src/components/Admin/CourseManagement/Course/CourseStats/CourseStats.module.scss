@@ -1,0 +1,12 @@
+@import '../../../../../variables';
+
+.CourseStats {
+    font-size: $default-font-size;
+
+    &__Header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 3rem;
+    }
+}

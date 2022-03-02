@@ -6,7 +6,7 @@ const initialState = {
     token: null,
     isAuth: false,
     userId: null,
-    userEmail: null,
+    userImage: null,
     userStatus: null,
     redirectPath: null,
     successfullSignup: false
@@ -31,7 +31,8 @@ const reducer = (state=initialState, action) => {
                 userId: null,
                 username: null,
                 redirectPath: null,
-                userStatus: null
+                userStatus: null,
+                userImage: null
             });
         case actionTypes.LOGIN_SUCCESS:
             return updateObject(state, {
@@ -42,7 +43,8 @@ const reducer = (state=initialState, action) => {
                 userId: action.userId,
                 username: action.username,
                 redirectPath: action.path,
-                userStatus: action.status
+                userStatus: action.status,
+                userImage: action.userImage
             });
         case actionTypes.LOGIN_FAIL:
             return updateObject(state, {
@@ -53,7 +55,8 @@ const reducer = (state=initialState, action) => {
                 userId: null,
                 username: null,
                 redirectPath: null,
-                userStatus: null
+                userStatus: null,
+                userImage: null
             });
         case actionTypes.LOGOUT:
             return updateObject(state, {
@@ -64,7 +67,8 @@ const reducer = (state=initialState, action) => {
                 userId: null,
                 username: null,
                 redirectPath: null,
-                userStatus: null
+                userStatus: null,
+                userImage: null
             });
         case actionTypes.SIGNUP_START:
             return updateObject(state, {
@@ -146,6 +150,10 @@ const reducer = (state=initialState, action) => {
                 isAuth: false,
                 userId: null,
                 redirectPath: action.path
+            });
+        case actionTypes.AVATAR_CHANGE:
+            return updateObject(state, {
+                userImage: action.newUrl
             });
         default:
             break;

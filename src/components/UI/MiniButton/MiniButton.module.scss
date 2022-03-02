@@ -1,0 +1,58 @@
+@import '../../../variables';
+
+.MiniButton {
+    cursor: pointer;
+    color: $color-complement-dark-3;
+    position: relative;
+    display: inline-block;
+    font-weight: 600;
+    padding: 1rem 0.5rem;
+    transition: all 0.2s ease;
+
+    &::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 2px;
+        width: 0;
+        background-color: $color-complement-dark-3;
+        transition: all 0.2s ease;
+    }
+
+    &:not(:last-child) {
+        margin-right: 1rem;
+    }
+
+    &:hover {
+        color: $color-complement-dark-1;
+    }
+
+    &:hover::before {
+        background-color: $color-complement-dark-1;
+        width: 100%;
+    }
+
+    &__Active {
+        color: $color-complement-dark-1;
+
+        &::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 2px;
+            width: 100%;
+            background-color: $color-complement-dark-1;
+        }
+
+        // &:hover {
+        //     color: $color-complement-dark-3;
+        // }
+
+        // &:hover::before {
+        //     background-color: $color-complement-dark-3;
+        //     width: 0;
+        // }
+    }
+}

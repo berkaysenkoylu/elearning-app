@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 
 import formValidation from '../../../../../utility/formValidation';
 import classes from './CourseHome.module.scss';
+import CourseStats from '../CourseStats/CourseStats';
 import SectionItem from './SectionItem/SectionItem';
 import Input from '../../../../UI/Input/Input';
 import Button from '../../../../UI/Button/Button';
 import Accordion from '../../../../UI/Accordion/Accordion';
-import CourseInfo from '../../../../CourseInfo/CourseInfo';
 import Select from '../../../../UI/Select/Select';
 
 const CourseHome = props => {
@@ -144,7 +144,7 @@ const CourseHome = props => {
                 <h1>{courseData.name || ''}</h1>
             </header>
 
-            <CourseInfo landingData={courseData.landing || {}} />
+            <CourseStats />
 
             <Accordion label="Sections">
                 <ul className={classes.CourseHome__SectionList__List}>
