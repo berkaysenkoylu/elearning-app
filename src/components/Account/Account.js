@@ -119,8 +119,9 @@ const Account = props => {
     } else if (userData.avatarUrl !== '') {
         let imageUrl = userData.avatarUrl || '';
         
+        // http://localhost:8000/
         if (imageUrl !== '')
-            style['backgroundImage'] = `url(${'http://localhost:8000/' + imageUrl.replace(/\\/g, '/')})`;
+            style['backgroundImage'] = `url(${'https://glacial-garden-54072.herokuapp.com/' + imageUrl.replace(/\\/g, '/')})`;
     }
 
     return (

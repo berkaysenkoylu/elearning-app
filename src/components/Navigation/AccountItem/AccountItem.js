@@ -31,8 +31,9 @@ const AccountItem = props => {
 
     let profilePictureStyle = {};
 
+    // http://localhost:8000/
     if (props.userImage) {
-        profilePictureStyle['backgroundImage'] = `url(${'http://localhost:8000/' + props.userImage.replace(/\\/g, '/')})`;
+        profilePictureStyle['backgroundImage'] = `url(${'https://glacial-garden-54072.herokuapp.com/' + props.userImage.replace(/\\/g, '/')})`;
     }
 
     return (

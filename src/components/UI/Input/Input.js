@@ -31,7 +31,7 @@ const Input = (props) => {
             setPasswordFeedbackVisible(false)
         }
 
-        // props.focusLost();
+        typeof props.focusLost === 'function' && props.focusLost();
     }
 
     switch(props.elementType) {
