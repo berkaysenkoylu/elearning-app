@@ -8,6 +8,7 @@ import FeedbackDialogue from '../FeedbackDialogue/FeedbackDialogue';
 import PasswordChange from './PasswordChange/PasswordChange';
 import AccountDataChange from './AccountDataChange/AccountDataChange';
 import File from '../UI/File/File';
+import { BACKEND_ORIGIN } from '../../utility/apiUrl';
 
 const MIME_TYPE_MAP = {
     "image/png": "png",
@@ -119,9 +120,8 @@ const Account = props => {
     } else if (userData.avatarUrl !== '') {
         let imageUrl = userData.avatarUrl || '';
         
-        // http://localhost:8000/
         if (imageUrl !== '')
-            style['backgroundImage'] = `url(${'https://glacial-garden-54072.herokuapp.com/' + imageUrl.replace(/\\/g, '/')})`;
+            style['backgroundImage'] = `url(${BACKEND_ORIGIN + '/' + imageUrl.replace(/\\/g, '/')})`;
     }
 
     return (

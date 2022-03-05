@@ -23,15 +23,6 @@
             h2 {
                 font-size: $default-header-font-size;
             }
-
-            span {
-                font-style: italic;
-
-                &::before {
-                    content: "by ";
-                    font-style: normal;
-                }
-            }
         }
 
         &__TimeContainer {
@@ -70,17 +61,20 @@
 
     &__Cta {
         display: flex;
+        justify-content: space-between;
         
-        margin-top: 1rem;
+        margin-top: 3rem;
         padding-top: 1rem;
         border-top: 1px solid rgba($color-black, 0.4);
 
-        & > button:not(:last-child) {
-            margin-right: 1rem;
-        }
-
-        & > button:first-child {
-            margin-left: auto;
+        &__Buttons {
+            & > button:not(:last-child) {
+                margin-right: 1rem;
+            }
+    
+            & > button:first-child {
+                margin-left: auto;
+            }
         }
     }
 }

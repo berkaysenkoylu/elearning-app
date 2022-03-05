@@ -1,9 +1,13 @@
 import React from 'react';
 
 import classes from './PostComment.module.scss';
+import AuthorInfo from '../../AuthorInfo/AuthorInfo';
 
 const PostComment = (props) => {
     const commentData = props.commentData;
+    const authorData = commentData.author;
+
+    console.log(commentData)
 
     const getPostCreateTimeDifference = (time) => {
         let now = (new Date()).getTime();
@@ -24,15 +28,26 @@ const PostComment = (props) => {
         return timeString;
     }
 
+    let name = '';
+    if (authorData.firstName.toLowerCase() === 'admin') {
+        name = authorData.firstName;
+    } else {
+        name = authorData.firstName + ' ' + authorData.lastName;
+    }
+
     return (
         <div className={classes.PostComment}>
-            <div className={classes.PostComment__Header}>
-                <span>{commentData.author.firstName + ' ' + commentData.author.lastName}</span>
-                <span>{getPostCreateTimeDifference(commentData.updatedAt)}</span>
-            </div>
-
             <div className={classes.PostComment__Content}>
                 {commentData.index}
+            </div>
+
+            <div className={classes.PostComment__Footer}>
+                <AuthorInfo
+                    userName={name}
+                    userImg={authorData.avatarUrl}
+                />
+
+                <span>{getPostCreateTimeDifference(commentData.updatedAt)}</span>
             </div>
         </div>
     )

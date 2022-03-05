@@ -1,10 +1,8 @@
 import axios from 'axios';
-
-// https://glacial-garden-54072.herokuapp.com/api/admin
-// http://localhost:8000/api/admin
+import { BACKEND_ORIGIN } from '../utility/apiUrl';
 
 const instance = axios.create({
-    baseURL: 'https://glacial-garden-54072.herokuapp.com/api/admin'
+    baseURL: BACKEND_ORIGIN + '/api/admin'
 });
 
 export default instance;

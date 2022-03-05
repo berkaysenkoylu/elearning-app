@@ -9,6 +9,8 @@ const CourseMenu = (props) => {
         props.onCourseActivityEnabled(type);
     }
 
+    console.log(props.courseSections)
+
     return (
         <Fragment>
             <div className={classes.CourseMenu__Intro} dangerouslySetInnerHTML={{__html: props.courseIntro}}></div>
@@ -20,9 +22,16 @@ const CourseMenu = (props) => {
             </div>
 
             <div className={classes.CourseMenu__Cta}>
-                <Button clicked={() => props.onSectionSelect(0)}>1. Hafta</Button>
+                {
+                    props.courseSections.map((courseSection, index) => {
+                        return <Button key={courseSection._id} clicked={() => props.onSectionSelect(index)}>{courseSection.name}</Button>
+                    })
+                }
+
+
+                {/* <Button clicked={() => props.onSectionSelect(0)}>1. Hafta</Button>
                 <Button disabled={true}>2. Hafta</Button>
-                <Button disabled={true}>3. Hafta</Button>
+                <Button disabled={true}>3. Hafta</Button> */}
             </div>
         </Fragment>
     );

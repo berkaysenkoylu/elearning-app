@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 
 import classes from './AccountItem.module.scss';
+import { BACKEND_ORIGIN } from '../../../utility/apiUrl';
 import useComponentVisible from '../../../hooks/useComponentVisible';
 import NavigationItem from '../NavigationItems/NavigationItem/NavigationItem';
 
@@ -31,9 +32,8 @@ const AccountItem = props => {
 
     let profilePictureStyle = {};
 
-    // http://localhost:8000/
     if (props.userImage) {
-        profilePictureStyle['backgroundImage'] = `url(${'https://glacial-garden-54072.herokuapp.com/' + props.userImage.replace(/\\/g, '/')})`;
+        profilePictureStyle['backgroundImage'] = `url(${BACKEND_ORIGIN + '/' + props.userImage.replace(/\\/g, '/')})`;
     }
 
     return (

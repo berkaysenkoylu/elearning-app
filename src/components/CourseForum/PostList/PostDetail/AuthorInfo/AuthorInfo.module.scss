@@ -1,0 +1,27 @@
+@import '../../../../../variables';
+
+.AuthorInfo {
+    display: flex;
+    align-items: center;
+
+    &__Avatar {
+        margin-right: 1rem;
+        width: 3rem;
+        height: 3rem;
+        clip-path: circle(50% at 50% 50%);
+        shape-outside: circle(50% at 50% 50%);
+        cursor: pointer;
+
+        &__Picture {
+            height: 100%;
+            background-image: url(../../../../../assets/images/avatar-default.png);
+            background-size: cover;
+            background-position: 50% 50%;
+            backface-visibility: hidden;
+        }
+    }
+
+    &__Name {
+        font-style: italic;
+    }
+}

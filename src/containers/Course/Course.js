@@ -115,7 +115,8 @@ class Course extends Component {
 
     onSectionSelectedHandler = (index) => {
         this.setState({
-            isOnMainMenu: false
+            isOnMainMenu: false,
+            sectionIndex: index
         });
     }
 
@@ -144,7 +145,7 @@ class Course extends Component {
         };
 
         axiosPost.post('', formData, config).then(result => {
-            console.log(result); // TODO remove
+            console.log(result); // TODO: remove
 
             return axiosForum.get('/course/' + this.state.courseData._id);
         }).then(newForumResponse => {
@@ -168,7 +169,7 @@ class Course extends Component {
         };
 
         axiosPost.put(`/${data.postId}`, formData, config).then(result => {
-            console.log(result); // TODO remove
+            console.log(result); // TODO: remove
 
             return axiosForum.get('/course/' + this.state.courseData._id);
         }).then(newForumResponse => {
@@ -222,15 +223,16 @@ class Course extends Component {
                 courseForum: newForumResponse.data.forum
             });
         }).catch(error => {
-            // TODO: A Better error feedback should be implemented
+            // TODO:: A Better error feedback should be implemented
             console.log(error.response.data.message);
         })
     }
 
     render() {
+        let sections = (this.state.courseData || {}).sections || [];
         let courseLandingData = (this.state.courseData || {}).landing || {};
         let activeNavigation = (this.state.courseNavItems.find(item => item.active) || {}).name;
-        let section = ((this.state.courseData || {}).sections || [])[this.state.sectionIndex] || {};
+        let section = sections[this.state.sectionIndex] || {};
         let courseName = (this.state.courseData || {}).name;
         let courseQuiz = (this.state.courseData || {}).quiz;
         let courseIntro = (this.state.courseData || {}).introduction;
@@ -246,6 +248,7 @@ class Course extends Component {
                         {this.state.isOnMainMenu ?
                             <CourseMenu
                                 courseIntro={courseIntro}
+                                courseSections={sections}
                                 onSectionSelect={this.onSectionSelectedHandler}
                                 courseQuiz={courseQuiz._id}
                                 onCourseActivityEnabled={this.onCourseActivityEnabledHandler}

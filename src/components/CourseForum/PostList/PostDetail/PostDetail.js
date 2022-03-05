@@ -3,16 +3,12 @@ import { connect } from 'react-redux';
 
 import classes from './PostDetail.module.scss';
 import Button from '../../../UI/Button/Button';
+import AuthorInfo from './AuthorInfo/AuthorInfo';
 import PostCommentList from './PostCommentList/PostCommentList';
 import CreatePostComment from '../PostDetail/PostCommentList/PostComment/CreatePostComment/CreatePostComment';
 
 const PostDetail = (props) => {
     const [isPostComment, setIsPostComment] = useState(false);
-    const [postData, setPostData] = useState({});
-
-    useEffect(() => {
-        setPostData(props.postData);
-    }, [props.postData]);
 
     let timeout;
 
@@ -64,7 +60,7 @@ const PostDetail = (props) => {
     }
 
     let pageContent = null;
-    if (Object.prototype.hasOwnProperty.call(postData, '_id')) {
+    if (Object.prototype.hasOwnProperty.call(props.postData, '_id')) {
         pageContent = (
             <section className={classes.PostDetailContainer}>
                 {isPostComment ? <CreatePostComment
@@ -79,9 +75,6 @@ const PostDetail = (props) => {
                             <h2>
                                 {props.postData.title}
                             </h2>
-                            <span>
-                                {props.postData.author.status !== 'admin' ? props.postData.author.firstName + ' ' + props.postData.author.lastName : props.postData.author.firstName}
-                            </span>
                         </div>
 
                         <div className={classes.PostDetail__Header__TimeContainer}>
@@ -98,10 +91,16 @@ const PostDetail = (props) => {
                     <div className={classes.PostDetail__Body}>
                         {props.postData.content}
                     </div>
+                    
+                    <div className={classes.PostDetail__Cta}>
+                        <AuthorInfo
+                            userName={props.postData.author.status !== 'admin' ? props.postData.author.firstName + ' ' + props.postData.author.lastName : props.postData.author.firstName}
+                            userImg={props.postData.author.avatarUrl}
+                        />
 
-                    {props.isAuth ? 
-                        <div className={classes.PostDetail__Cta}>
-                            { props.userId === props.postData.author._id ? <>
+                        {props.isAuth ? 
+                        <div className={classes.PostDetail__Cta__Buttons}>
+                            { props.userId === props.postData.author._id || props.status === 'admin' ? <>
                                 <Button
                                     btnType='BtnDanger'
                                     btnSize='BtnSmall'
@@ -110,14 +109,15 @@ const PostDetail = (props) => {
                                     btnType='BtnSecondary'
                                     btnSize='BtnSmall'
                                     clicked={() => props.postEdited(props.postData._id)}>Edit</Button>
-                            </> : null }
-                            
+                                </> : null
+                            }
+                        
                             <Button
                                 btnType='BtnPrimary'
                                 btnSize='BtnSmall'
                                 clicked={() => togglePostComment(true)}>Reply</Button>
-                        </div>
-                    : null}
+                        </div> : null}
+                    </div>
                 </div>
 
                 <div className={classes.PostComments}>
@@ -148,7 +148,8 @@ const PostDetail = (props) => {
 const mapStateToProps = state => {
     return {
         isAuth: state.isAuth,
-        userId: state.userId
+        userId: state.userId,
+        status: state.userStatus
     }
 }
 
