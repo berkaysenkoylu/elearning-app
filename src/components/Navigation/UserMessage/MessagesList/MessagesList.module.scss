@@ -1,0 +1,9 @@
+@import '../../../../variables';
+
+.MessagesList {
+    list-style: none;
+    padding: 5px 0;
+    height: 19rem;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+}

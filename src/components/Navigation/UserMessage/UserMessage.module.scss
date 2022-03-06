@@ -1,0 +1,49 @@
+@import '../../../variables';
+
+.UserMessage {
+    position: relative;
+    margin-right: 1.5rem;
+
+    &__Icon {
+        width: 2rem;
+        height: 2rem;
+        fill: $color-tertiary-dark-1;
+        cursor: pointer;
+        transition: fill 0.2s ease-in;
+
+        &:hover {
+            fill: $color-complement;
+        }
+    }
+
+    &__InboxPreviewWrapper {
+        position: absolute;
+        right: 0;
+        top: 3rem;
+        width: 25rem;
+        height: 25rem;
+        overflow: hidden;
+        box-shadow: $shadow-custom;
+        transition: height 0.2s ease-in;
+
+        footer {
+            border-top: 1px solid $color-black;
+        }
+    }
+
+    &__InboxPreviewContent {
+        background-color: $color-white;
+        min-height: 20rem;
+
+        header {
+            padding: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid $color-black;
+
+            h2 {
+                font-size: $default-font-size;
+                color: $color-black;
+            }
+        }
+    }
+}
