@@ -1,0 +1,45 @@
+@import '../../../../../variables';
+
+.MessageListItem {
+    margin: 0.5rem 0;
+    font-size: $small-font-size;
+    display: flex;
+    align-items: center;
+    padding: 0 5px;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
+    &__Picture {
+        width: 4rem;
+        height: 4rem;
+        clip-path: circle(50% at 50% 50%);
+        shape-outside: circle(50% at 50% 50%);
+
+        &__Img {
+            height: 100%;
+            background-image: url(../../../../../assets/images/avatar-default.png);
+            background-size: cover;
+            background-position: 50% 50%;
+            backface-visibility: hidden;
+            border-radius: 50%;
+            border: 1px rgba($gray, 0.75) solid;
+        }
+    }
+
+    &__Content {
+        margin-left: 1rem;
+        display: flex;
+        flex-direction: column;
+
+        &__Username {
+            color: $color-black;
+            font-weight: 700;
+        }
+    }
+
+    &__Time {
+        margin-left: auto;
+    }
+}
