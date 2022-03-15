@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 
 import classes from './UserMessage.module.scss';
 import useComponentVisible from '../../../hooks/useComponentVisible';
@@ -95,7 +96,7 @@ const UserMessage = () => {
                     />
 
                     <footer>
-                        CTA
+                        <Link to='/my-inbox'>Go to inbox</Link>
                     </footer>
                 </div>
             </div>

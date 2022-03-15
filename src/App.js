@@ -4,6 +4,7 @@ import { connect, useDispatch } from 'react-redux';
 
 import Administration from './components/Admin/Administration';
 import Account from './components/Account/Account';
+import ChatContainer from './components/ChatContainer/ChatContainer';
 import Layout from './hoc/Layout/Layout';
 import Home from './components/Home/Home';
 import Authentication from './containers/Authentication/Authentication';
@@ -22,6 +23,7 @@ const App = (props) => {
 	let routes = (
 		<Switch>
 			<Route path='/logout' component={Logout} />
+            {props.isAuthenticated ? <Route path='/my-inbox' component={ChatContainer} /> : null}
             {props.isAuthenticated ? <Route path='/my-account' component={Account} /> : null}
 			<Route path='/auth' component={Authentication} />
 			<Route path='/contact' render={() => <div>CONTACT COMPONENT</div>} />

@@ -1,0 +1,8 @@
+@import '../../../variables';
+
+.Sidebar {
+    flex: 0 0 20%;
+    background-color: $color-chat;
+    display: flex;
+    flex-direction: column;
+}
