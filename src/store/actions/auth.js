@@ -1,5 +1,6 @@
 import * as actionTypes from './actionTypes';
 import axiosAuth from '../../axiosUtility/axios-auth';
+import axiosMessage from '../../axiosUtility/axios-message';
 
 export const signupStart = () => {
     return {
@@ -66,6 +67,8 @@ export const authCheckState = () => {
 
                 dispatch(loginSuccess(token, userId, userImage, status));
                 dispatch(authTimeout((expirationDate.getTime() - new Date().getTime()) / 1000));
+
+                dispatch(getMessages(userId, token));
             } else {
                 dispatch(logout());
             }
@@ -110,6 +113,8 @@ export const login = (userData) => {
 
             dispatch(loginSuccess(response.data.token, response.data.userId, response.data.userImage, response.data.status));
             dispatch(authTimeout(+response.data.expiresIn));
+            
+            dispatch(getMessages(response.data.userId, response.data.token)); // TODO:
         }).catch(error => {
             dispatch(loginFail(error.response.data.message));
         })
@@ -204,4 +209,35 @@ export const changeAvatar = (newAvatarUrl) => {
         type: actionTypes.AVATAR_CHANGE,
         newUrl: newAvatarUrl
     };
+}
+
+// USER MESSAGES
+export const getMessageSuccess = (messageList) => {
+    return {
+        type: actionTypes.MESSAGE_FETCH_SUCCESS,
+        messages: messageList
+    };
+}
+
+export const getMessageFail = (error) => {
+    return {
+        type: actionTypes.MESSAGE_FETCH_FAIL,
+        error: error
+    };
+}
+
+export const getMessages = (userId, userToken) => {
+    return dispatch => {
+        let config = {
+            headers: {
+                Authorization: 'Bearer ' + userToken
+            }
+        };
+
+        axiosMessage.get('/' + userId, config).then(response => {
+            dispatch(getMessageSuccess(response.data.messageList));
+        }).catch(error => {
+            dispatch(getMessageFail(error.response.data.message));
+        });
+    }
 }

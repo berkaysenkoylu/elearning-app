@@ -9,7 +9,8 @@ const initialState = {
     userImage: null,
     userStatus: null,
     redirectPath: null,
-    successfullSignup: false
+    successfullSignup: false,
+    userMessages: []
 };
 
 // Utility function for state management
@@ -32,7 +33,8 @@ const reducer = (state=initialState, action) => {
                 username: null,
                 redirectPath: null,
                 userStatus: null,
-                userImage: null
+                userImage: null,
+                userMessages: []
             });
         case actionTypes.LOGIN_SUCCESS:
             return updateObject(state, {
@@ -56,7 +58,8 @@ const reducer = (state=initialState, action) => {
                 username: null,
                 redirectPath: null,
                 userStatus: null,
-                userImage: null
+                userImage: null,
+                userMessages: []
             });
         case actionTypes.LOGOUT:
             return updateObject(state, {
@@ -68,7 +71,8 @@ const reducer = (state=initialState, action) => {
                 username: null,
                 redirectPath: null,
                 userStatus: null,
-                userImage: null
+                userImage: null,
+                userMessages: []
             });
         case actionTypes.SIGNUP_START:
             return updateObject(state, {
@@ -154,6 +158,16 @@ const reducer = (state=initialState, action) => {
         case actionTypes.AVATAR_CHANGE:
             return updateObject(state, {
                 userImage: action.newUrl
+            });
+        case actionTypes.MESSAGE_FETCH_SUCCESS:
+            return updateObject(state, {
+                error: null,
+                userMessages: action.messages
+            });
+        case actionTypes.MESSAGE_FETCH_FAIL:
+            return updateObject(state, {
+                userMessages: [],
+                error: action.error
             });
         default:
             break;

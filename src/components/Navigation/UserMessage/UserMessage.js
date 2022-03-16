@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import classes from './UserMessage.module.scss';
 import useComponentVisible from '../../../hooks/useComponentVisible';
 import svg from '../../../assets/images/sprite.svg';
 import MessagesList from './MessagesList/MessagesList';
 
-const UserMessage = () => {
+const UserMessage = props => {
     const [inboxPrevRef, isComponentVisible, setIsComponentVisible] = useComponentVisible(false);
     const [inboxPrevHeight, setInboxPrevHeight] = useState(0);
 
@@ -22,6 +23,40 @@ const UserMessage = () => {
         }
     }, [inboxPrevRef]);
 
+    useEffect(() => {
+        let totalUnReadMessages = 0;
+        let userToLastMessageMap = {};
+        let userId = '';
+
+        props.userMessages.forEach(message => {
+            userId = message.sender._id !== props.userId ? message.sender._id : message.receiver._id;
+
+            if (!Object.prototype.hasOwnProperty.call(userToLastMessageMap, userId)) {
+                userToLastMessageMap[userId] = {
+                    lastMessage: {},
+                    unreadCount: 0
+                };
+            }
+
+            let lastMessageData = userToLastMessageMap[userId] || {};
+            let lastMessageOfUser = lastMessageData.lastMessage || {};
+
+            if (message.time > (lastMessageOfUser.time || 0) && (message.receiver._id === userId || message.sender._id)) {
+                userToLastMessageMap[userId] = {
+                    lastMessage: message,
+                    unreadCount: !message.isRead ? lastMessageData.unreadCount + 1 : lastMessageData.unreadCount
+                };
+            }
+
+            
+            !message.isRead && totalUnReadMessages++;
+        });
+
+        console.log(userToLastMessageMap)
+        console.log(totalUnReadMessages)
+
+    }, [props.userMessages, props.userId]);
+
     const toggleMenu = () => {
         setIsComponentVisible(prevState => !prevState);
     }
@@ -29,6 +64,8 @@ const UserMessage = () => {
     const innerStyle = {
         height: `${isComponentVisible ? inboxPrevHeight : 0}px`
     };
+
+    
 
     // TODO: Replace it later
     const messageList = [
@@ -104,4 +141,11 @@ const UserMessage = () => {
     );
 }
 
-export default UserMessage;
+const mapStateToProps = state => {
+    return {
+        userId: state.userId,
+        userMessages: state.userMessages
+    };
+};
+
+export default connect(mapStateToProps, null)(UserMessage);
