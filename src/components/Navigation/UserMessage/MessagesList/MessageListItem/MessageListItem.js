@@ -4,7 +4,8 @@ import classes from './MessageListItem.module.scss';
 import { BACKEND_ORIGIN } from '../../../../../utility/apiUrl';
 
 const MessageListItem = props => {
-    let author = props.author;
+    let userData = props.userData;
+    let messageData = props.lastMessageData;
 
     const getPostCreateTimeDifference = (time) => {
         let now = (new Date()).getTime();
@@ -24,9 +25,10 @@ const MessageListItem = props => {
         return timeString;
     }
 
-    let messageIndex = props.messageText;
-    let userImage = author.userImg || '';
+    let messageIndex = messageData.messageText;
+    let userImage = userData.avatarUrl || '';
     let messageListItemStyle = {};
+    let userName = [userData.firstName, userData.lastName].join(' ');
 
     if (userImage && userImage !== '') {
         messageListItemStyle['backgroundImage'] = `url(${BACKEND_ORIGIN + '/' + userImage.replace(/\\/g, '/')})`;
@@ -40,7 +42,7 @@ const MessageListItem = props => {
 
             <div className={classes.MessageListItem__Content}>
                 <span className={classes.MessageListItem__Content__Username}>
-                    {author.username}
+                    {userName}
                 </span>
 
                 <span className={classes.MessageListItem__Content__Message}>
@@ -48,8 +50,12 @@ const MessageListItem = props => {
                 </span>
             </div>
 
+            
+            {props.unreadMessageCount > 0 ? <span className={classes.MessageListItem__UnreadCount}>{props.unreadMessageCount}</span> : null}
+            
+
             <div className={classes.MessageListItem__Time}>
-                {getPostCreateTimeDifference(props.date)}
+                {getPostCreateTimeDifference(messageData.time)}
             </div>
         </li>
     )

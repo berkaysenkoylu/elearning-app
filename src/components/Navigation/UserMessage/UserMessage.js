@@ -10,6 +10,8 @@ import MessagesList from './MessagesList/MessagesList';
 const UserMessage = props => {
     const [inboxPrevRef, isComponentVisible, setIsComponentVisible] = useComponentVisible(false);
     const [inboxPrevHeight, setInboxPrevHeight] = useState(0);
+    const [messageList, setMessageList] = useState([]);
+    const [totalUnreadMessageCount, setTotalUnreadMessageCount] = useState();
 
     let timeout = useRef(null);
     
@@ -44,16 +46,16 @@ const UserMessage = props => {
             if (message.time > (lastMessageOfUser.time || 0) && (message.receiver._id === userId || message.sender._id)) {
                 userToLastMessageMap[userId] = {
                     lastMessage: message,
-                    unreadCount: !message.isRead ? lastMessageData.unreadCount + 1 : lastMessageData.unreadCount
+                    unreadCount: !message.isRead && message.sender._id !== props.userId ?
+                        lastMessageData.unreadCount + 1 : lastMessageData.unreadCount
                 };
             }
 
-            
-            !message.isRead && totalUnReadMessages++;
+            !message.isRead && message.sender._id !== props.userId && totalUnReadMessages++;
         });
 
-        console.log(userToLastMessageMap)
-        console.log(totalUnReadMessages)
+        setMessageList(userToLastMessageMap);
+        setTotalUnreadMessageCount(totalUnReadMessages);
 
     }, [props.userMessages, props.userId]);
 
@@ -65,62 +67,15 @@ const UserMessage = props => {
         height: `${isComponentVisible ? inboxPrevHeight : 0}px`
     };
 
-    
-
-    // TODO: Replace it later
-    const messageList = [
-        {
-            id: 'ab1',
-            messageText: 'Hey listen this is my first message.',
-            author: {
-                username: 'Alpaslan Senkoylu',
-                userImg: '',
-            },
-            date: 1646575104446
-        },
-        {
-            id: 'ab2',
-            messageText: 'Hey listen this is my first message.',
-            author: {
-                username: 'Emre Acaroglu',
-                userImg: '',
-            },
-            date: 1646575158035
-        },
-        {
-            id: 'ab3',
-            messageText: 'Hey listen this is my first message.',
-            author: {
-                username: 'Admin',
-                userImg: 'assets/1646484580148own3.jpg',
-            },
-            date: 1646575195134
-        },
-        {
-            id: 'ab4',
-            messageText: 'Hey listen this is my first message.',
-            author: {
-                username: 'Admin',
-                userImg: 'assets/1646484580148own3.jpg',
-            },
-            date: 1646575245134
-        },
-        {
-            id: 'ab5',
-            messageText: 'Hey listen this is my first message.',
-            author: {
-                username: 'Admin',
-                userImg: 'assets/1646484580148own3.jpg',
-            },
-            date: 1646575245134
-        }
-    ];
+    // TODO: ADD Navigation to individual messages here
 
     return (
         <li className={classes.UserMessage}>
             <svg className={classes.UserMessage__Icon} onClick={toggleMenu}>
                 <use xlinkHref={`${svg}#icon-bubbles2`}></use>
             </svg>
+
+            {totalUnreadMessageCount > 0 ? <span className={classes.UserMessage__UnreadCount}>{totalUnreadMessageCount}</span> : null}
 
             <div className={classes.UserMessage__InboxPreviewWrapper} ref={inboxPrevRef} style={innerStyle}>
                 <div className={classes.UserMessage__InboxPreviewContent}>

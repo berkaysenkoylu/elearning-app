@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 
 import classes from './ChatWindow.module.scss';
 // import ChatMessage from './ChatMessage/ChatMessage';

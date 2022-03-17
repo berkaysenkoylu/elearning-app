@@ -4,6 +4,21 @@
     position: relative;
     margin-right: 1.5rem;
 
+    &__UnreadCount {
+        position: absolute;
+        width: 1.6rem;
+        height: 1.6rem;
+        top: -30%;
+        right: -25%;
+        color: $color-white;
+        text-align: center;
+        font-size: 1.1rem;
+        background-color: $color-primary-dark-1;
+        border-radius: 50%;
+        line-height: 1.2;
+        font-weight: 700;
+    }
+
     &__Icon {
         width: 2rem;
         height: 2rem;
