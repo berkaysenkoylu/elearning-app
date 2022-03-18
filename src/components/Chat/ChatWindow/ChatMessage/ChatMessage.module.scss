@@ -1,0 +1,44 @@
+@import '../../../../variables';
+
+.ChatMessage {
+    &:not(:last-child) {
+        margin-bottom: 1rem;
+    }
+
+    width: 100%;
+    font-size: $default-font-size;
+
+    &__Body {
+        display: flex;
+
+        &__UserPictureContainer {
+            width: 4rem;
+            height: 4rem;
+            clip-path: circle(50% at 50% 50%);
+            shape-outside: circle(50% at 50% 50%);
+
+            div {
+                height: 100%;
+                background-image: url(../../../../assets/images/avatar-default.png);
+                background-size: cover;
+                background-position: 50% 50%;
+                backface-visibility: hidden;
+                transition: all 0.5s;
+                border: 1px rgba($color-grey-light-1, 0.75) solid;
+                border-radius: 50%;
+            }
+        }
+
+        &__Message {
+            padding: 0.5rem;
+            margin-left: 1rem;
+            background-color: $color-chat;
+            border-radius: 8px;
+            line-height: 1.7;
+            color: $color-white;
+        }
+    }
+
+    &__Time {
+    }
+}
