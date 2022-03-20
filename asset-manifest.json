@@ -1,25 +1,25 @@
 {
   "files": {
-    "main.css": "/elearning-app/static/css/main.3791c159.chunk.css",
-    "main.js": "/elearning-app/static/js/main.1a8915be.chunk.js",
-    "main.js.map": "/elearning-app/static/js/main.1a8915be.chunk.js.map",
+    "main.css": "/elearning-app/static/css/main.1d6c3300.chunk.css",
+    "main.js": "/elearning-app/static/js/main.b0550a0e.chunk.js",
+    "main.js.map": "/elearning-app/static/js/main.b0550a0e.chunk.js.map",
     "runtime-main.js": "/elearning-app/static/js/runtime-main.69d2c4b2.js",
     "runtime-main.js.map": "/elearning-app/static/js/runtime-main.69d2c4b2.js.map",
-    "static/js/2.d561a4d7.chunk.js": "/elearning-app/static/js/2.d561a4d7.chunk.js",
-    "static/js/2.d561a4d7.chunk.js.map": "/elearning-app/static/js/2.d561a4d7.chunk.js.map",
+    "static/js/2.a292b672.chunk.js": "/elearning-app/static/js/2.a292b672.chunk.js",
+    "static/js/2.a292b672.chunk.js.map": "/elearning-app/static/js/2.a292b672.chunk.js.map",
     "index.html": "/elearning-app/index.html",
-    "precache-manifest.0f74c97b224aead3f472baaba1d0fe6e.js": "/elearning-app/precache-manifest.0f74c97b224aead3f472baaba1d0fe6e.js",
+    "precache-manifest.4f11d55f1be71d9e349504ddb831f883.js": "/elearning-app/precache-manifest.4f11d55f1be71d9e349504ddb831f883.js",
     "service-worker.js": "/elearning-app/service-worker.js",
-    "static/css/main.3791c159.chunk.css.map": "/elearning-app/static/css/main.3791c159.chunk.css.map",
-    "static/js/2.d561a4d7.chunk.js.LICENSE.txt": "/elearning-app/static/js/2.d561a4d7.chunk.js.LICENSE.txt",
-    "static/media/AccountItem.module.scss": "/elearning-app/static/media/avatar-default.4c498882.png",
+    "static/css/main.1d6c3300.chunk.css.map": "/elearning-app/static/css/main.1d6c3300.chunk.css.map",
+    "static/js/2.a292b672.chunk.js.LICENSE.txt": "/elearning-app/static/js/2.a292b672.chunk.js.LICENSE.txt",
+    "static/media/AuthorInfo.module.scss": "/elearning-app/static/media/avatar-default.4c498882.png",
     "static/media/spine.jpg": "/elearning-app/static/media/spine.303de4cf.jpg",
-    "static/media/sprite.svg": "/elearning-app/static/media/sprite.01cf7e2a.svg"
+    "static/media/sprite.svg": "/elearning-app/static/media/sprite.f62b690b.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.69d2c4b2.js",
-    "static/js/2.d561a4d7.chunk.js",
-    "static/css/main.3791c159.chunk.css",
-    "static/js/main.1a8915be.chunk.js"
+    "static/js/2.a292b672.chunk.js",
+    "static/css/main.1d6c3300.chunk.css",
+    "static/js/main.b0550a0e.chunk.js"
   ]
 }
