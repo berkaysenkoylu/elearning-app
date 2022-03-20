@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "df996d3b1157f5e01c064a57edfbd777",
+    "revision": "983aedd5579ad79d72eca52a579be476",
     "url": "/elearning-app/index.html"
   },
   {
-    "revision": "fee89a57e5c287ea4cea",
+    "revision": "405371fa7a254afb30e2",
     "url": "/elearning-app/static/css/main.1d6c3300.chunk.css"
   },
   {
-    "revision": "233a43c261acfbbb7a95",
-    "url": "/elearning-app/static/js/2.a292b672.chunk.js"
+    "revision": "b369c1780905ac6dcc6c",
+    "url": "/elearning-app/static/js/2.40133cb2.chunk.js"
   },
   {
     "revision": "52674e8b38b06545c1f5d16363fc2e9a",
-    "url": "/elearning-app/static/js/2.a292b672.chunk.js.LICENSE.txt"
+    "url": "/elearning-app/static/js/2.40133cb2.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "fee89a57e5c287ea4cea",
-    "url": "/elearning-app/static/js/main.a5dc7dbd.chunk.js"
+    "revision": "405371fa7a254afb30e2",
+    "url": "/elearning-app/static/js/main.74197c5d.chunk.js"
   },
   {
     "revision": "d203d574cc6e26ab4b58",
