@@ -1,6 +1,6 @@
 import * as actionTypes from './actionTypes';
 import axiosAuth from '../../axiosUtility/axios-auth';
-import axiosMessage from '../../axiosUtility/axios-message';
+// import axiosMessage from '../../axiosUtility/axios-message';
 
 export const signupStart = () => {
     return {
@@ -52,23 +52,20 @@ export const authCheckState = () => {
     return async dispatch => {
         const token = localStorage.getItem('token');
 
-        if(token === null){
+        if(token === null) {
             dispatch(logout());
-        }
-        else 
-        {
+        } else {
             const expirationDate = new Date(localStorage.getItem('expirationTime'));
             if(expirationDate > new Date()){
                 const userId = localStorage.getItem('userId');
 
                 const response = await axiosAuth.get(`/${userId}`);
-                const status = response.data.user.status;
-                const userImage = response.data.user.avatarUrl;
+                const userData = response.data.user;
+                const status = userData.status;
+                const userImage = userData.avatarUrl;
 
-                dispatch(loginSuccess(token, userId, userImage, status));
+                dispatch(loginSuccess(token, userId, userImage, status, userData.messages));
                 dispatch(authTimeout((expirationDate.getTime() - new Date().getTime()) / 1000));
-
-                dispatch(getMessages(userId, token));
             } else {
                 dispatch(logout());
             }
@@ -82,14 +79,15 @@ export const loginStart = () => {
     };
 }
 
-export const loginSuccess = (token, userId, userImage, status) => {
+export const loginSuccess = (token, userId, userImage, status, messages) => {
     return {
         type: actionTypes.LOGIN_SUCCESS,
         token: token,
         userId: userId,
         userImage: userImage,
         path: '/',
-        status: status
+        status: status,
+        userMessages: messages
     };
 };
 
@@ -105,16 +103,15 @@ export const login = (userData) => {
         dispatch(loginStart());
 
         axiosAuth.post('/login', userData).then(response => {
-            const expirationTime = new Date(new Date().getTime() + response.data.expiresIn * 1000);
+            const responseData = response.data.userData;
+            const expirationTime = new Date(new Date().getTime() + responseData.expiresIn * 1000);
 
-            localStorage.setItem("userId", response.data.userId);
-            localStorage.setItem("token", response.data.token);
+            localStorage.setItem("userId", responseData.userId);
+            localStorage.setItem("token", responseData.token);
             localStorage.setItem("expirationTime", expirationTime);
 
-            dispatch(loginSuccess(response.data.token, response.data.userId, response.data.userImage, response.data.status));
-            dispatch(authTimeout(+response.data.expiresIn));
-            
-            dispatch(getMessages(response.data.userId, response.data.token)); // TODO:
+            dispatch(loginSuccess(responseData.token, responseData.userId, responseData.userImage, responseData.status, responseData.messages));
+            dispatch(authTimeout(+responseData.expiresIn));
         }).catch(error => {
             dispatch(loginFail(error.response.data.message));
         })
@@ -212,32 +209,39 @@ export const changeAvatar = (newAvatarUrl) => {
 }
 
 // USER MESSAGES
-export const getMessageSuccess = (messageList) => {
+// export const getMessageSuccess = (messageList) => {
+//     return {
+//         type: actionTypes.MESSAGE_FETCH_SUCCESS,
+//         messages: messageList
+//     };
+// }
+
+// export const getMessageFail = (error) => {
+//     return {
+//         type: actionTypes.MESSAGE_FETCH_FAIL,
+//         error: error
+//     };
+// }
+
+// export const getMessages = (userId, userToken) => {
+//     return dispatch => {
+//         let config = {
+//             headers: {
+//                 Authorization: 'Bearer ' + userToken
+//             }
+//         };
+
+//         axiosMessage.get('/' + userId, config).then(response => {
+//             dispatch(getMessageSuccess(response.data.messageList));
+//         }).catch(error => {
+//             dispatch(getMessageFail(error.response.data.message));
+//         });
+//     }
+// }
+
+export const updateMessages = (newMessages) => {
     return {
-        type: actionTypes.MESSAGE_FETCH_SUCCESS,
-        messages: messageList
-    };
-}
-
-export const getMessageFail = (error) => {
-    return {
-        type: actionTypes.MESSAGE_FETCH_FAIL,
-        error: error
-    };
-}
-
-export const getMessages = (userId, userToken) => {
-    return dispatch => {
-        let config = {
-            headers: {
-                Authorization: 'Bearer ' + userToken
-            }
-        };
-
-        axiosMessage.get('/' + userId, config).then(response => {
-            dispatch(getMessageSuccess(response.data.messageList));
-        }).catch(error => {
-            dispatch(getMessageFail(error.response.data.message));
-        });
+        type: actionTypes.UPDATE_MESSAGES,
+        messages: newMessages
     }
 }

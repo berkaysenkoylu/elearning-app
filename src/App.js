@@ -20,6 +20,17 @@ const App = (props) => {
 		dispatch(actions.authCheckState());
 	}, [dispatch]);
 
+    useEffect(() => {
+        props.userSocket && props.userSocket.on('private message', messageData => {
+            let messages = [...props.userMessages];
+
+            messages.push(messageData.data);
+
+            props.updateMessages(messages);
+        });
+        // eslint-disable-next-line
+    }, [props.userSocket, props.userMessages, props.updateMessages]);
+
 	let routes = (
 		<Switch>
 			<Route path='/logout' component={Logout} />
@@ -45,8 +56,16 @@ const App = (props) => {
 const mapStateToProps = state => {
 	return {
 		isAuthenticated: state.isAuth,
-        userStatus: state.userStatus
+        userStatus: state.userStatus,
+        userSocket: state.userSocket,
+        userMessages: state.userMessages
 	};
 };
 
-export default connect(mapStateToProps, null)(App);
+const mapDispatchToProps = dispatch => {
+    return {
+        updateMessages: (messages) => dispatch(actions.updateMessages(messages))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

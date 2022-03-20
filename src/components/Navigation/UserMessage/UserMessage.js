@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import classes from './UserMessage.module.scss';
@@ -13,6 +13,7 @@ const UserMessage = props => {
     const [messageList, setMessageList] = useState([]);
     const [totalUnreadMessageCount, setTotalUnreadMessageCount] = useState();
 
+    let history = useHistory();
     let timeout = useRef(null);
     
     useEffect(() => {
@@ -29,8 +30,9 @@ const UserMessage = props => {
         let totalUnReadMessages = 0;
         let userToLastMessageMap = {};
         let userId = '';
+        let messageList = props.userMessages.slice().sort((a, b) => b.time > a.time)
 
-        props.userMessages.forEach(message => {
+        messageList.forEach(message => {
             userId = message.sender._id !== props.userId ? message.sender._id : message.receiver._id;
 
             if (!Object.prototype.hasOwnProperty.call(userToLastMessageMap, userId)) {
@@ -40,16 +42,17 @@ const UserMessage = props => {
                 };
             }
 
-            let lastMessageData = userToLastMessageMap[userId] || {};
+            let lastMessageData = userToLastMessageMap[userId];
             let lastMessageOfUser = lastMessageData.lastMessage || {};
 
-            if (message.time > (lastMessageOfUser.time || 0) && (message.receiver._id === userId || message.sender._id)) {
+            if (message.time > (lastMessageOfUser.time || 0) && (message.receiver._id === userId || message.sender._id === userId)) {
                 userToLastMessageMap[userId] = {
-                    lastMessage: message,
-                    unreadCount: !message.isRead && message.sender._id !== props.userId ?
-                        lastMessageData.unreadCount + 1 : lastMessageData.unreadCount
+                    lastMessage: message
                 };
             }
+
+            userToLastMessageMap[userId].unreadCount = !message.isRead && message.sender._id !== props.userId ?
+                lastMessageData.unreadCount + 1 : lastMessageData.unreadCount;
 
             !message.isRead && message.sender._id !== props.userId && totalUnReadMessages++;
         });
@@ -57,17 +60,25 @@ const UserMessage = props => {
         setMessageList(userToLastMessageMap);
         setTotalUnreadMessageCount(totalUnReadMessages);
 
+        if (totalUnReadMessages > 0) {
+            // window.alert('New Message');
+        }
+
     }, [props.userMessages, props.userId]);
 
     const toggleMenu = () => {
         setIsComponentVisible(prevState => !prevState);
     }
 
+    const onUserMessageItemClickedHandler = () => {
+        history.push(`/my-inbox`);
+
+        toggleMenu();
+    }
+
     const innerStyle = {
         height: `${isComponentVisible ? inboxPrevHeight : 0}px`
     };
-
-    // TODO: ADD Navigation to individual messages here
 
     return (
         <li className={classes.UserMessage}>
@@ -85,6 +96,7 @@ const UserMessage = props => {
 
                     <MessagesList
                         list={messageList}
+                        userMessageItemClicked={onUserMessageItemClickedHandler}
                     />
 
                     <footer>

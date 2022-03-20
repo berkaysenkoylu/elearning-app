@@ -3,6 +3,7 @@
 .UserMessage {
     position: relative;
     margin-right: 1.5rem;
+    
 
     &__UnreadCount {
         position: absolute;
@@ -39,6 +40,7 @@
         height: 25rem;
         overflow: hidden;
         box-shadow: $shadow-custom;
+        z-index: 9999;
         transition: height 0.2s ease-in;
 
         footer {

@@ -35,8 +35,8 @@ const MessageListItem = props => {
     }
 
     return (
-        <li className={classes.MessageListItem}>
-           <figure className={classes.MessageListItem__Picture}>
+        <li className={classes.MessageListItem} onClick={props.clicked}>
+            <figure className={classes.MessageListItem__Picture}>
                 <div className={classes.MessageListItem__Picture__Img} style={messageListItemStyle}></div>
             </figure>
 

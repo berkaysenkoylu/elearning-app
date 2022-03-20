@@ -1,4 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
+import io from 'socket.io-client';
 
 const initialState = {
     isLoading: false,
@@ -10,7 +11,8 @@ const initialState = {
     userStatus: null,
     redirectPath: null,
     successfullSignup: false,
-    userMessages: []
+    userMessages: [],
+    userSocket: null
 };
 
 // Utility function for state management
@@ -34,9 +36,11 @@ const reducer = (state=initialState, action) => {
                 redirectPath: null,
                 userStatus: null,
                 userImage: null,
-                userMessages: []
+                userMessages: [],
+                userSocket: null
             });
         case actionTypes.LOGIN_SUCCESS:
+            let socket = io('http://localhost:8000', { auth: { userId: action.userId } });
             return updateObject(state, {
                 isLoading: false,
                 error: null,
@@ -46,7 +50,9 @@ const reducer = (state=initialState, action) => {
                 username: action.username,
                 redirectPath: action.path,
                 userStatus: action.status,
-                userImage: action.userImage
+                userImage: action.userImage,
+                userMessages: action.userMessages,
+                userSocket: socket
             });
         case actionTypes.LOGIN_FAIL:
             return updateObject(state, {
@@ -59,9 +65,12 @@ const reducer = (state=initialState, action) => {
                 redirectPath: null,
                 userStatus: null,
                 userImage: null,
-                userMessages: []
+                userMessages: [],
+                userSocket: null
             });
         case actionTypes.LOGOUT:
+            typeof (state.userSocket || {}).disconnect === 'function' && state.userSocket.disconnect();
+
             return updateObject(state, {
                 isLoading: false,
                 error: null,
@@ -72,7 +81,8 @@ const reducer = (state=initialState, action) => {
                 redirectPath: null,
                 userStatus: null,
                 userImage: null,
-                userMessages: []
+                userMessages: [],
+                userSocket: null
             });
         case actionTypes.SIGNUP_START:
             return updateObject(state, {
@@ -159,15 +169,19 @@ const reducer = (state=initialState, action) => {
             return updateObject(state, {
                 userImage: action.newUrl
             });
-        case actionTypes.MESSAGE_FETCH_SUCCESS:
+        // case actionTypes.MESSAGE_FETCH_SUCCESS:
+        //     return updateObject(state, {
+        //         error: null,
+        //         userMessages: action.messages
+        //     });
+        // case actionTypes.MESSAGE_FETCH_FAIL:
+        //     return updateObject(state, {
+        //         userMessages: [],
+        //         error: action.error
+        //     });
+        case actionTypes.UPDATE_MESSAGES:
             return updateObject(state, {
-                error: null,
                 userMessages: action.messages
-            });
-        case actionTypes.MESSAGE_FETCH_FAIL:
-            return updateObject(state, {
-                userMessages: [],
-                error: action.error
             });
         default:
             break;

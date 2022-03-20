@@ -18,7 +18,8 @@ const MessagesList = props => {
                 time: messageData.time
             }}
             unreadMessageCount={(messages[userId] || {}).unreadCount}
-        />
+            clicked={props.userMessageItemClicked}
+        />;
     });
 
 
@@ -30,12 +31,3 @@ const MessagesList = props => {
 }
 
 export default MessagesList;
-
-/*
-messageData={{
-    message: lastMessage.message || '',
-    time: lastMessage.time
-}}
-unreadMessageCount={userToUnreadMessagesMap[user._id] || 0}
-
-*/

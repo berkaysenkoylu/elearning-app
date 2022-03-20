@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { BACKEND_ORIGIN } from '../../../../utility/apiUrl';
 import classes from './UserItem.module.scss';
 
 const UserItem = props => {
@@ -8,14 +9,22 @@ const UserItem = props => {
 
     let pictureStyle = {};
 
-    if (userData.avatarUrl && userData.avatarUrl !== '') {
-        pictureStyle['backgroundImage'] = `url(${userData.avatarUrl})`;
+    let userImage = userData.avatarUrl;
+
+    if (userImage && userImage !== '') {
+        pictureStyle['backgroundImage'] = `url(${BACKEND_ORIGIN + '/' + userImage.replace(/\\/g, '/')})`;
+        
     }
 
     let message = lastMessageData.message || '-';
+    let classList = [classes.UserItem];
+
+    if (props.isSelected) {
+        classList = [classes.UserItem, classes.UserItem__Selected];
+    }
 
     return (
-        <div className={classes.UserItem} onClick={props.userSelected}>
+        <div className={classList.join(' ')} onClick={props.userSelected}>
             <figure className={classes.UserItem__PictureContainer}>
                 <div style={pictureStyle}></div>
             </figure>

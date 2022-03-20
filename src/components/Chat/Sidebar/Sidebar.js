@@ -34,6 +34,7 @@ const Sidebar = React.memo(props => {
                         time: lastMessage.time
                     }}
                     unreadMessageCount={userToUnreadMessagesMap[user._id] || 0}
+                    isSelected={props.selectedUserId === user._id}
                 />
             })}
         </div>

@@ -6,5 +6,6 @@ export {
     authCheckState,
     passwordResetRequest,
     resetPassword,
-    changeAvatar
+    changeAvatar,
+    updateMessages
 } from './auth';
