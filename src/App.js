@@ -21,15 +21,25 @@ const App = (props) => {
 	}, [dispatch]);
 
     useEffect(() => {
-        props.userSocket && props.userSocket.on('private message', messageData => {
+        if (props.userSocket) {
             let messages = [...props.userMessages];
 
-            messages.push(messageData.data);
-
-            props.updateMessages(messages);
-        });
+            props.userSocket.on('private message', messageData => {
+                messages.push(messageData.data);
+    
+                props.updateMessages(messages);
+            });
+    
+            props.userSocket.on('message sent', messageData => {
+                if (messageData.from === props.userId) {
+                    messages.push(messageData.data);
+    
+                    props.updateMessages(messages);
+                }
+            });
+        }
         // eslint-disable-next-line
-    }, [props.userSocket, props.userMessages, props.updateMessages]);
+    }, [props.userSocket, props.userMessages, props.userId]);
 
 	let routes = (
 		<Switch>
@@ -55,6 +65,7 @@ const App = (props) => {
 
 const mapStateToProps = state => {
 	return {
+        userId: state.userId,
 		isAuthenticated: state.isAuth,
         userStatus: state.userStatus,
         userSocket: state.userSocket,

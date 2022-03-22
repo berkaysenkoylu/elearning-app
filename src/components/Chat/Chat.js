@@ -92,25 +92,25 @@ const Chat = props => {
             messageData
         });
 
-        let senderData = availableUsers.find(user => user._id === props.userId) || {};
+        // let senderData = currentUser.current;
 
-        // This is for updating the user's messageList without resorting to using backend
-        props.updateMessages([...props.userMessages, {
-            ...messageData,
-            _id: Math.random() * 1923,
-            sender: {
-                _id: props.userId,
-                firstName: senderData.firstName,
-                lastName: senderData.lastName,
-                avatarUrl: senderData.avatarUrl
-            },
-            receiver: {
-                _id: selectedUser._id,
-                firstName: selectedUser.firstName,
-                lastName: selectedUser.lastName,
-                avatarUrl: selectedUser.avatarUrl
-            }
-        } ]);
+        // // This is for updating the user's messageList without resorting to using backend
+        // props.updateMessages([...props.userMessages, {
+        //     ...messageData,
+        //     _id: Math.random() * 1923,
+        //     sender: {
+        //         _id: props.userId,
+        //         firstName: senderData.firstName,
+        //         lastName: senderData.lastName,
+        //         avatarUrl: senderData.avatarUrl
+        //     },
+        //     receiver: {
+        //         _id: selectedUser._id,
+        //         firstName: selectedUser.firstName,
+        //         lastName: selectedUser.lastName,
+        //         avatarUrl: selectedUser.avatarUrl
+        //     }
+        // } ]);
     }
 
     return (
@@ -136,6 +136,8 @@ const Chat = props => {
 const mapStateToProps = state => {
     return {
         userId: state.userId,
+        userFirstName: state.userFirstName,
+        userLastName: state.userLastName,
         userMessages: state.userMessages,
         userSocket: state.userSocket
     };

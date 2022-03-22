@@ -1,4 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
+import { BACKEND_ORIGIN } from '../../utility/apiUrl';
 import io from 'socket.io-client';
 
 const initialState = {
@@ -32,7 +33,6 @@ const reducer = (state=initialState, action) => {
                 token: null,
                 isAuth: false,
                 userId: null,
-                username: null,
                 redirectPath: null,
                 userStatus: null,
                 userImage: null,
@@ -40,14 +40,13 @@ const reducer = (state=initialState, action) => {
                 userSocket: null
             });
         case actionTypes.LOGIN_SUCCESS:
-            let socket = io('http://localhost:8000', { auth: { userId: action.userId } });
+            let socket = io(BACKEND_ORIGIN, { auth: { userId: action.userId } });
             return updateObject(state, {
                 isLoading: false,
                 error: null,
                 token: action.token,
                 isAuth: true,
                 userId: action.userId,
-                username: action.username,
                 redirectPath: action.path,
                 userStatus: action.status,
                 userImage: action.userImage,
@@ -61,7 +60,6 @@ const reducer = (state=initialState, action) => {
                 token: null,
                 isAuth: false,
                 userId: null,
-                username: null,
                 redirectPath: null,
                 userStatus: null,
                 userImage: null,
@@ -77,7 +75,6 @@ const reducer = (state=initialState, action) => {
                 token: null,
                 isAuth: false,
                 userId: null,
-                username: null,
                 redirectPath: null,
                 userStatus: null,
                 userImage: null,

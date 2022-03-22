@@ -98,10 +98,10 @@ const UserMessage = props => {
                         list={messageList}
                         userMessageItemClicked={onUserMessageItemClickedHandler}
                     />
-
+{/* 
                     <footer>
                         <Link to='/my-inbox'>Go to inbox</Link>
-                    </footer>
+                    </footer> */}
                 </div>
             </div>
         </li>

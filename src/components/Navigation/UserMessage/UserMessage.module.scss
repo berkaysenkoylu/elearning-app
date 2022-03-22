@@ -3,7 +3,6 @@
 .UserMessage {
     position: relative;
     margin-right: 1.5rem;
-    
 
     &__UnreadCount {
         position: absolute;
@@ -42,10 +41,6 @@
         box-shadow: $shadow-custom;
         z-index: 9999;
         transition: height 0.2s ease-in;
-
-        footer {
-            border-top: 1px solid $color-black;
-        }
     }
 
     &__InboxPreviewContent {
