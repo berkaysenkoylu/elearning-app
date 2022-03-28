@@ -1,17 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import classes from './UserMessage.module.scss';
 import useComponentVisible from '../../../hooks/useComponentVisible';
 import svg from '../../../assets/images/sprite.svg';
 import MessagesList from './MessagesList/MessagesList';
+import Notification from '../../Notification/Notification';
 
 const UserMessage = props => {
     const [inboxPrevRef, isComponentVisible, setIsComponentVisible] = useComponentVisible(false);
     const [inboxPrevHeight, setInboxPrevHeight] = useState(0);
     const [messageList, setMessageList] = useState([]);
     const [totalUnreadMessageCount, setTotalUnreadMessageCount] = useState();
+    const [showNotification, setShowNotification] = useState(false);
 
     let history = useHistory();
     let timeout = useRef(null);
@@ -61,9 +63,9 @@ const UserMessage = props => {
         setTotalUnreadMessageCount(totalUnReadMessages);
 
         if (totalUnReadMessages > 0) {
-            // window.alert('New Message');
+            !showNotification && setShowNotification(true);
         }
-
+        // eslint-disable-next-line
     }, [props.userMessages, props.userId]);
 
     const toggleMenu = () => {
@@ -76,35 +78,52 @@ const UserMessage = props => {
         toggleMenu();
     }
 
+    const onMessageNotificationClosed = () => {
+        // TODO: Handle the timeout
+        setTimeout(() => {
+            setShowNotification(prevState => !prevState);
+        }, 400);
+    }
+
     const innerStyle = {
         height: `${isComponentVisible ? inboxPrevHeight : 0}px`
     };
 
     return (
-        <li className={classes.UserMessage}>
-            <svg className={classes.UserMessage__Icon} onClick={toggleMenu}>
-                <use xlinkHref={`${svg}#icon-bubbles2`}></use>
-            </svg>
+        <>
+            {
+                showNotification ?
+                    <Notification
+                        soundFileName='message-notification.wav'
+                        message='You have unread message(s) !'
+                        closed={onMessageNotificationClosed}
+            /> : null}
+            
+            <li className={classes.UserMessage}>
+                <svg className={classes.UserMessage__Icon} onClick={toggleMenu}>
+                    <use xlinkHref={`${svg}#icon-bubbles2`}></use>
+                </svg>
 
-            {totalUnreadMessageCount > 0 ? <span className={classes.UserMessage__UnreadCount}>{totalUnreadMessageCount}</span> : null}
+                {totalUnreadMessageCount > 0 ? <span className={classes.UserMessage__UnreadCount}>{totalUnreadMessageCount}</span> : null}
 
-            <div className={classes.UserMessage__InboxPreviewWrapper} ref={inboxPrevRef} style={innerStyle}>
-                <div className={classes.UserMessage__InboxPreviewContent}>
-                    <header>
-                        <h2>Inbox</h2>
-                    </header>
+                <div className={classes.UserMessage__InboxPreviewWrapper} ref={inboxPrevRef} style={innerStyle}>
+                    <div className={classes.UserMessage__InboxPreviewContent}>
+                        <header>
+                            <h2>Inbox</h2>
+                        </header>
 
-                    <MessagesList
-                        list={messageList}
-                        userMessageItemClicked={onUserMessageItemClickedHandler}
-                    />
-{/* 
-                    <footer>
-                        <Link to='/my-inbox'>Go to inbox</Link>
-                    </footer> */}
+                        <MessagesList
+                            list={messageList}
+                            userMessageItemClicked={onUserMessageItemClickedHandler}
+                        />
+                    {/* 
+                        <footer>
+                            <Link to='/my-inbox'>Go to inbox</Link>
+                        </footer> */}
+                    </div>
                 </div>
-            </div>
-        </li>
+            </li>
+        </>
     );
 }
 

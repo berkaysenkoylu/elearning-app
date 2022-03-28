@@ -1,0 +1,77 @@
+@import '../../variables';
+
+.Notification {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 25rem;
+    height: 6rem;
+    padding: 1rem;
+    font-size: $small-font-size;
+    z-index: 9999;
+    transform: translate(-50%, calc(12rem - 50%));
+    transition: all 0.2s ease;
+    box-shadow: $shadow-custom-2;
+    display: flex;
+    align-items: center;
+
+    &__Open {
+        animation: appear 0.4s ease-out;
+        animation-fill-mode: forwards;
+    }
+
+    &__Closed {
+        animation: disappear 0.4s ease-out;
+        animation-fill-mode: forwards;
+    }
+
+    &__CloseButton {
+        cursor: pointer;
+        position: absolute;
+        top: 4px;
+        right: 4px;
+        width: 1.6rem;
+        height: 1.6rem;
+
+        &::before, &::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            height: 100%;
+            width: 2px;
+            background-color: $color-black;
+            transition: background-color 0.2s ease-out;
+        }
+
+        &::before {
+            transform: rotateZ(45deg);
+        }
+
+        &::after {
+            transform: rotateZ(-45deg);
+        }
+
+        &:hover::before, &:hover::after {
+            background-color: $color-grey-dark-2;
+        }
+    }
+}
+
+@keyframes appear {
+    0% {
+        transform: translate(100%, calc(12rem - 50%));
+    }
+    100% {
+        transform: translate(-50%, calc(12rem - 50%));
+    }
+}
+
+@keyframes disappear {
+    0% {
+        transform: translate(-50%, calc(12rem - 50%));
+    }
+    100% {
+        transform: translate(100%, calc(12rem - 50%));
+    }
+}

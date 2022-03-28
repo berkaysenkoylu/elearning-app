@@ -6,6 +6,7 @@ import axiosAdmin from '../../../../axiosUtility/axios-admin';
 import CourseHome from './CourseHome/CourseHome';
 import CreateSubSection from './CreateSubSection/CreateSubSection';
 import CreateQuiz from '../Course/CourseActivities/CreateQuiz/CreateQuiz';
+import CreateQuestionnaire from './CourseActivities/CreateQuestionnaire/CreateQuestionnaire';
 
 // TODO: Instead of using state management here, move all the logic to its parent component
 const Course = props => {
@@ -224,7 +225,7 @@ const Course = props => {
 
     const routes = (
         <Switch>
-            <Route path={props.match.url + '/create-questionnaire'} render={() => <div>CREATE QUESTIONNAIRE</div>} />
+            <Route path={props.match.url + '/create-questionnaire'} render={() => <CreateQuestionnaire />} />
             <Route path={props.match.url + '/edit-quiz/:quizId'} render={() => <CreateQuiz
                 currentQuizData={(props.courseData || {}).quiz || {}}
                 onQuizEdited={(quizData) => onCourseActivityEditedHandler('quiz', quizData)} />} />
