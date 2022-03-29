@@ -45,7 +45,11 @@ const CourseHome = props => {
         let copiedQuestionnaireData = copiedCourseActivities.questionnaire;
 
         copiedQuizData.alreadyExists = typeof props.courseData.quiz !== 'undefined';
+        copiedQuizData.selected = copiedQuizData.alreadyExists ? false : true;
+        
         copiedQuestionnaireData.alreadyExists = typeof props.courseData.questionnaire !== 'undefined';
+        copiedQuestionnaireData.selected = copiedQuestionnaireData.alreadyExists ? false : true;
+
 
         copiedCourseActivities.quiz = { ...copiedQuizData };
         copiedCourseActivities.questionnaire = { ...copiedQuestionnaireData };
@@ -131,8 +135,8 @@ const CourseHome = props => {
                     <li>
                         {courseData.questionnaire.name}
 
-                        <button>Edit</button>
-                        <button>Delete</button>
+                        <button onClick={() => onCourseActivityEdit('questionnaire', courseData.questionnaire._id)}>Edit</button>
+                        <button onClick={() => onCourseActivityDelete('questionnaire', courseData.questionnaire._id)}>Delete</button>
                     </li> : null }
             </ul>
         )

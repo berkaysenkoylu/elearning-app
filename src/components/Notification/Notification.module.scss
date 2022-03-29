@@ -9,7 +9,7 @@
     padding: 1rem;
     font-size: $small-font-size;
     z-index: 9999;
-    transform: translate(-50%, calc(12rem - 50%));
+    transform: translate(100%, calc(12rem - 50%));
     transition: all 0.2s ease;
     box-shadow: $shadow-custom-2;
     display: flex;

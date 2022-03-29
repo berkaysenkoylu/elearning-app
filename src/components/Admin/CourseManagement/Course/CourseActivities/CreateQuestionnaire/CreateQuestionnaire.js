@@ -20,23 +20,23 @@ const CreateQuestionnaire = props => {
     const [file, setFile] = useState(undefined);
 
     useEffect(() => {
-        if (typeof props.currentQuestionaireData === 'undefined') {
+        if (typeof props.currentQuestionnaireData === 'undefined') {
             return;
         }
 
         setEditMode(true);
 
-        setQuestionnaireToEditData(props.currentQuestionaireData);
+        setQuestionnaireToEditData(props.currentQuestionnaireData);
 
         const copiedQuestionnaireNameFormCtrl = { ...questionnaireNameFormControl };
 
         copiedQuestionnaireNameFormCtrl.touched = true;
-        copiedQuestionnaireNameFormCtrl.value = props.currentQuestionaireData.name;
+        copiedQuestionnaireNameFormCtrl.value = props.currentQuestionnaireData.name;
         copiedQuestionnaireNameFormCtrl.valid = true;
 
         setQuestionnaireNameFormControl(copiedQuestionnaireNameFormCtrl);
         // eslint-disable-next-line
-    }, [props.currentQuestionaireData]);
+    }, [props.currentQuestionnaireData]);
 
     const onInputFieldChanged = (event) => {
         const copiedQuestionnaireNameFormCtrl = { ...questionnaireNameFormControl };
@@ -54,10 +54,10 @@ const CreateQuestionnaire = props => {
         setFile(selectedFile);
     }
 
-    const onQuuestionnaireCreate = () => {
+    const onQuestionnaireCreate = () => {
         const formData = new FormData();
 
-        formData.append('quizName', questionnaireNameFormControl.value);
+        formData.append('questionnaireName', questionnaireNameFormControl.value);
         
         if (typeof file !== 'undefined') {
             formData.append('file', file);
@@ -66,11 +66,11 @@ const CreateQuestionnaire = props => {
         }
 
         if (editMode) {
-            formData.append('quizId', questionnaireToEditData._id);
+            formData.append('questionnaireId', questionnaireToEditData._id);
 
             props.onQuestionnaireEdited(formData)
         } else {
-            props.onQuuestionnaireCreated(formData);
+            props.onQuestionnaireCreated(formData);
         }
     }
 
@@ -102,7 +102,7 @@ const CreateQuestionnaire = props => {
 
             <div className={classes.CreateQuestionnaire__Cta}>
                 <Button
-                    clicked={onQuuestionnaireCreate}>{!editMode ? 'Create' : 'Edit'}</Button>
+                    clicked={onQuestionnaireCreate}>{!editMode ? 'Create' : 'Edit'}</Button>
             </div>
         </section>
     )

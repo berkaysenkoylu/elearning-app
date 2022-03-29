@@ -150,6 +150,9 @@ const Course = props => {
             case 'quiz':
                 requestUrl = '/quiz';
                 break;
+            case 'questionnaire':
+                requestUrl = '/questionnaire';
+                break;
             default:
                 break;
         }
@@ -184,6 +187,9 @@ const Course = props => {
             case 'quiz':
                 requestUrl = '/quiz/' + data.get('quizId');
                 break;
+            case 'questionnaire':
+                requestUrl = '/questionnaire/' + data.get('questionnaireId');
+                break;
             default:
                 break;
         }
@@ -208,6 +214,9 @@ const Course = props => {
             case 'quiz':
                 requestUrl = '/quiz/' + id;
                 break;
+            case 'questionnaire':
+                requestUrl = '/questionnaire/' + id;
+                break;
             default:
                 break;
         }
@@ -225,7 +234,14 @@ const Course = props => {
 
     const routes = (
         <Switch>
-            <Route path={props.match.url + '/create-questionnaire'} render={() => <CreateQuestionnaire />} />
+            <Route path={props.match.url + '/edit-questionnaire/:questionnaireId'} render={() => <CreateQuestionnaire
+                currentQuestionnaireData={(props.courseData || {}).questionnaire || {}}
+                onQuestionnaireEdited={(questionnaireData) => onCourseActivityEditedHandler('questionnaire', questionnaireData)}
+            />} />
+            <Route path={props.match.url + '/create-questionnaire'} render={() => <CreateQuestionnaire
+                currentQuestionnaireData={undefined}
+                onQuestionnaireCreated={(questionnaireData) => onCourseActivityCreatedHandler('questionnaire', questionnaireData) }
+            />} />
             <Route path={props.match.url + '/edit-quiz/:quizId'} render={() => <CreateQuiz
                 currentQuizData={(props.courseData || {}).quiz || {}}
                 onQuizEdited={(quizData) => onCourseActivityEditedHandler('quiz', quizData)} />} />

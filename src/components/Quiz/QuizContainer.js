@@ -21,8 +21,15 @@ const QuizContainer = (props) => {
         setIsAtQuizIntro(false);
     }
 
-    const onQuizFinishedHandler = (quizReport) => {
-        setQuizResultData(quizReport);
+    const onQuizFinishedHandler = (questionsAnswerData) => {
+        let result = {
+            quizId: quizData._id,
+            answers: questionsAnswerData
+        };
+
+        console.log(result)
+
+        setQuizResultData(questionsAnswerData.map(question => question.isCorrect));
 
         setIsQuizFinished(true);
     }

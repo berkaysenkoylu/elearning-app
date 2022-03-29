@@ -9,7 +9,7 @@ const CourseMenu = (props) => {
         props.onCourseActivityEnabled(type);
     }
 
-    console.log(props.courseSections)
+    // console.log(props.courseSections)
 
     return (
         <Fragment>

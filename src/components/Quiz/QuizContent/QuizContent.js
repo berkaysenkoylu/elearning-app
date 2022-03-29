@@ -20,12 +20,29 @@ const QuizContent = (props) => {
         }
     }, [timeout]);
 
-    const onAnswerSelectedHandler = (answeredQuestionNumber, choiceIndex) => {
-        let isCorrect = questionList[answeredQuestionNumber - 1].choices[choiceIndex].isCorrect;
+    const onAnswerSelectedHandler = (answeredQuestionNumber, answer) => {
+        let questionData = questionList[answeredQuestionNumber - 1];
+        let isCorrect = questionData.choices[answer].isCorrect;
 
         setSuccess(isCorrect);
         setIsQuestionAnswered(true);
-        questionAnswerList.current.push(isCorrect);
+
+        let individualResultData = {
+            questionType: questionData.type,
+            isCorrect: isCorrect,
+            selectedAnswer: null
+        };
+
+        switch (questionData.type) {
+            case 'multiple-choice':
+            case 'case study':
+                individualResultData.selectedAnswer = answer;
+                break;
+            default:
+                break;
+        }
+        
+        questionAnswerList.current.push(individualResultData);
 
         if(currentQuestion < questionAmount - 1) {
             // Next question

@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
 
 import classes from './Course.module.scss';
 import Loader from '../../components/Loader/Loader';
@@ -110,6 +111,13 @@ class Course extends Component {
             isOnMainMenu: true,
             isOnQuizMode: false,
             isOnQuestionnaireMode: false
+        });
+    }
+
+    onCourseActivityFinishedHandler = (report) => {
+        console.log({
+            ...report,
+            userId: this.props.userId
         });
     }
 
@@ -265,7 +273,9 @@ class Course extends Component {
                             :
                             <Quiz
                                 quizData={courseQuiz}
-                                onQuizExited={this.onCourseActivityExitedHandler} />
+                                onQuizExited={this.onCourseActivityExitedHandler}
+                                onQuizFinished={this.onCourseActivityFinishedHandler}
+                            />
                         }
                     </div>
                 );
@@ -316,4 +326,10 @@ class Course extends Component {
     }
 }
 
-export default Course;
+const mapStateToProps = state => {
+    return {
+        userId: state.userId
+    }
+}
+
+export default connect(mapStateToProps, null)(Course);
